@@ -7,19 +7,31 @@ import { MapComponent } from './map/map.component';
 import {HttpClientModule} from '@angular/common/http';
 import {DataService} from './services/data.service';
 import {HeaderComponent} from './header.component';
+import { CountryListComponent } from './country-list/country-list.component';
+import {AppRoutingModule} from './app-routing.module';
+import {CountryService} from './services/country.service';
+import { StatesListComponent } from './states-list/states-list.component';
+import {StateService} from './services/state.service';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     MapComponent,
-    HeaderComponent
+    HeaderComponent,
+    CountryListComponent,
+    StatesListComponent
   ],
   imports: [
     BrowserModule,
-    HttpClientModule
+    HttpClientModule,
+    AppRoutingModule
   ],
-  providers: [DataService],
+  providers: [
+    DataService,
+    CountryService,
+    StateService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

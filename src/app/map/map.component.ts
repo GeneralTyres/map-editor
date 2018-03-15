@@ -42,8 +42,9 @@ export class MapComponent implements OnInit {
   loadData () {
     this.data.load('states').subscribe(
       data => {
-        const polyline = L.polygon(JSON.parse(data[0].polygon)).addTo(this.map);
-        const tri = L.polygon(JSON.parse(data[1].polygon)).addTo(this.map);
+        for (let i = 0; i < data.length; i++) {
+          const polyline = L.polygon(JSON.parse(data[0].polygon)).addTo(this.map);
+        }
       }
     );
   }
@@ -53,7 +54,7 @@ export class MapComponent implements OnInit {
     console.log('this.poly ::', this.poly.getLatLngs());
     const pol = this.poly.getLatLngs()[0];
     const arr = [];
-    console.log('pol ::', pol)
+
     for (let o = 0; o < pol.length; o++) {
       arr.push([pol[o].lat, pol[o].lng]);
     }
