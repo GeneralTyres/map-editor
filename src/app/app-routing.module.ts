@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import {CountryListComponent} from './country-list/country-list.component';
 import {MapComponent} from './map/map.component';
+import {CountryComponent} from './country/country.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/', pathMatch: 'full' },
@@ -15,6 +16,7 @@ const appRoutes: Routes = [
     //   { path: ':id/edit', component: RecipeEditComponent },
     // ]
   },
+  { path: 'country', component: CountryComponent },
   { path: 'states', component: CountryListComponent,
     children: [
       { path: '', component: CountryListComponent },

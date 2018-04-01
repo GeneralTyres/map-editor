@@ -3,6 +3,9 @@ import 'leaflet';
 import 'leaflet-editable';
 import {HttpClient} from '@angular/common/http';
 import {DataService} from '../services/data.service';
+import {CountryService} from '../services/country.service';
+import {StateService} from '../services/state.service';
+import {CountryModel} from '../models/country.model';
 
 @Component({
   selector: 'app-map',
@@ -12,11 +15,17 @@ import {DataService} from '../services/data.service';
 export class MapComponent implements OnInit {
 
   map: any;
+  areas: any;
+  states: any;
   poly: any;
+  countries: CountryModel[];
   maps: any[];
+  date: string;
 
   constructor(private http: HttpClient,
-              private data: DataService) { }
+              private data: DataService,
+              private countryService: CountryService,
+              private stateService: StateService) { }
 
   ngOnInit() {
     const osmUrl = 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
@@ -33,38 +42,38 @@ export class MapComponent implements OnInit {
       console.log(e);
     });
 
-    // this.poly = L.polygon([[43.1, 1.2], [43.2, 1.3], [43.3, 1.2]]).addTo(this.map);
-    // this.poly.enableEdit();
-
     this.loadData();
   }
 
   loadData () {
-    this.data.load('states').subscribe(
+    this.countryService.loadCountries().subscribe(
+      response => {
+        console.log('response ::', response);
+        this.countries = response;
+      }
+    );
+    this.data.load('areas').subscribe(
       data => {
-        for (let i = 0; i < data.length; i++) {
-          const polyline = L.polygon(JSON.parse(data[0].polygon)).addTo(this.map);
-        }
+        console.log('data ::', data);
+        this.areas = data;
+      }
+    );
+    this.stateService.loadStates().subscribe(
+      data => {
+        console.log('data ::', data);
+        this.states = data;
       }
     );
   }
 
-  saveData() {
-
-    console.log('this.poly ::', this.poly.getLatLngs());
-    const pol = this.poly.getLatLngs()[0];
-    const arr = [];
-
-    for (let o = 0; o < pol.length; o++) {
-      arr.push([pol[o].lat, pol[o].lng]);
+  showStatesByDate() {
+    console.log('ping')
+    const areas = this.stateService.getStatesByCountryAndDate(this.countries, this.date, this.areas, this.states);
+    console.log('areas ::', areas)
+    for (let i = 0; i < areas.length; i++) {
+      this.poly = L.polygon(JSON.parse(areas[i].polygon)).addTo(this.map);
     }
-    const str = JSON.stringify(arr);
-    this.http.post('http://192.168.0.109:1337/states', {polygon: str})
-      .subscribe(value => {
-        console.log('value ::', value)
-      });
+
   }
-
-
 
 }

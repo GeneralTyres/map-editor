@@ -12,6 +12,9 @@ import {AppRoutingModule} from './app-routing.module';
 import {CountryService} from './services/country.service';
 import { StatesListComponent } from './states-list/states-list.component';
 import {StateService} from './services/state.service';
+import { CountryComponent } from './country/country.component';
+import {FormsModule} from '@angular/forms';
+import {MapService} from './services/map.service';
 
 
 @NgModule({
@@ -20,17 +23,20 @@ import {StateService} from './services/state.service';
     MapComponent,
     HeaderComponent,
     CountryListComponent,
-    StatesListComponent
+    StatesListComponent,
+    CountryComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
   ],
   providers: [
     DataService,
     CountryService,
-    StateService
+    StateService,
+    MapService
   ],
   bootstrap: [AppComponent]
 })

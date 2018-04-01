@@ -4,7 +4,7 @@ import {HttpClient} from '@angular/common/http';
 @Injectable()
 export class DataService {
 
-  env: string = 'http://192.168.0.109:1337';
+  env = 'http://192.168.0.109:1337';
 
   constructor(private http: HttpClient) { }
 
@@ -16,6 +16,12 @@ export class DataService {
   create(tableName, data) {
     const query = this.env + '/' + tableName;
     return this.http.post(query, data);
+  }
+
+  update(tableName, data) {
+    console.log('update ::', data)
+    const query = this.env + '/' + tableName + '/' + data.id;
+    return this.http.patch(query, data);
   }
 
 }
