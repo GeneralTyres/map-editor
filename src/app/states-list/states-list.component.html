@@ -1,0 +1,84 @@
+<!--<div class="row" style="padding-bottom: 20px">-->
+  <!--<div class="col-md-12">-->
+    <!--<button class="btn btn-primary">-->
+    <!--Add new State?-->
+  <!--</button>-->
+  <!--</div>-->
+
+<!--</div>-->
+<div class="row" style="padding-bottom: 20px">
+  <div class="col-md-12">
+    <div class="card" style="width: auto;">
+      <div class="map-container" id="map"></div>
+      <div class="card-body">
+        <h5 class="card-title">Add new State</h5>
+        <p class="card-text">Add new period in the countries geographical extend.</p>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+          <div class="form-group">
+            <label for="from">From</label>
+            <input
+              type="text"
+              id="from"
+              name="from"
+              class="form-control"
+              [(ngModel)]="activeState.fromDate">
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="form-group">
+            <label for="to">To</label>
+            <input
+              type="text"
+              id="to"
+              name="to"
+              class="form-control"
+              [(ngModel)]="activeState.toDate">
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="form-group">
+            <label for="colour">Colour</label>
+            <input
+              type="text"
+              id="colour"
+              name="colour"
+              class="form-control"
+              [(ngModel)]="area.colour">
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="form-group">
+            <label for="type">Polygon Type</label>
+            <input
+              type="number"
+              id="type"
+              name="type"
+              class="form-control"
+              [(ngModel)]="area.polygonType">
+          </div>
+        </li>
+      </ul>
+      <div class="card-body">
+        <a (click)="saveState()" class="card-link">Save State</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <table class="table">
+      <tr>
+        <th>State</th>
+        <th>From</th>
+        <th>To</th>
+      </tr>
+      <tr *ngFor="let state of states">
+        <td>{{ state.colour }}</td>
+        <td>{{ state.fromDate }}</td>
+        <td>{{ state.toDate }}</td>
+      </tr>
+    </table>
+  </div>
+</div>
