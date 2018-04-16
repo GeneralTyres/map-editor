@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { Routes, RouterModule, Resolve } from '@angular/router';
 
 import {CountryListComponent} from './country-list/country-list.component';
 import {MapComponent} from './map/map.component';

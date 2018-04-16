@@ -1,4 +1,8 @@
 .map-container {
-  height: 600px;
+  height: 800px;
   width: 100%;
+}
+
+.flag-img {
+  border: 3px solid #000000;
 }

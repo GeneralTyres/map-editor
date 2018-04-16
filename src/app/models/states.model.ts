@@ -3,8 +3,10 @@ export class StateModel {
     public id: number,
     public countryId: number,
     public areaId: number,
-    public fromDate: string,
-    public toDate: string,
+    public date: string,
+    public name: string,
+    public description: string,
+    public reference: string,
     public createdAt: number,
     public updatedAt: number
   ) {}

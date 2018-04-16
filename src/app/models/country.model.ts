@@ -4,7 +4,7 @@ export class CountryModel {
               public description: string,
               public fromDate: string,
               public toDate: string,
-              // public createdAt: number,
+              public flag: string,
               // public updatedAt: number
   ) {}
 }

@@ -2,14 +2,43 @@
 <div class="row">
 
   <div class="col-md-4">
-    <input
-      type="text"
-      [(ngModel)] = 'date'>
+    <!--<input-->
+      <!--type="text"-->
+      <!--[(ngModel)] = 'date'>-->
   </div>
   <div class="col-md-4">
-    <button class="btn btn-primary" (click)="showStatesByDate()">
-      Add New shape
-    </button>
+    <div class="input-group mb-3">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="-500"
+        aria-label="Recipient's username"
+        aria-describedby="basic-addon2"
+        [(ngModel)] = 'date'>
+      <div class="input-group-append">
+        <button
+          class="btn btn-outline-secondary"
+          type="button"
+          (click)="showStatesByDate()">Go To Date</button>
+      </div>
+    </div>
   </div>
   <div class="col-md-4"></div>
+</div>
+<div class="row">
+  <div class="col-md-3 text-center">
+    <img style="height: 200px; width: 400px" class="card-img-top flag-img" src="{{ activeCountry.flag }}" alt="Card image cap">
+  </div>
+  <div class="col-md-9">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">{{ activeCountry.name }}</h5>
+        <p class="card-text">{{ activeCountry.description }}</p>
+      </div>
+      <div class="card-body">
+        <a href="#" class="card-link">Open Country Page</a>
+        <a href="#" class="card-link">Clear Selected</a>
+      </div>
+    </div>
+  </div>
 </div>

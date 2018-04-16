@@ -3,6 +3,7 @@ import {CountryModel} from '../models/country.model';
 import {CountryService} from '../services/country.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {StateService} from '../services/state.service';
+import {LoaderService} from '../services/loader.service';
 
 @Component({
   selector: 'app-country-list',
@@ -15,28 +16,29 @@ export class CountryListComponent implements OnInit {
   constructor(private countryService: CountryService,
               private stateService: StateService,
               private route: ActivatedRoute,
-              private router: Router) { }
+              private router: Router,
+              private loaderService: LoaderService) { }
 
   ngOnInit() {
-    this.loadCountries();
-  }
-
-  loadCountries() {
-    this.countryService.loadCountries().subscribe(
-      (response) => {
-        this.countries.push(...response);
+    this.loaderService.loadAll().then(
+      () => {
+        this.getData();
       }
     );
+  }
+
+  getData() {
+    this.countries = this.countryService.getCountries();
   }
 
   goToCountry(country) {
-    this.stateService.loadStates().subscribe(
-      value => {
-        this.stateService.setStates(value);
-        this.countryService.setActiveCountry(country);
-        this.router.navigate(['country']);
-      }
-    );
+    this.countryService.setActiveCountry(country);
+    this.loaderService.navigate('country');
+  }
+
+  createNewCountry() {
+    this.countryService.setActiveCountry(null);
+    this.loaderService.navigate('country');
   }
 
 }

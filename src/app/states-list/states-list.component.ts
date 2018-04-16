@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {StateModel} from '../models/states.model';
 import {StateService} from '../services/state.service';
 import {CountryModel} from '../models/country.model';
@@ -7,6 +7,7 @@ import 'leaflet';
 import 'leaflet-editable';
 import {DataService} from '../services/data.service';
 import {MapService} from '../services/map.service';
+import {AreaService} from '../services/area.service';
 
 @Component({
   selector: 'app-states-list',
@@ -14,6 +15,8 @@ import {MapService} from '../services/map.service';
   styleUrls: ['./states-list.component.css']
 })
 export class StatesListComponent implements OnInit {
+
+  @Input() country: CountryModel;
 
   map: any;
   poly: any;
@@ -23,16 +26,18 @@ export class StatesListComponent implements OnInit {
     colour: ''
   };
   states: StateModel[];
-  country: CountryModel;
-  activeState: StateModel = new StateModel(null, null, null, '', '');
+  activeState: StateModel = new StateModel(null, null, null, '', '', null, null);
+  createMode = false;
 
   constructor(private stateSer: StateService,
               private countryService: CountryService,
               private data: DataService,
-              private mapService: MapService) { }
+              private mapService: MapService,
+              private areaService: AreaService) { }
 
   ngOnInit() {
-    const osmUrl = 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
+    console.log('this.createMode ::', this.createMode)
+    const osmUrl = 'https://mt0.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',
       osmAttrib = '&copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors',
       osm = L.tileLayer(osmUrl, {
         maxZoom: 18,
@@ -43,17 +48,12 @@ export class StatesListComponent implements OnInit {
     this.map = L.map('map', {editable: true}).setView([43.1, 1.2], 12).addLayer(osm);
 
     this.map.on('editable:editing', function (e) {
-      console.log(e);
+      //
     });
-
-    this.poly = L.polygon([[43.1, 1.2], [43.2, 1.3], [43.3, 1.2]]).addTo(this.map);
-    this.poly.enableEdit();
-
-    this.country = this.countryService.getActiveCountry();
     // Get country states
-    this.states = this.stateSer.getStatesByCountry(this.country);
-    if (this.country) {
-      this.activeState.countryId = this.country.id;
+    this.states = this.stateSer.getStatesByCountry(this.country).sort(function(a, b){return b.date - a.date});
+    if (this.states.length > 0) {
+      this.activateState(this.states[0]);
     }
   }
 
@@ -61,18 +61,53 @@ export class StatesListComponent implements OnInit {
     this.area.polygon =  this.mapService.convertLeafletPolygonToString(this.poly);
     this.mapService.saveArea(this.area).subscribe(
       response => {
-        console.log('response ::', response);
         this.activeState.areaId = response.id;
         this.activeState.countryId = this.country.id;
-        console.log('this.activeState ::', this.activeState)
+        const newState = false;
         this.stateSer.saveState(this.activeState).subscribe(
-          response => {
-            console.log('response ::', response);
+          () => {
+
           }
         );
       }
     );
+  }
 
+  createNewState() {
+    this.activeState = new StateModel(null, (this.country ? this.country.id : null), null, '', '',  '',
+      '', 0, 0);
+    if (this.poly) {
+      this.poly.remove();
+    }
+    this.poly = L.polygon([[-0.514916, 13.756250], [-12.713968, 38.717188], [-31.192780, 14.810938]]).addTo(this.map);
+    this.poly.enableEdit();
+    this.map.fitBounds(this.poly.getBounds());
+  }
+
+  extendState(oldState) {
+    this.displayAreaById(oldState.areaId);
+    const state = new StateModel(null, oldState.countryId, null, '', '', '', '',
+      0, 0);
+    this.activateState(state);
+  }
+
+  activateState(state) {
+    if (state.areaId) {
+      this.displayAreaById(state.areaId);
+    }
+    this.activeState = state;
+  }
+
+  displayAreaById(areaId) {
+    if (this.poly) {
+      this.poly.remove();
+    }
+    const area = this.areaService.getAreaByAreaId(areaId);
+    this.area.colour = area.colour;
+    const polygon = JSON.parse(area.polygon);
+    this.poly = L.polygon(polygon, {color: area.colour}).addTo(this.map);
+    this.map.fitBounds(this.poly.getBounds());
+    this.poly.enableEdit();
   }
 
 }

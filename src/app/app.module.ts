@@ -13,8 +13,12 @@ import {CountryService} from './services/country.service';
 import { StatesListComponent } from './states-list/states-list.component';
 import {StateService} from './services/state.service';
 import { CountryComponent } from './country/country.component';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MapService} from './services/map.service';
+import {AreaService} from './services/area.service';
+import {BaseService} from './services/base.service';
+import { CountryMapComponent } from './country-map/country-map.component';
+import {LoaderService} from './services/loader.service';
 
 
 @NgModule({
@@ -24,19 +28,24 @@ import {MapService} from './services/map.service';
     HeaderComponent,
     CountryListComponent,
     StatesListComponent,
-    CountryComponent
+    CountryComponent,
+    CountryMapComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
+    ReactiveFormsModule,
     FormsModule
   ],
   providers: [
+    LoaderService,
     DataService,
     CountryService,
     StateService,
-    MapService
+    MapService,
+    AreaService,
+    BaseService
   ],
   bootstrap: [AppComponent]
 })

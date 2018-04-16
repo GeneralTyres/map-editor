@@ -6,11 +6,18 @@ import {CountryModel} from '../models/country.model';
 export class CountryService {
 
   activeCountry: CountryModel;
+  countryList: CountryModel[];
 
   constructor(private data: DataService) { }
 
   loadCountries() {
-    return this.data.load('countries');
+    return new Promise((resolve, reject) =>
+      this.data.load('countries').subscribe(
+        (response: CountryModel[] ) => {
+          this.countryList = response;
+          resolve();
+        }
+      ));
   }
 
   setActiveCountry(country: CountryModel) {
@@ -27,6 +34,10 @@ export class CountryService {
     } else {
       return this.data.create('countries', country);
     }
+  }
+
+  getCountries() {
+    return this.countryList.slice();
   }
 
 }

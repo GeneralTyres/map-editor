@@ -14,6 +14,7 @@ export class DataService {
   }
 
   create(tableName, data) {
+    delete data.id;
     const query = this.env + '/' + tableName;
     return this.http.post(query, data);
   }
@@ -22,6 +23,11 @@ export class DataService {
     console.log('update ::', data)
     const query = this.env + '/' + tableName + '/' + data.id;
     return this.http.patch(query, data);
+  }
+
+  locate(point) {
+    const query = this.env + '/locate';
+    return this.http.post(query, point);
   }
 
 }

@@ -2,6 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {CountryService} from '../services/country.service';
 import {CountryModel} from '../models/country.model';
 import {NgForm} from '@angular/forms';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-country',
@@ -12,43 +13,46 @@ export class CountryComponent implements OnInit {
   @ViewChild('f') slForm: NgForm;
 
   country: CountryModel;
+  createMode = true;
 
-  constructor(private countryService: CountryService) {
-
-  }
+  constructor(private countryService: CountryService,
+              private router: Router) {}
 
   ngOnInit() {
     this.country = this.countryService.getActiveCountry();
-    if (this.country) {
-      setTimeout(() => {    // <<<---    using ()=> syntax
-        this.slForm.setValue({
-          name: this.country.name,
-          description: this.country.description,
-          fromDate: this.country.fromDate,
-          toDate: this.country.toDate
-        });
-      }, 500);
+    if (!this.country) {
+      this.createMode = true;
+      this.country = new CountryModel(null, '', '', '', '', '');
     } else {
-      this.country = new CountryModel(null, '', '', '', '')
+      this.createMode = false;
     }
   }
 
   onSubmit(form: NgForm) {
-    const value = form.value;
-    const country = {
-        id: this.country.id,
-        name: value.name,
-        description: value.description,
-        fromDate: value.fromDate,
-        toDate: value.toDate
-    };
-    console.log('country ::', country);
-    this.countryService.saveCountry(country).subscribe(
-      (response) => {
-        console.log('response ::', response);
+    if (this.createMode) {
+      this.countryService.saveCountry(this.country).subscribe(
+        (response: CountryModel) => {
+          this.router.navigate(['../countries']);
+        }
+      );
     }
-    );
-    // form.reset();
+  }
+
+  toggleCreateMode() {
+    this.createMode = !this.createMode;
+  }
+
+  processImage(input) {
+    const file = (input.target.files[0]);
+    // Create a FileReader
+    let reader = new FileReader();
+    reader.readAsDataURL(file);
+    // Add an event listener to deal with the file when the reader is complete
+    reader.addEventListener("load", (event:any) => {
+      // Get the event.target.result from the reader (base64 of the image)
+      const base64 = event.target.result;
+      this.country.flag = base64;
+    }, false);
   }
 
 }
