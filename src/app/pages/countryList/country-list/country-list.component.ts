@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {CountryModel} from '../models/country.model';
-import {CountryService} from '../services/country.service';
+import {CountryModel} from '../../../models/country.model';
+import {CountryService} from '../../../services/country.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {StateService} from '../services/state.service';
-import {LoaderService} from '../services/loader.service';
+import {StateService} from '../../../services/state.service';
+import {LoaderService} from '../../../services/loader.service';
 
 @Component({
   selector: 'app-country-list',
@@ -20,11 +20,7 @@ export class CountryListComponent implements OnInit {
               private loaderService: LoaderService) { }
 
   ngOnInit() {
-    this.loaderService.loadAll().then(
-      () => {
-        this.getData();
-      }
-    );
+    this.getData();
   }
 
   getData() {

@@ -25,12 +25,9 @@ export class MapService {
         if (areas[i].id === states[s].areaId) {
           for (let c = 0; c < countries.length; c++) {
             if (countries[c].id === states[s].countryId) {
-              const polygon = L.polygon(JSON.parse(areas[i].polygon), {color: areas[i].colour});
-              // class FatPolygon {
-              //   constructor(public leafletPolygon: any, public country: any)
-              //   {}
-              // }
-              // const statePolygon = new FatPolygon(polygon, countries[c]);
+              const lineTpye = (areas[i].polygonType ? '15, 10, 5' : '');
+              const polygon: any = L.polygon(JSON.parse(areas[i].polygon), {color: areas[i].colour,
+                dashArray: lineTpye});
               polygon.country = countries[c];
               polygons.push(polygon);
             }

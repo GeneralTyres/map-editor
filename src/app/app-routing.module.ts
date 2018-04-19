@@ -1,14 +1,16 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, Resolve } from '@angular/router';
 
-import {CountryListComponent} from './country-list/country-list.component';
-import {MapComponent} from './map/map.component';
-import {CountryComponent} from './country/country.component';
+import {CountryListComponent} from './pages/countryList/country-list/country-list.component';
+import {MapComponent} from './pages/home/map/map.component';
+import {CountryComponent} from './pages/countryEdit/country/country.component';
+import {ResolverService} from './resolver.service';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/', pathMatch: 'full' },
   { path: 'home', component: MapComponent },
   { path: 'countries', component: CountryListComponent,
+    resolve: {loader: ResolverService}
     // children: [
     //   { path: '', component: RecipeStartComponent },
     //   { path: 'new', component: RecipeEditComponent },

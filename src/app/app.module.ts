@@ -1,24 +1,25 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
 
 
 import { AppComponent } from './app.component';
-import { MapComponent } from './map/map.component';
+import { MapComponent } from './pages/home/map/map.component';
 import {HttpClientModule} from '@angular/common/http';
 import {DataService} from './services/data.service';
 import {HeaderComponent} from './header.component';
-import { CountryListComponent } from './country-list/country-list.component';
+import { CountryListComponent } from './pages/countryList/country-list/country-list.component';
 import {AppRoutingModule} from './app-routing.module';
 import {CountryService} from './services/country.service';
-import { StatesListComponent } from './states-list/states-list.component';
 import {StateService} from './services/state.service';
-import { CountryComponent } from './country/country.component';
+import { CountryComponent } from './pages/countryEdit/country/country.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MapService} from './services/map.service';
 import {AreaService} from './services/area.service';
 import {BaseService} from './services/base.service';
 import { CountryMapComponent } from './country-map/country-map.component';
 import {LoaderService} from './services/loader.service';
+import {ResolverService} from './resolver.service';
 
 
 @NgModule({
@@ -27,7 +28,6 @@ import {LoaderService} from './services/loader.service';
     MapComponent,
     HeaderComponent,
     CountryListComponent,
-    StatesListComponent,
     CountryComponent,
     CountryMapComponent
   ],
@@ -36,7 +36,8 @@ import {LoaderService} from './services/loader.service';
     HttpClientModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    Ng4LoadingSpinnerModule.forRoot()
   ],
   providers: [
     LoaderService,
@@ -45,7 +46,8 @@ import {LoaderService} from './services/loader.service';
     StateService,
     MapService,
     AreaService,
-    BaseService
+    BaseService,
+    ResolverService
   ],
   bootstrap: [AppComponent]
 })

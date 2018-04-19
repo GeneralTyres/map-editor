@@ -1,0 +1,233 @@
+<div class="row">
+  <div class="col-md-12 text-center">
+    <h2>{{ country.name }}</h2>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-1"></div>
+  <div class="col-md-10">
+    <app-country-map
+      [mapCountry]='country'>
+    </app-country-map>
+  </div>
+  <div class="col-md-1"></div>
+</div>
+
+<div class="row">
+  <div class="col-md-1"></div>
+  <div class="col-md-3">
+    <img src="{{ country.flag }}" alt="" style="height: 300px; width: 100%">
+  </div>
+  <div class="col-md-7">
+    <form (ngSubmit)="onSubmit(f)" #f="ngForm">
+      <div class="card">
+        <h5 class="card-header">{{ country.name }} Details <span>
+          <a
+            class="btn btn-primary"
+            (click)="toggleCreateMode()">
+            Edit</a>
+        </span></h5>
+        <div class="card-body">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              class="form-control"
+              [(ngModel)] = "country.name"
+              [readonly]="!createMode">
+          </div>
+          <div class="form-group">
+            <label for="description">Description</label>
+            <input
+              type="text"
+              id="description"
+              name="description"
+              class="form-control"
+              [(ngModel)] = "country.description"
+              [readonly]="!createMode">
+          </div>
+          <div class="form-group">
+            <label for="fromDate">From Date</label>
+            <input
+              type="text"
+              id="fromDate"
+              name="fromDate"
+              class="form-control"
+              [(ngModel)] = "country.fromDate"
+              [readonly]="!createMode">
+          </div>
+          <div class="form-group">
+            <label for="toDate">To Date</label>
+            <input
+              type="text"
+              id="toDate"
+              name="toDate"
+              class="form-control"
+              [(ngModel)] = "country.toDate"
+              [readonly]="!createMode">
+          </div>
+          <div class="form-group">
+            <label for="toDate">Flag</label>
+            <input
+              type="file"
+              id="flagFile"
+              name="flagFile"
+              class="form-control"
+              (change)="processImage($event)">
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <button
+                class="btn btn-primary"
+                type="submit">
+                Save Country Details
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="col-md-1"></div>
+</div>
+
+<div class="row">
+  <div class="col-md-1"></div>
+  <div class="col-md-10">
+    <div class="card">
+      <div class="card-heading">
+        <h3>Country's States</h3>
+      </div>
+      <div class="row" style="padding-bottom: 20px">
+        <div class="col-md-12">
+          <div class="card" style="width: auto;">
+            <div class="map-container" id="map"></div>
+            <div class="card-body">
+              <h5 class="card-title">{{ activeState.name }}</h5>
+              <p class="card-text">{{ activeState.description }}</p>
+              <ul class="list-group list-group-flush" *ngIf="showStateEdit">
+                <li class="list-group-item">
+                  <div class="form-group">
+                    <label for="from">State Name</label>
+                    <input
+                      type="text"
+                      id="name"
+                      name="name"
+                      class="form-control"
+                      [(ngModel)]="activeState.name">
+                  </div>
+                </li>
+                <li class="list-group-item">
+                  <div class="form-group">
+                    <label for="from">State Description</label>
+                    <input
+                      type="text"
+                      id="description"
+                      name="description"
+                      class="form-control"
+                      [(ngModel)]="activeState.description">
+                  </div>
+                </li>
+                <li class="list-group-item">
+                  <div class="form-group">
+                    <label for="from">State Date</label>
+                    <input
+                      type="text"
+                      id="from"
+                      name="from"
+                      class="form-control"
+                      placeholder="Date of the map your basing the area on"
+                      [(ngModel)]="activeState.date">
+                  </div>
+                </li>
+                <li class="list-group-item">
+                  <div class="form-group">
+                    <label for="colour">Area Colour</label>
+                    <input
+                      type="text"
+                      id="colour"
+                      name="colour"
+                      class="form-control"
+                      [(ngModel)]="area.colour">
+                  </div>
+                </li>
+                <li class="list-group-item">
+                  <div class="form-group">
+                    <label for="type">State Type</label>
+                    <input
+                      type="number"
+                      id="type"
+                      name="type"
+                      class="form-control"
+                      [(ngModel)]="area.polygonType">
+                  </div>
+                </li>
+                <li class="list-group-item">
+                  <div class="form-group">
+                    <label for="type">Reference</label>
+                    <input
+                      type="text"
+                      id="reference"
+                      name="reference"
+                      class="form-control"
+                      placeholder="wikipedia link"
+                      [(ngModel)]="activeState.reference">
+                  </div>
+                </li>
+              </ul>
+              <button
+                *ngIf="!showStateEdit"
+                class="btn btn-primary card-link"
+                (click)="editState()">
+                Edit State</button>
+              <button
+                *ngIf="showStateEdit"
+                class="btn btn-primary card-link"
+                (click)="saveState()">
+                Save State</button>
+              <button
+                class="btn btn-primary card-link"
+                (click)="extendState(activeState)">
+                Duplicate</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <table class="table table-hover">
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td>
+                <button
+                  class="btn btn-success"
+                  (click)="createNewState()">
+                  New State
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <th>State Name</th>
+              <th>State Description</th>
+              <th>Date</th>
+              <th>Actions</th>
+            </tr>
+            <tr *ngFor="let state of states" (click)="activateState(state)">
+              <td>{{ state.name }}</td>
+              <td>{{ state.description }}</td>
+              <td>{{ state.date }}</td>
+              <td>
+                <button>Delete</button>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+    </div>
+  <div class="col-md-1"></div>
+</div>
