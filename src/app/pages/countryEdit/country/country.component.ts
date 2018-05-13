@@ -79,8 +79,10 @@ export class CountryComponent implements OnInit {
 
   onSubmit(form: NgForm) {
     if (this.createMode) {
+      this.spinnerService.show();
       this.countryService.saveCountry(this.country).subscribe(
         (response: CountryModel) => {
+          this.spinnerService.hide();
           this.router.navigate(['../countries']);
         }
       );
@@ -137,11 +139,11 @@ export class CountryComponent implements OnInit {
 
   extendState(oldState) {
     this.showStateEdit = true;
-    this.poly.enableEdit();
     this.displayAreaById(oldState.areaId);
     const state = new StateModel(null, oldState.countryId, null, '', '', '', '',
       0, 0);
     this.activateState(state);
+    this.poly.enableEdit();
   }
 
   activateState(state) {

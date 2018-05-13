@@ -25,7 +25,13 @@ export class MapService {
         if (areas[i].id === states[s].areaId) {
           for (let c = 0; c < countries.length; c++) {
             if (countries[c].id === states[s].countryId) {
-              const lineTpye = (areas[i].polygonType ? '15, 10, 5' : '');
+              let lineTpye = '';
+              if (areas[i].polygonType === 0) {
+              } else if (areas[i].polygonType === 1) {
+                lineTpye = '15, 10, 5';
+              } else if (areas[i].polygonType === 2) {
+                lineTpye = '5, 5, 1, 5';
+              }
               const polygon: any = L.polygon(JSON.parse(areas[i].polygon), {color: areas[i].colour,
                 dashArray: lineTpye});
               polygon.country = countries[c];

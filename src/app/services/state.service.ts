@@ -14,8 +14,8 @@ export class StateService {
 
   loadStates() {
     return this.data.load('states').subscribe(
-      (repsonse: StateModel[]) => {
-        this.states = repsonse;
+      (response: StateModel[]) => {
+        this.states = response;
       }
     );
   }

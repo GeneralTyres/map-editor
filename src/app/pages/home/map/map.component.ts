@@ -8,7 +8,6 @@ import {StateService} from '../../../services/state.service';
 import {CountryModel} from '../../../models/country.model';
 import {MapService} from '../../../services/map.service';
 import {AreaService} from '../../../services/area.service';
-import {LoaderService} from '../../../services/loader.service';
 
 let self;
 @Component({
@@ -36,13 +35,12 @@ export class MapComponent implements OnInit {
               private countryService: CountryService,
               private stateService: StateService,
               private mapService: MapService,
-              private areaService: AreaService,
-              private loaderService: LoaderService) {
+              private areaService: AreaService) {
     self = this;
   }
 
   ngOnInit() {
-    this.loadData();
+    this.getData();
     this.loadMap();
   }
 
@@ -69,19 +67,11 @@ export class MapComponent implements OnInit {
 
     // method that we will use to update the control based on feature properties passed
     this.infobox.update = function (country) {
-      this._div.innerHTML = '<h4>US Population Density</h4>' +  (country ?
-        '<img style="height: 70px; width: 100px" src="' + country.flag + '">'
+      this._div.innerHTML = (country ?
+        '<h4>' + country.name + '</h4><img style="height: 70px; width: 100px" src="' + country.flag + '">'
         : 'Hover over a state');
     };
     this.infobox.addTo(this.map);
-  }
-
-  loadData () {
-    this.loaderService.loadAll().then(
-      () => {
-        this.getData();
-      }
-    );
   }
 
   getData() {

@@ -4,7 +4,7 @@ import {HttpClient} from '@angular/common/http';
 @Injectable()
 export class DataService {
 
-  env = 'http://192.168.0.109:1337';
+  env = 'http://192.168.0.106:1337';
 
   constructor(private http: HttpClient) { }
 

@@ -5,10 +5,13 @@ import {CountryListComponent} from './pages/countryList/country-list/country-lis
 import {MapComponent} from './pages/home/map/map.component';
 import {CountryComponent} from './pages/countryEdit/country/country.component';
 import {ResolverService} from './resolver.service';
+import {HomeResolverService} from './pages/home/homeResolver.service';
+import {CountryEditResolverService} from './pages/countryEdit/countryEditResolver.service';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/', pathMatch: 'full' },
-  { path: 'home', component: MapComponent },
+  { path: 'home', component: MapComponent,
+    resolve: {homeLoader: HomeResolverService}},
   { path: 'countries', component: CountryListComponent,
     resolve: {loader: ResolverService}
     // children: [
@@ -18,7 +21,8 @@ const appRoutes: Routes = [
     //   { path: ':id/edit', component: RecipeEditComponent },
     // ]
   },
-  { path: 'country', component: CountryComponent },
+  { path: 'country', component: CountryComponent,
+    resolve: {loader: CountryEditResolverService} },
   { path: 'states', component: CountryListComponent,
     children: [
       { path: '', component: CountryListComponent },

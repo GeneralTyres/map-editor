@@ -1,7 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
 
+import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
+import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
 
 import { AppComponent } from './app.component';
 import { MapComponent } from './pages/home/map/map.component';
@@ -18,8 +19,9 @@ import {MapService} from './services/map.service';
 import {AreaService} from './services/area.service';
 import {BaseService} from './services/base.service';
 import { CountryMapComponent } from './country-map/country-map.component';
-import {LoaderService} from './services/loader.service';
 import {ResolverService} from './resolver.service';
+import {HomeResolverService} from './pages/home/homeResolver.service';
+import {CountryEditResolverService} from './pages/countryEdit/countryEditResolver.service';
 
 
 @NgModule({
@@ -37,17 +39,20 @@ import {ResolverService} from './resolver.service';
     AppRoutingModule,
     ReactiveFormsModule,
     FormsModule,
-    Ng4LoadingSpinnerModule.forRoot()
+    Ng4LoadingSpinnerModule.forRoot(),
+    LoadingBarHttpClientModule
   ],
   providers: [
-    LoaderService,
     DataService,
     CountryService,
     StateService,
     MapService,
     AreaService,
     BaseService,
-    ResolverService
+    // Resolvers
+    ResolverService,
+    HomeResolverService,
+    CountryEditResolverService
   ],
   bootstrap: [AppComponent]
 })
