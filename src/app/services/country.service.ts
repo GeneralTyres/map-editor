@@ -12,7 +12,7 @@ export class CountryService {
 
   loadCountries() {
     return new Promise((resolve, reject) =>
-      this.data.load('countries').subscribe(
+      this.data.load('countries', 0).subscribe(
         (response: CountryModel[] ) => {
           this.countryList = response;
           resolve();

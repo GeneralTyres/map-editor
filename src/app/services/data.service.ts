@@ -5,11 +5,15 @@ import {HttpClient} from '@angular/common/http';
 export class DataService {
 
   env = 'http://192.168.0.106:1337';
+  // env = 'http://172.20.10.2:1337';
 
   constructor(private http: HttpClient) { }
 
-  load(tableName) {
-    const query = this.env + '/' + tableName;
+  load(tableName, limit) {
+    const query =
+      this.env + '/' +
+      tableName +
+      '?limit=' + (limit ? limit : 1000);
     return this.http.get(query);
   }
 
@@ -20,7 +24,6 @@ export class DataService {
   }
 
   update(tableName, data) {
-    console.log('update ::', data)
     const query = this.env + '/' + tableName + '/' + data.id;
     return this.http.patch(query, data);
   }

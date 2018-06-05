@@ -1,25 +1,23 @@
-<div class="row" style="padding-bottom: 30px">
-  <div class="col-md-1"></div>
-  <div class="col-md-4">
+<div class="row">
+  <div class="col-md-4"></div>
+  <div class="col-md-2 text-center">
+    <input
+      type="text"
+      id="search"
+      placeholder="South Africa"
+      [(ngModel)]="searchText"
+      (ngModelChange)="search($event)">
+  </div>
+  <div class="col-md-2">
     <button
       class="btn btn-primary pull-right"
       (click)="createNewCountry()">
       Add new country
     </button>
   </div>
-  <div class="col-md-6"></div>
-  <div class="col-md-1"></div>
+  <div class="col-md-2"></div>
 </div>
-<div class="row">
-  <div class="col-md-3 text-right"><label for="search">Search :</label></div>
-  <div class="col-md-9">
-    <input
-      type="text"
-      id="search"
-      [(ngModel)]="searchText"
-      (ngModelChange)="search($event)">
-  </div>
-</div>
+
 <div class="row">
   <div class="col-md-1"></div>
   <div class="col-md-10">

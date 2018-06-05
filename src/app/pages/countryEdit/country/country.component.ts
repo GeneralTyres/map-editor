@@ -132,9 +132,17 @@ export class CountryComponent implements OnInit {
     if (this.poly) {
       this.poly.remove();
     }
-    this.poly = L.polygon([[-0.514916, 13.756250], [-12.713968, 38.717188], [-31.192780, 14.810938]]).addTo(this.map);
+    this.createNewPolygon();
     this.poly.enableEdit();
     this.map.fitBounds(this.poly.getBounds());
+  }
+
+  createNewPolygon() {
+    if (this.poly) {
+      this.poly.remove();
+    }
+    this.poly = L.polygon([[-0.514916, 13.756250], [-12.713968, 38.717188], [-31.192780, 14.810938]]).addTo(this.map);
+    this.poly.enableEdit();
   }
 
   extendState(oldState) {
@@ -163,9 +171,14 @@ export class CountryComponent implements OnInit {
       this.poly.remove();
     }
     const area = this.areaService.getAreaByAreaId(areaId);
-    this.area.colour = area.colour;
-    const polygon = JSON.parse(area.polygon);
-    this.poly = L.polygon(polygon, {color: area.colour}).addTo(this.map);
+    console.log('area ::', area)
+    if (!area) {
+      this.createNewPolygon();
+    } else {
+      this.area.colour = area.colour;
+      const polygon = JSON.parse(area.polygon);
+      this.poly = L.polygon(polygon, {color: area.colour}).addTo(this.map);
+    }
     this.map.fitBounds(this.poly.getBounds());
   }
 

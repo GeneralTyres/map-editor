@@ -13,7 +13,7 @@ export class StateService {
   }
 
   loadStates() {
-    return this.data.load('states').subscribe(
+    return this.data.load('states', 0).subscribe(
       (response: StateModel[]) => {
         this.states = response;
       }

@@ -9,7 +9,7 @@ import {HomeResolverService} from './pages/home/homeResolver.service';
 import {CountryEditResolverService} from './pages/countryEdit/countryEditResolver.service';
 
 const appRoutes: Routes = [
-  { path: '', redirectTo: '/', pathMatch: 'full' },
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: MapComponent,
     resolve: {homeLoader: HomeResolverService}},
   { path: 'countries', component: CountryListComponent,

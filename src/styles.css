@@ -1,1 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
+.colouredNavbar {
+  background-color: #6f2f00 !important;
+}
+
+.navbar-light .navbar-brand {
+  text-shadow: 3px 3px 6px white;
+}
+
+.navbar-light .navbar-nav .show > .nav-link, .navbar-light .navbar-nav .active > .nav-link, .navbar-light .navbar-nav .nav-link.show, .navbar-light .navbar-nav .nav-link.active {
+  text-shadow: 3px 3px 6px white;
+}

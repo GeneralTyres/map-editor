@@ -57,6 +57,16 @@ export class MapComponent implements OnInit {
     // initialize the map on the "map" div with a given center and zoom
     this.map = L.map('map').setView([43.1, 1.2], 5).addLayer(osm);
 
+    const entityIcon = new L.DivIcon({
+      className: '',
+      html: '<img src="../../../../assets/images/emblem.svg" style="margin: auto; display: block">',
+      iconSize: [50, 50],
+      iconAnchor: [25, 50]
+    });
+
+    const marker = L.marker([39.959882, 4.277765],
+      {icon: entityIcon}).addTo(this.map);
+
     this.infobox = new L.Control();
 
     this.infobox.onAdd = function () {
@@ -74,6 +84,12 @@ export class MapComponent implements OnInit {
     this.infobox.addTo(this.map);
   }
 
+  eventHandler(event) {
+    if (event.keyCode === 13) {
+      this.showStatesByDate();
+    }
+  }
+
   getData() {
     this.countries = this.countryService.getCountries();
     this.states = this.stateService.getStates();
@@ -81,6 +97,7 @@ export class MapComponent implements OnInit {
   }
 
   showStatesByDate() {
+    console.log('ping')
     this.featureGroup.clearLayers();
     const stateAreas = this.stateService.getStatesByCountryAndDate(this.countries, this.date, this.areas);
     const polygons = this.mapService.buildMainMapPolygons(stateAreas, this.states, this.countries);
