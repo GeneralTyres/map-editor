@@ -8,6 +8,9 @@ import {StateService} from '../../../services/state.service';
 import {CountryModel} from '../../../models/country.model';
 import {MapService} from '../../../services/map.service';
 import {AreaService} from '../../../services/area.service';
+import {TerritoryService} from '../../../services/territory.service';
+import {BaseService} from '../../../services/base.service';
+import {LeafletService} from '../../../services/leaflet.service';
 
 let self;
 @Component({
@@ -21,7 +24,11 @@ export class MapComponent implements OnInit {
   areas: any;
   states: any;
   countries: CountryModel[];
-  date: string;
+  // Variables for map
+  displayedCountries: any[];
+  displayStates: any[];
+  displayedTerritories: any[];
+  date: number;
   featureGroup: any = L.featureGroup();
   infobox: any;
   activeCountry = {
@@ -29,13 +36,20 @@ export class MapComponent implements OnInit {
     description: '',
     flag: ''
   };
+  activeState = {
+    name: '',
+    description: ''
+  };
 
   constructor(private http: HttpClient,
               private data: DataService,
               private countryService: CountryService,
               private stateService: StateService,
               private mapService: MapService,
-              private areaService: AreaService) {
+              private areaService: AreaService,
+              private territoryService: TerritoryService,
+              private baseService: BaseService,
+              private leafletService: LeafletService) {
     self = this;
   }
 
@@ -82,11 +96,19 @@ export class MapComponent implements OnInit {
         : 'Hover over a state');
     };
     this.infobox.addTo(this.map);
+
+    const imageUrl = '../../../../assets/images/Map_Battle_of_Stalingrad-vi.svg',
+      imageBounds = new L.LatLngBounds([[50.158220, 39.611708], [46.493444, 46.862684]]);
+    L.imageOverlay(imageUrl, imageBounds).addTo(this.map);
+
+    const imageUrl2 = '../../../../assets/images/testCar.svg',
+      imageBounds2 = new L.LatLngBounds([[51.350012, 4.054811], [49.587958, 7.194893]]);
+    L.imageOverlay(imageUrl2, imageBounds2).addTo(this.map);
   }
 
   eventHandler(event) {
     if (event.keyCode === 13) {
-      this.showStatesByDate();
+      this.showYear();
     }
   }
 
@@ -96,20 +118,26 @@ export class MapComponent implements OnInit {
     this.areas = this.areaService.getAreas();
   }
 
-  showStatesByDate() {
-    console.log('ping')
+  showYear() {
     this.featureGroup.clearLayers();
-    const stateAreas = this.stateService.getStatesByCountryAndDate(this.countries, this.date, this.areas);
-    const polygons = this.mapService.buildMainMapPolygons(stateAreas, this.states, this.countries);
+    const countries = this.countryService.getCountriesByDate(this.date);
+    const countryIds = this.baseService.getPropertyValuesFromArray(countries, 'id');
+    this.displayedTerritories = this.territoryService.getTerritoriesByCountryIdAndDate(countryIds, this.date);
+    const areaIds = this.baseService.getPropertyValuesFromArray(this.displayedTerritories, 'areaId');
+    const areas = this.areaService.getAreasByIds(areaIds);
+    // const stateAreas = this.stateService.getStatesByCountryAndDate(this.countries, this.date, this.areas);
+    const polygons = this.leafletService.buildPolygonsFromAreas(areas);
     for (let i = 0; i < polygons.length; i++) {
       polygons[i].on('click', function (e) {
-        self.activeCountry = e.target.country;
+        // self.activeCountry = e.target.country;
+        // self.activeState = e.target.state;
         self.map.fitBounds(e.target.getBounds());
-      }).on('mouseover', function (e) {
-        self.infobox.update(e.target.country);
-      }).on('mouseout', function (e) {
-        self.infobox.update();
       });
+      //   .on('mouseover', function (e) {
+      //   self.infobox.update(e.target.country);
+      // }).on('mouseout', function (e) {
+      //   self.infobox.update();
+      // });
     }
     this.featureGroup = L.featureGroup(polygons);
     this.featureGroup.addTo(this.map);

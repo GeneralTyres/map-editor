@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
 import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
 
 import { AppComponent } from './app.component';
 import { MapComponent } from './pages/home/map/map.component';
@@ -22,6 +23,9 @@ import { CountryMapComponent } from './country-map/country-map.component';
 import {ResolverService} from './resolver.service';
 import {HomeResolverService} from './pages/home/homeResolver.service';
 import {CountryEditResolverService} from './pages/countryEdit/countryEditResolver.service';
+import { CountryDashboardComponent } from './pages/home/country-dashboard/country-dashboard.component';
+import {TerritoryService} from './services/territory.service';
+import {LeafletService} from './services/leaflet.service';
 
 
 @NgModule({
@@ -31,7 +35,8 @@ import {CountryEditResolverService} from './pages/countryEdit/countryEditResolve
     HeaderComponent,
     CountryListComponent,
     CountryComponent,
-    CountryMapComponent
+    CountryMapComponent,
+    CountryDashboardComponent
   ],
   imports: [
     BrowserModule,
@@ -40,7 +45,8 @@ import {CountryEditResolverService} from './pages/countryEdit/countryEditResolve
     ReactiveFormsModule,
     FormsModule,
     Ng4LoadingSpinnerModule.forRoot(),
-    LoadingBarHttpClientModule
+    LoadingBarHttpClientModule,
+    AngularFontAwesomeModule
   ],
   providers: [
     DataService,
@@ -49,6 +55,8 @@ import {CountryEditResolverService} from './pages/countryEdit/countryEditResolve
     MapService,
     AreaService,
     BaseService,
+    TerritoryService,
+    LeafletService,
     // Resolvers
     ResolverService,
     HomeResolverService,

@@ -6,6 +6,9 @@ export class StateModel {
     public date: string,
     public name: string,
     public description: string,
+    public population: number,
+    public economy: number,
+    public civilisation: number,
     public reference: string,
     public createdAt: number,
     public updatedAt: number

@@ -10,3 +10,13 @@
 .navbar-light .navbar-nav .show > .nav-link, .navbar-light .navbar-nav .active > .nav-link, .navbar-light .navbar-nav .nav-link.show, .navbar-light .navbar-nav .nav-link.active {
   text-shadow: 3px 3px 6px white;
 }
+
+.btn-icon-primary {
+  color: #004cff;
+  background-color: #fff;
+  border-color: #fff;
+  border-top-color: rgb(0, 123, 255);
+  border-right-color: rgb(0, 123, 255);
+  border-bottom-color: rgb(0, 123, 255);
+  border-left-color: rgb(0, 123, 255);
+}

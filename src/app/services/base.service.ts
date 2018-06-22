@@ -10,6 +10,26 @@ export class BaseService {
   }
 
   /**
+   * Returns all the objects that have the values of the specified property. It can be used for example, to find
+   * all the boreholes with ids that you already have.
+   * @param {array} array - The array which must be filtered
+   * @param {string} property -  The property that filtering is based on
+   * @param {array} values - The values that should be searched. (Ex. ids)
+   * @return {Array} filteredArray - The objects that have the specified values
+   */
+  getObjectsWherePropertyHasValues(array, property, values) {
+    const filteredArray = [];
+    values.forEach(function(value) {
+      array.forEach(function(entry) {
+        if (entry[property] === value) {
+          filteredArray.push(entry);
+        }
+      });
+    });
+    return filteredArray;
+  }
+
+  /**
    * A function that filters trough an array to and gets objects that have the specified property values.
    * @param {array} array - The array to be filtered
    * @param {object} properties - An object that contains the properties and desired values
@@ -22,7 +42,7 @@ export class BaseService {
     const matchingObjectsArray = [];
     for (let i = 0; i < array.length; i++) {
       let allKeyValuesMatch = true;
-      for (let key in properties) {
+      for (const key in properties) {
         if (array[i][key] !== properties[key]) {
           allKeyValuesMatch = false;
         }
@@ -34,8 +54,34 @@ export class BaseService {
     return matchingObjectsArray;
   }
 
-  sort(a, b) {
-    return b.date - a.date;
+  getPropertyValuesFromArray(array, property) {
+    // Underscore pluck functionality
+    // Extracts a list of property values from array
+    if (array === null || array === undefined || array.length === 0) {
+      return [];
+    }
+    const allPropertyValues = [];
+    for (let i = 0; i < array.length; i++) {
+      allPropertyValues.push(array[i][property]);
+    }
+    return allPropertyValues;
+  }
+
+  sortByDate(array: any, order) {
+    if (order === 'asc') {
+      return array.sort(
+        function(a, b) {
+          return a.date - b.date;
+        }
+      );
+    } else if (order === 'desc') {
+      return array.sort(
+        function(a, b) {
+          return b.date - a.date;
+        }
+      );
+    }
+    return array;
   }
 
   regularA = /[^a-zA-Z]/g;

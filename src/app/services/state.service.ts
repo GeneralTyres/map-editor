@@ -33,10 +33,12 @@ export class StateService {
   }
 
   compare(a, b) {
-    if (a.toDate < b.toDate)
+    if (a.toDate < b.toDate) {
       return -1;
-    if (a.toDate > b.toDate)
+    }
+    if (a.toDate > b.toDate) {
       return 1;
+    }
     return 0;
   }
 
@@ -50,36 +52,63 @@ export class StateService {
     return countryStates.sort(this.compare);
   }
 
-  getStatesByCountryAndDate(countries, date, areas) {
-    const currentStates = [];
-    const filteredAreas = [];
+  // getStatesByCountryAndDate(countries, date, areas) {
+  //   const currentStates = [];
+  //   const filteredAreas = [];
+  //   // Kry die regte state vir die lande
+  //   for (let j = 0; j < countries.length; j++) {
+  //     // Kry lande vir die tyd
+  //     if (Number(countries[j].fromDate) < date && Number(countries[j].toDate) >= date) {
+  //       // Kry lande se states
+  //       let countryStates = this.baseService.getObjectsWhereKeysHaveValues(this.states, {countryId: countries[j].id});
+  //       if (countryStates.length > 0) {
+  //         // Sort country states
+  //         countryStates = this.baseService.sortByDate(countryStates, 'asc');
+  //         let selectedState = countryStates[0];
+  //         for (let c = 0; c < countryStates.length; c++) {
+  //           if (Number(countryStates[c].date) <= Number(date)) {
+  //             selectedState = countryStates[c];
+  //           }
+  //         }
+  //         currentStates.push(selectedState);
+  //       }
+  //       // Kry die areas vir die state
+  //       for (let o = 0; o < currentStates.length; o++) {
+  //         for (let r = 0; r < areas.length; r++) {
+  //           if (areas[r].id === currentStates[o].areaId) {
+  //             filteredAreas.push(areas[r]);
+  //           }
+  //         }
+  //       }
+  //     }
+  //   }
+  //   return filteredAreas;
+  // }
+
+  /**
+   * Get country object with state object attached.
+   * @param countries
+   * @param date
+   * @return {any}
+   */
+  getStatesByCountryAndDate(countries, date) {
     // Kry die regte state vir die lande
     for (let j = 0; j < countries.length; j++) {
-      if (Number(countries[j].fromDate) < date && Number(countries[j].toDate) >= date) {
-        const countryStates = this.baseService.getObjectsWhereKeysHaveValues(this.states, {countryId: countries[j].id});
-        if (countryStates.length > 0) {
-          countryStates.sort(this.baseService.sort);
-          let selectedState = countryStates[0];
-          for (let c = 0; c < countryStates.length; c++) {
-            if (Number(countryStates[c].date) < Number(date)) {
-              selectedState = countryStates[c];
-              break;
-            }
-          }
-          currentStates.push(selectedState);
-        }
-
-        // Kry die areas vir die state
-        for (let o = 0; o < currentStates.length; o++) {
-          for (let r = 0; r < areas.length; r++) {
-            if (areas[r].id === currentStates[o].areaId) {
-              filteredAreas.push(areas[r]);
-            }
+      // Kry lande se states
+      let countryStates = this.baseService.getObjectsWhereKeysHaveValues(this.states, {countryId: countries[j].id});
+      if (countryStates.length > 0) {
+        // Sort country states
+        countryStates = this.baseService.sortByDate(countryStates, 'asc');
+        let selectedState = countryStates[0];
+        for (let c = 0; c < countryStates.length; c++) {
+          if (Number(countryStates[c].date) <= Number(date)) {
+            selectedState = countryStates[c];
           }
         }
+        countries[j].state = selectedState;
       }
     }
-    return filteredAreas;
+    return countries;
   }
 
   getNewestStateByCountryId(countryId) {

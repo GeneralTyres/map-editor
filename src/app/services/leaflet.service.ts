@@ -7,7 +7,7 @@ import {CountryService} from './country.service';
 import {TerritoryService} from './territory.service';
 
 @Injectable()
-export class MapService {
+export class LeafletService {
   style: any;
 
   constructor( private areaService: AreaService,
@@ -50,38 +50,29 @@ export class MapService {
     });
   }
 
-  buildMainMapPolygons(areas, states, countries) {
+  buildPolygonsFromAreas(areas) {
     const polygons = [];
     for (let i = 0; i < areas.length; i++) {
-      for (let s = 0; s < states.length; s++) {
-        if (areas[i].id === states[s].areaId) {
-          for (let c = 0; c < countries.length; c++) {
-            if (countries[c].id === states[s].countryId) {
-              let lineTpye = '';
-              if (areas[i].polygonType === 0) {
-              } else if (areas[i].polygonType === 1) {
-                lineTpye = '15, 10, 5';
-              } else if (areas[i].polygonType === 2) {
-                lineTpye = '5, 5, 1, 5';
-              }
-              const polygon: any = L.polygon(JSON.parse(areas[i].polygon),
-                {fillColor: areas[i].colour,
-                  weight: 2,
-                  opacity: 0.6,
-                  color: 'white',
-                  dashArray: '3',
-                  fillOpacity: 0.2
-                }).on({
-                mouseover: this.highlightFeature,
-                mouseout: this.resetFeature
-              });
-              polygon.country = countries[c];
-              polygon.state = states[s];
-              polygons.push(polygon);
-            }
-          }
+      let lineTpye = '';
+      if (areas[i].polygonType === 0) {
+        } else if (areas[i].polygonType === 1) {
+        lineTpye = '15, 10, 5';
+        } else if (areas[i].polygonType === 2) {
+        lineTpye = '5, 5, 1, 5';
         }
-      }
+        const polygon: any = L.polygon(JSON.parse(areas[i].polygon),
+          {fillColor: areas[i].colour,
+            weight: 2,
+            opacity: 0.6,
+            color: 'white',
+            dashArray: '3',
+            fillOpacity: 0.2
+          }).on({
+          mouseover: this.highlightFeature,
+          mouseout: this.resetFeature
+        });
+      polygon.area = areas[i];
+      polygons.push(polygon);
     }
     return polygons;
   }

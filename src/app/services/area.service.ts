@@ -13,7 +13,6 @@ export class AreaService {
   loadAreas () {
     return this.data.load('areas', 0).subscribe(
       value => {
-        console.log('value ::', value)
         this.areas = value;
       }
     );
@@ -24,11 +23,12 @@ export class AreaService {
   }
 
   getAreaByAreaId(areaId: number) {
-    console.log('areaId ::', areaId)
-    console.log('this.areas ::', this.areas)
     const areas = this.base.getObjectsWhereKeysHaveValues(this.areas, {id: areaId});
-    console.log('areas ::', areas)
     return areas[0];
+  }
+
+  getAreasByIds(areaIds: number[]) {
+    return this.base.getObjectsWherePropertyHasValues(this.areas, 'id', areaIds);
   }
 
 }

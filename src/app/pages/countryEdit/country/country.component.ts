@@ -22,10 +22,11 @@ export class CountryComponent implements OnInit {
   @ViewChild('f') slForm: NgForm;
 
   country: CountryModel;
-  createMode = true;
+  editCountry = true;
+  editEras = true;
   // State list
   states: StateModel[];
-  activeState: StateModel = new StateModel(null, null, null, '', '', '', '', null, null);
+  activeState: StateModel = new StateModel(null, null, null, '', '', '', 0, 0, 0, '', null, null);
   map: any;
   poly: any;
   area: any = {
@@ -34,7 +35,6 @@ export class CountryComponent implements OnInit {
     colour: ''
   };
   showStateEdit = false;
-
 
   constructor(private countryService: CountryService,
               private router: Router,
@@ -47,14 +47,14 @@ export class CountryComponent implements OnInit {
 
   ngOnInit() {
     this.country = this.countryService.getActiveCountry();
+    console.log('this.country ::', this.country)
     if (!this.country) {
-      this.createMode = true;
+      console.log('this.country ::', this.country)
+      this.editCountry = true;
       this.country = new CountryModel(null, '', '', '', '', '');
     } else {
-      this.createMode = false;
+      this.editCountry = false;
     }
-    // Load map
-    this.loadMap();
     // Get country states
     this.states = this.stateSer.getStatesByCountry(this.country).sort(function(a, b) {
       return b.date - a.date;
@@ -62,9 +62,10 @@ export class CountryComponent implements OnInit {
     if (this.states.length !== 0) {
       this.activateState(this.states[0]);
     }
+    this.loadTerritoryMap();
   }
 
-  loadMap() {
+  loadTerritoryMap() {
     const osmUrl = 'https://mt0.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',
       osmAttrib = '&copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors',
       osm = L.tileLayer(osmUrl, {
@@ -78,7 +79,7 @@ export class CountryComponent implements OnInit {
   }
 
   onSubmit(form: NgForm) {
-    if (this.createMode) {
+    if (this.editCountry) {
       this.spinnerService.show();
       this.countryService.saveCountry(this.country).subscribe(
         (response: CountryModel) => {
@@ -89,8 +90,18 @@ export class CountryComponent implements OnInit {
     }
   }
 
-  toggleCreateMode() {
-    this.createMode = !this.createMode;
+  /**
+   * Maak die land besonderede bewerkbaar
+   */
+  toggleEditCountry() {
+    this.editCountry = !this.editCountry;
+  }
+
+  /**
+   * Maak die eras besonderede bewerkbaar
+   */
+  toggleEditEra() {
+    this.editEras = !this.editEras;
   }
 
   processImage(input) {
@@ -107,28 +118,32 @@ export class CountryComponent implements OnInit {
   }
 
   saveState() {
-    this.spinnerService.show();
-    this.area.polygon =  this.mapService.convertLeafletPolygonToString(this.poly);
-    this.mapService.saveArea(this.area).subscribe(
-      (response: any) => {
-        this.activeState.areaId = response.id;
-        this.activeState.countryId = this.country.id;
-        const newState = false;
-        this.stateSer.saveState(this.activeState).subscribe(
-          (stateResponse: StateModel) => {
-            this.spinnerService.hide();
-            this.poly.disableEdit();
-            self.showStateEdit = false;
-          }
-        );
-      }
-    );
+    if (this.activeState.countryId !== null) {
+      this.spinnerService.show();
+      this.area.polygon =  this.mapService.convertLeafletPolygonToString(this.poly);
+      this.mapService.saveArea(this.area).subscribe(
+        (response: any) => {
+          this.activeState.areaId = response.id;
+          this.activeState.countryId = this.country.id;
+          const newState = false;
+          this.stateSer.saveState(this.activeState).subscribe(
+            (stateResponse: StateModel) => {
+              this.spinnerService.hide();
+              this.poly.disableEdit();
+              self.showStateEdit = false;
+            }
+          );
+        }
+      );
+    }
   }
 
   createNewState() {
+    // Load map
+    this.loadTerritoryMap();
     this.showStateEdit = true;
     this.activeState = new StateModel(null, (this.country ? this.country.id : null), null, '', '',  '',
-      '', 0, 0);
+      0, 0, 0, '', 0, 0);
     if (this.poly) {
       this.poly.remove();
     }
@@ -148,15 +163,15 @@ export class CountryComponent implements OnInit {
   extendState(oldState) {
     this.showStateEdit = true;
     this.displayAreaById(oldState.areaId);
-    const state = new StateModel(null, oldState.countryId, null, '', '', '', '',
-      0, 0);
+    const state = new StateModel(null, oldState.countryId, null, '', '', '', 0, 0,
+      0, '', 0, 0);
     this.activateState(state);
     this.poly.enableEdit();
   }
 
   activateState(state) {
     if (state.areaId) {
-      this.displayAreaById(state.areaId);
+      // this.displayAreaById(state.areaId);
     }
     this.activeState = state;
   }
@@ -171,7 +186,6 @@ export class CountryComponent implements OnInit {
       this.poly.remove();
     }
     const area = this.areaService.getAreaByAreaId(areaId);
-    console.log('area ::', area)
     if (!area) {
       this.createNewPolygon();
     } else {

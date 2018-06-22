@@ -1,13 +1,16 @@
 <div class="row">
-  <div class="col-md-1"></div>
-  <div class="col-md-10">
+  <!--<div class="col-md-1"></div>-->
+  <div class="col-md-8">
     <div class="map-container" id="map"></div>
   </div>
-  <div class="col-md-1"></div>
+  <div class="col-md-4">
+    <app-country-dashboard [activeCountry]="activeCountry" [activeState]="activeState"></app-country-dashboard>
+  </div>
+  <!--<div class="col-md-1"></div>-->
 </div>
 
 <div class="row">
-  <div class="col-md-4"></div>
+  <div class="col-md-2"></div>
   <div class="col-md-4">
     <div class="input-group mb-3">
       <input
@@ -20,9 +23,9 @@
         (keypress)="eventHandler($event)">
       <div class="input-group-append">
         <button
-          class="btn btn-outline-secondary"
+          class="btn btn-primary"
           type="button"
-          (click)="showStatesByDate()">Go To Date</button>
+          (click)="showYear()">Go To Date</button>
       </div>
     </div>
   </div>
@@ -30,17 +33,3 @@
 </div>
 
 
-<div class="row">
-  <div class="col-md-1"></div>
-  <div class="col-md-10">
-    <div class="card">
-      <img class="card-img-top era-panorama" src="../../../../assets/images/Medieval-Brussels-750.jpg" alt="Card image cap">
-      <div class="card-body">
-        <h5 class="card-title">{{ activeCountry.name }}</h5>
-        <p class="card-text">{{ activeCountry.description }}</p>
-        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-      </div>
-    </div>
-  </div>
-  <div class="col-md-1"></div>
-</div>
