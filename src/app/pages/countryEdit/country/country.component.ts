@@ -37,6 +37,7 @@ export class CountryComponent implements OnInit {
   };
   showStateEdit = false;
   territories: any;
+  activeTerritory = {};
 
   constructor(private countryService: CountryService,
               private router: Router,
@@ -77,7 +78,71 @@ export class CountryComponent implements OnInit {
 
     // initialize the map on the "map" div with a given center and zoom
     this.map = L.map('map', {editable: true}).setView([-0.163360, 13.053125], 3).addLayer(osm);
+    L.NewPolygonControl = L.Control.extend({
+      options: {
+        position: 'topleft'
+      },
+      onAdd: function (map) {
+        const container = L.DomUtil.create('div', 'leaflet-control leaflet-bar'),
+          link = L.DomUtil.create('a', '', container);
+        link.href = '#';
+        link.title = 'Create a new polygon';
+        link.innerHTML = '▱';
+        L.DomEvent.on(link, 'click', L.DomEvent.stop)
+          .on(link, 'click', function () {
+            map.editTools.startPolygon();
+          });
+        container.style.display = 'block';
+        map.editTools.on('editable:enabled', function (e) {
+          container.style.display = 'none';
+        });
+        map.editTools.on('editable:disable', function (e) {
+          container.style.display = 'block';
+        });
+        map.editTools.on('editable:drawing:move', function (e) {
 
+        });
+        return container;
+      }
+    });
+    L.AddPolygonShapeControl = L.Control.extend({
+      options: {
+        position: 'topleft'
+      },
+      onAdd: function (map) {
+        const container = L.DomUtil.create('div', 'leaflet-control leaflet-bar'),
+          link = L.DomUtil.create('a', '', container);
+        link.href = '#';
+        link.title = 'Create a new polygon';
+        link.innerHTML = '▱▱';
+        L.DomEvent.on(link, 'click', L.DomEvent.stop)
+          .on(link, 'click', function () {
+            if (!map.editTools.currentPolygon) return;
+            map.editTools.currentPolygon.editor.newShape();
+          });
+        container.style.display = 'none';
+        map.editTools.on('editable:enabled', function (e) {
+          container.style.display = 'block';
+        });
+        map.editTools.on('editable:disable', function (e) {
+          container.style.display = 'none';
+        });
+        return container;
+      }
+    });
+    this.map.addControl(new L.NewPolygonControl());
+    this.map.addControl(new L.AddPolygonShapeControl());
+    this.map.editTools.on('editable:enable', function (e) {
+      if (this.currentPolygon) this.currentPolygon.disableEdit();
+      this.currentPolygon = e.layer;
+      this.fire('editable:enabled');
+    });
+    this.map.editTools.on('editable:drawing:move', function (e) {
+      const poly = e.target;
+      this.currentPolygon = e.layer;
+      self.poly = this.currentPolygon;
+      console.log('this.currentPolygon', this.currentPolygon.getLatLngs());
+    });
   }
 
   onSubmit(form: NgForm) {
@@ -140,6 +205,25 @@ export class CountryComponent implements OnInit {
     }
   }
 
+  saveTerritory() {
+    if (this.activeTerritory.countryId !== null) {
+      this.spinnerService.show();
+      this.area.polygon =  this.mapService.convertLeafletPolygonToString(this.poly);
+      this.mapService.saveArea(this.area).subscribe(
+        (response: any) => {
+          this.activeTerritory.areaId = response.id;
+          this.activeTerritory.countryId = this.country.id;
+          this.territoryService.saveTerritory(this.activeTerritory).subscribe(
+            (stateResponse: any) => {
+              this.spinnerService.hide();
+              this.poly.disableEdit();
+            }
+          );
+        }
+      );
+    }
+  }
+
   createNewState() {
     // Load map
     this.loadTerritoryMap();
@@ -159,6 +243,7 @@ export class CountryComponent implements OnInit {
       this.poly.remove();
     }
     this.poly = L.polygon([[-0.514916, 13.756250], [-12.713968, 38.717188], [-31.192780, 14.810938]]).addTo(this.map);
+    this.map.fitBounds(this.poly.getBounds());
     this.poly.enableEdit();
   }
 

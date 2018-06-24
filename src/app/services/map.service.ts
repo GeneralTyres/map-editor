@@ -21,9 +21,12 @@ export class MapService {
   convertLeafletPolygonToString(polygon: any) {
     const proPolygon = [];
     let polygonString: string;
-    polygon = polygon.getLatLngs()[0];
+    polygon = polygon.getLatLngs();
     for (let i = 0; i < polygon.length; i++) {
-      proPolygon.push([polygon[i].lat, polygon[i].lng]);
+      proPolygon.push([[]]);
+      for (let s = 0; s < polygon[i][0].length; s++) {
+        proPolygon[i][0].push([polygon[i][0][s].lat, polygon[i][0][s].lng]);
+      }
     }
     polygonString = JSON.stringify(proPolygon);
     return polygonString;

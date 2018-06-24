@@ -18,6 +18,14 @@ export class TerritoryService {
     );
   }
 
+  saveTerritory(territory: any) {
+    if (territory.id) {
+      return this.data.update('territories', territory);
+    } else {
+      return this.data.create('territories', territory);
+    }
+  }
+
   getTerritories() {
     return this.territories.slice();
   }
