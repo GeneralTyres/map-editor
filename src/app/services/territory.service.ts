@@ -40,11 +40,13 @@ export class TerritoryService {
   }
 
   getTerritoryByAreaId(areaId: number) {
-    console.log('areaId ::', areaId)
-    console.log('this.areas ::', this.territories)
-    const areas = this.base.getObjectsWhereKeysHaveValues(this.territories, {id: areaId});
-    console.log('areas ::', areas)
+    const areas = this.base.getObjectsWhereKeysHaveValues(this.territories, {areaId: areaId});
     return areas[0];
+  }
+
+  getTerritoriesByCountryId(countryId) {
+    const areas = this.base.getObjectsWhereKeysHaveValues(this.territories, {countryId: countryId});
+    return areas;
   }
 
 }

@@ -54,6 +54,11 @@ export class CountryService {
     return this.countryList.slice();
   }
 
+  getCountryById(countryId) {
+    const country = this.baseService.getObjectsWhereKeysHaveValues(this.countryList, {id: countryId});
+    return country[0];
+  }
+
   getCountriesByDate(date: number) {
     const countries: CountryModel[] = this.getCountries();
     const matchingCountries: CountryModel[] = [];
@@ -75,8 +80,6 @@ export class CountryService {
     const currentCountriesIds: number[] = this.baseService.getPropertyValuesFromArray(currentCountries, 'id');
     // Get country states
     currentCountries = this.stateService.getStatesByCountryAndDate(currentCountries, date);
-
-    console.log('currentCountries ::', currentCountries);
   }
 
 }

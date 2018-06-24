@@ -52,38 +52,6 @@ export class StateService {
     return countryStates.sort(this.compare);
   }
 
-  // getStatesByCountryAndDate(countries, date, areas) {
-  //   const currentStates = [];
-  //   const filteredAreas = [];
-  //   // Kry die regte state vir die lande
-  //   for (let j = 0; j < countries.length; j++) {
-  //     // Kry lande vir die tyd
-  //     if (Number(countries[j].fromDate) < date && Number(countries[j].toDate) >= date) {
-  //       // Kry lande se states
-  //       let countryStates = this.baseService.getObjectsWhereKeysHaveValues(this.states, {countryId: countries[j].id});
-  //       if (countryStates.length > 0) {
-  //         // Sort country states
-  //         countryStates = this.baseService.sortByDate(countryStates, 'asc');
-  //         let selectedState = countryStates[0];
-  //         for (let c = 0; c < countryStates.length; c++) {
-  //           if (Number(countryStates[c].date) <= Number(date)) {
-  //             selectedState = countryStates[c];
-  //           }
-  //         }
-  //         currentStates.push(selectedState);
-  //       }
-  //       // Kry die areas vir die state
-  //       for (let o = 0; o < currentStates.length; o++) {
-  //         for (let r = 0; r < areas.length; r++) {
-  //           if (areas[r].id === currentStates[o].areaId) {
-  //             filteredAreas.push(areas[r]);
-  //           }
-  //         }
-  //       }
-  //     }
-  //   }
-  //   return filteredAreas;
-  // }
 
   /**
    * Get country object with state object attached.

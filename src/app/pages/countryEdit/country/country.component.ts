@@ -10,6 +10,7 @@ import {StateService} from '../../../services/state.service';
 import {AreaService} from '../../../services/area.service';
 import {MapService} from '../../../services/map.service';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
+import {TerritoryService} from '../../../services/territory.service';
 
 let self;
 
@@ -35,21 +36,21 @@ export class CountryComponent implements OnInit {
     colour: ''
   };
   showStateEdit = false;
+  territories: any;
 
   constructor(private countryService: CountryService,
               private router: Router,
               private stateSer: StateService,
               private mapService: MapService,
               private areaService: AreaService,
+              private territoryService: TerritoryService,
               private spinnerService: Ng4LoadingSpinnerService) {
     self = this;
   }
 
   ngOnInit() {
     this.country = this.countryService.getActiveCountry();
-    console.log('this.country ::', this.country)
     if (!this.country) {
-      console.log('this.country ::', this.country)
       this.editCountry = true;
       this.country = new CountryModel(null, '', '', '', '', '');
     } else {
@@ -62,6 +63,7 @@ export class CountryComponent implements OnInit {
     if (this.states.length !== 0) {
       this.activateState(this.states[0]);
     }
+    this.territories = this.territoryService.getTerritoriesByCountryId(this.country.id);
     this.loadTerritoryMap();
   }
 
@@ -194,6 +196,29 @@ export class CountryComponent implements OnInit {
       this.poly = L.polygon(polygon, {color: area.colour}).addTo(this.map);
     }
     this.map.fitBounds(this.poly.getBounds());
+  }
+
+  activateTerritory(territory) {
+    if (this.poly) {
+      this.poly.remove();
+    }
+    const area = this.areaService.getAreaByAreaId(territory.areaId);
+    if (!area) {
+      this.createNewPolygon();
+    } else {
+      this.area.colour = area.colour;
+      const polygon = JSON.parse(area.polygon);
+      this.poly = L.polygon(polygon, {color: area.colour}).addTo(this.map);
+    }
+    this.map.fitBounds(this.poly.getBounds());
+  }
+
+  /**
+   * Skep 'n nuwe gebied
+   */
+  createNewTerritory() {
+    // Maak nuwe polygon
+    this.createNewPolygon();
   }
 
 }

@@ -5,6 +5,7 @@ import {BaseService} from './base.service';
 import {AreaService} from './area.service';
 import {CountryService} from './country.service';
 import {TerritoryService} from './territory.service';
+import {StateService} from './state.service';
 
 @Injectable()
 export class MapService {
@@ -14,6 +15,7 @@ export class MapService {
                private baseService: BaseService,
                private countryService: CountryService,
                private data: DataService,
+               private stateService: StateService,
                private territoryService: TerritoryService) { }
 
   convertLeafletPolygonToString(polygon: any) {
@@ -50,40 +52,13 @@ export class MapService {
     });
   }
 
-  buildMainMapPolygons(areas, states, countries) {
-    const polygons = [];
-    for (let i = 0; i < areas.length; i++) {
-      for (let s = 0; s < states.length; s++) {
-        if (areas[i].id === states[s].areaId) {
-          for (let c = 0; c < countries.length; c++) {
-            if (countries[c].id === states[s].countryId) {
-              let lineTpye = '';
-              if (areas[i].polygonType === 0) {
-              } else if (areas[i].polygonType === 1) {
-                lineTpye = '15, 10, 5';
-              } else if (areas[i].polygonType === 2) {
-                lineTpye = '5, 5, 1, 5';
-              }
-              const polygon: any = L.polygon(JSON.parse(areas[i].polygon),
-                {fillColor: areas[i].colour,
-                  weight: 2,
-                  opacity: 0.6,
-                  color: 'white',
-                  dashArray: '3',
-                  fillOpacity: 0.2
-                }).on({
-                mouseover: this.highlightFeature,
-                mouseout: this.resetFeature
-              });
-              polygon.country = countries[c];
-              polygon.state = states[s];
-              polygons.push(polygon);
-            }
-          }
-        }
-      }
-    }
-    return polygons;
+  getCountryAndState(areaId, date) {
+    const activeTerritory = this.territoryService.getTerritoryByAreaId(areaId);
+    let activeCountry = this.countryService.getCountryById(activeTerritory.countryId);
+    activeCountry = this.stateService.getStatesByCountryAndDate([activeCountry], date);
+    activeCountry = activeCountry[0];
+    activeCountry.territory = activeTerritory;
+    return activeCountry;
   }
 
   getAreasForMap(date: number) {

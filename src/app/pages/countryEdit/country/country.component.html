@@ -262,19 +262,38 @@
             <div class="col-md-12">
               <table class="table">
                 <thead>
-                <tr>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                </tr>
+                  <tr>
+                    <th></th>
+                    <th></th>
+                    <th><button
+                      class="btn btn-icon-primary"
+                      (click)="createNewTerritory()">
+                      <span><fa name="plus"></fa></span>
+                    </button></th>
+                  </tr>
+                  <tr>
+                    <th>Territory Name</th>
+                    <th>Date</th>
+                    <th>Actions</th>
+                  </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                  <tr *ngFor="let territory of territories" (click)="activateTerritory(territory)">
+                    <td>{{ territory.name }}</td>
+                    <td>{{ territory.date }}</td>
+                    <td>
+                      <div class="btn-group">
+                        <button
+                          class="btn btn-icon-primary card-link"
+                          (click)="extendState(activeState)">
+                          <span><fa name="copy"></fa></span></button>
+                        <button
+                          *ngIf="!showStateEdit"
+                          class="btn btn-icon-primary card-link"
+                          (click)="editState()">
+                          <span><fa name="times"></fa></span></button>
+                      </div>
+                    </td>
                   </tr>
                 </tbody>
               </table>

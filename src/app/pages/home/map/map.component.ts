@@ -31,15 +31,7 @@ export class MapComponent implements OnInit {
   date: number;
   featureGroup: any = L.featureGroup();
   infobox: any;
-  activeCountry = {
-    name: '',
-    description: '',
-    flag: ''
-  };
-  activeState = {
-    name: '',
-    description: ''
-  };
+  activeCountry: any;
 
   constructor(private http: HttpClient,
               private data: DataService,
@@ -118,6 +110,11 @@ export class MapComponent implements OnInit {
     this.areas = this.areaService.getAreas();
   }
 
+  getCountryAndState(areaId) {
+    // self.activeCountry = e.target.country;
+    // self.activeState = e.target.state;
+  }
+
   showYear() {
     this.featureGroup.clearLayers();
     const countries = this.countryService.getCountriesByDate(this.date);
@@ -125,12 +122,10 @@ export class MapComponent implements OnInit {
     this.displayedTerritories = this.territoryService.getTerritoriesByCountryIdAndDate(countryIds, this.date);
     const areaIds = this.baseService.getPropertyValuesFromArray(this.displayedTerritories, 'areaId');
     const areas = this.areaService.getAreasByIds(areaIds);
-    // const stateAreas = this.stateService.getStatesByCountryAndDate(this.countries, this.date, this.areas);
     const polygons = this.leafletService.buildPolygonsFromAreas(areas);
     for (let i = 0; i < polygons.length; i++) {
       polygons[i].on('click', function (e) {
-        // self.activeCountry = e.target.country;
-        // self.activeState = e.target.state;
+        self.activeCountry = self.mapService.getCountryAndState(e.target.area.id, self.date);
         self.map.fitBounds(e.target.getBounds());
       });
       //   .on('mouseover', function (e) {
