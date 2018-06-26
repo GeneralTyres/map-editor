@@ -37,7 +37,10 @@ export class CountryComponent implements OnInit {
   };
   showStateEdit = false;
   territories: any;
-  activeTerritory = {};
+  activeTerritory: any = {
+    name: '',
+    date: null
+  };
 
   constructor(private countryService: CountryService,
               private router: Router,
@@ -85,7 +88,6 @@ export class CountryComponent implements OnInit {
       onAdd: function (map) {
         const container = L.DomUtil.create('div', 'leaflet-control leaflet-bar'),
           link = L.DomUtil.create('a', '', container);
-        link.href = '#';
         link.title = 'Create a new polygon';
         link.innerHTML = '▱';
         L.DomEvent.on(link, 'click', L.DomEvent.stop)
@@ -112,7 +114,6 @@ export class CountryComponent implements OnInit {
       onAdd: function (map) {
         const container = L.DomUtil.create('div', 'leaflet-control leaflet-bar'),
           link = L.DomUtil.create('a', '', container);
-        link.href = '#';
         link.title = 'Create a new polygon';
         link.innerHTML = '▱▱';
         L.DomEvent.on(link, 'click', L.DomEvent.stop)
@@ -288,6 +289,7 @@ export class CountryComponent implements OnInit {
       this.poly.remove();
     }
     const area = this.areaService.getAreaByAreaId(territory.areaId);
+    this.activeTerritory = territory;
     if (!area) {
       this.createNewPolygon();
     } else {

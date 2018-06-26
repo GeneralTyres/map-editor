@@ -148,28 +148,6 @@
                 </li>
                 <li class="list-group-item">
                   <div class="form-group">
-                    <label for="colour">Area Colour</label>
-                    <input
-                      type="text"
-                      id="colour"
-                      name="colour"
-                      class="form-control"
-                      [(ngModel)]="area.colour">
-                  </div>
-                </li>
-                <li class="list-group-item">
-                  <div class="form-group">
-                    <label for="type">State Type</label>
-                    <input
-                      type="number"
-                      id="type"
-                      name="type"
-                      class="form-control"
-                      [(ngModel)]="area.polygonType">
-                  </div>
-                </li>
-                <li class="list-group-item">
-                  <div class="form-group">
                     <label for="type">Population</label>
                     <input
                       type="number"
@@ -203,6 +181,7 @@
                   </div>
                 </li>
               </ul>
+              <button class="btn btn-success">Save</button>
             </div>
             <div class="col-md-4" *ngIf="editEras">
               <table class="table table-hover">
@@ -259,7 +238,46 @@
             <div class="col-md-12">
               <div class="map-container" id="map"></div>
             </div>
-            <div class="col-md-12">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="territoryName">Name</label>
+                <input
+                  type="text"
+                  id="territoryName"
+                  name="territoryName"
+                  class="form-control"
+                  [(ngModel)]="activeTerritory.name">
+              </div>
+              <div class="form-group">
+                <label for="territoryDate">Date of creation</label>
+                <input
+                  type="text"
+                  id="territoryDate"
+                  name="territoryDate"
+                  class="form-control"
+                  [(ngModel)]="activeTerritory.date">
+              </div>
+              <div class="form-group">
+                <label for="colour">Area Colour</label>
+                <input
+                  type="text"
+                  id="colour"
+                  name="colour"
+                  class="form-control"
+                  [(ngModel)]="area.colour">
+              </div>
+              <div class="form-group">
+                <label for="type">State Type</label>
+                <input
+                  type="number"
+                  id="type"
+                  name="type"
+                  class="form-control"
+                  [(ngModel)]="area.polygonType">
+              </div>
+              <button class="btn btn-success">Save</button>
+            </div>
+            <div class="col-md-6">
               <table class="table">
                 <thead>
                   <tr>

@@ -1,10 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
 .colouredNavbar {
-  background-color: #6f2f00 !important;
+  background-color: #232323 !important;
+  color: #004cff;
 }
 
 .navbar-light .navbar-brand {
-  text-shadow: 3px 3px 6px white;
+  text-shadow: 3px 3px 6px #ececec;
 }
 
 .navbar-light .navbar-nav .show > .nav-link, .navbar-light .navbar-nav .active > .nav-link, .navbar-light .navbar-nav .nav-link.show, .navbar-light .navbar-nav .nav-link.active {
@@ -19,4 +20,12 @@
   border-right-color: rgb(0, 123, 255);
   border-bottom-color: rgb(0, 123, 255);
   border-left-color: rgb(0, 123, 255);
+}
+
+.card {
+  background-color: #393939 !important;
+}
+
+.list-group-item-action {
+  background-color: #393939 !important;
 }
