@@ -1,0 +1,19 @@
+<div class="row">
+  <div class="col-md-1"></div>
+  <div class="col-md-10">
+    <div class="card" *ngIf="activeCountry">
+      <img class="card-img-top era-panorama" src="../../../../assets/images/Medieval-Brussels-750.jpg" alt="Card image cap">
+      <div class="card-body">
+        <div class="text-center">
+          <img src="{{ activeCountry.flag }}" alt="" class="dashboard-flag img-thumbnail">
+        </div>
+        <h5 class="card-title">{{ activeCountry.name }}</h5>
+        <p class="card-text">{{ activeCountry.description }}</p>
+        <h5>Current State</h5>
+        <p class="card-text">{{ activeCountry.state.name }}</p>
+        <p class="card-text">{{ activeCountry.state.description }}</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-1"></div>
+</div>
