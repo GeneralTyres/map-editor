@@ -81,7 +81,7 @@ export class CountryComponent implements OnInit {
 
     // initialize the map on the "map" div with a given center and zoom
     this.map = L.map('map', {editable: true}).setView([-0.163360, 13.053125], 3).addLayer(osm);
-    L.NewPolygonControl = L.Control.extend({
+    const newPolygonControl = L.Control.extend({
       options: {
         position: 'topleft'
       },
@@ -107,7 +107,7 @@ export class CountryComponent implements OnInit {
         return container;
       }
     });
-    L.AddPolygonShapeControl = L.Control.extend({
+    const addPolygonShapeControl = L.Control.extend({
       options: {
         position: 'topleft'
       },
@@ -131,8 +131,8 @@ export class CountryComponent implements OnInit {
         return container;
       }
     });
-    this.map.addControl(new L.NewPolygonControl());
-    this.map.addControl(new L.AddPolygonShapeControl());
+    this.map.addControl(new newPolygonControl());
+    this.map.addControl(new addPolygonShapeControl());
     this.map.editTools.on('editable:enable', function (e) {
       if (this.currentPolygon) this.currentPolygon.disableEdit();
       this.currentPolygon = e.layer;
