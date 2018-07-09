@@ -11,6 +11,8 @@ import {AreaService} from '../../../services/area.service';
 import {MapService} from '../../../services/map.service';
 import {TerritoryService} from '../../../services/territory.service';
 import {BaseService} from '../../../services/base.service';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {TerritoryModalComponent} from '../territory-modal/territory-modal.component';
 
 let self;
 
@@ -48,7 +50,8 @@ export class CountryComponent implements OnInit {
               private mapService: MapService,
               private areaService: AreaService,
               private territoryService: TerritoryService,
-              private baseService: BaseService) {
+              private baseService: BaseService,
+              private modalService: NgbModal) {
     self = this;
     this.creatingCountry = false;
   }
@@ -86,70 +89,7 @@ export class CountryComponent implements OnInit {
       });
 
     // initialize the map on the "map" div with a given center and zoom
-    this.map = L.map('map', {editable: true}).setView([-0.163360, 13.053125], 3).addLayer(osm);
-    const newPolygonControl = L.Control.extend({
-      options: {
-        position: 'topleft'
-      },
-      onAdd: function (map) {
-        const container = L.DomUtil.create('div', 'leaflet-control leaflet-bar'),
-          link = L.DomUtil.create('a', '', container);
-        link.title = 'Create a new polygon';
-        link.innerHTML = '▱';
-        L.DomEvent.on(link, 'click', L.DomEvent.stop)
-          .on(link, 'click', function () {
-            map.editTools.startPolygon();
-          });
-        container.style.display = 'block';
-        map.editTools.on('editable:enabled', function (e) {
-          container.style.display = 'none';
-        });
-        map.editTools.on('editable:disable', function (e) {
-          container.style.display = 'block';
-        });
-        map.editTools.on('editable:drawing:move', function (e) {
-
-        });
-        return container;
-      }
-    });
-    const addPolygonShapeControl = L.Control.extend({
-      options: {
-        position: 'topleft'
-      },
-      onAdd: function (map) {
-        const container = L.DomUtil.create('div', 'leaflet-control leaflet-bar'),
-          link = L.DomUtil.create('a', '', container);
-        link.title = 'Create a new polygon';
-        link.innerHTML = '▱▱';
-        L.DomEvent.on(link, 'click', L.DomEvent.stop)
-          .on(link, 'click', function () {
-            if (!map.editTools.currentPolygon) return;
-            map.editTools.currentPolygon.editor.newShape();
-          });
-        container.style.display = 'none';
-        map.editTools.on('editable:enabled', function (e) {
-          container.style.display = 'block';
-        });
-        map.editTools.on('editable:disable', function (e) {
-          container.style.display = 'none';
-        });
-        return container;
-      }
-    });
-    this.map.addControl(new newPolygonControl());
-    this.map.addControl(new addPolygonShapeControl());
-    this.map.editTools.on('editable:enable', function (e) {
-      if (this.currentPolygon) this.currentPolygon.disableEdit();
-      this.currentPolygon = e.layer;
-      this.fire('editable:enabled');
-    });
-    // Save die polygon in die variable
-    this.map.editTools.on('editable:drawing:move', function (e) {
-      const poly = e.target;
-      this.currentPolygon = e.layer;
-      self.poly = this.currentPolygon;
-    });
+    this.map = L.map('territoryPreview', {editable: true}).setView([-0.163360, 13.053125], 3).addLayer(osm);
   }
 
   saveCountry() {
@@ -258,14 +198,14 @@ export class CountryComponent implements OnInit {
     }
     const area = this.areaService.getAreaByAreaId(areaId);
     if (!area) {
-      this.createNewPolygon();
+      // this.createNewPolygon();
     } else {
       this.area = area;
       const polygon = JSON.parse(area.polygon);
       this.poly = L.polygon(polygon, {color: area.colour}).addTo(this.map);
     }
     this.map.fitBounds(this.poly.getBounds());
-    this.poly.enableEdit();
+    // this.poly.enableEdit();
   }
 
   /**
@@ -273,8 +213,13 @@ export class CountryComponent implements OnInit {
    * @param territory
    */
   activateTerritory(territory) {
-    this.displayAreaById(territory.areaId);
-    this.activeTerritory = territory;
+    const modalRef = this.modalService.open(TerritoryModalComponent, { size: 'lg', beforeDismiss: () => false });
+    modalRef.componentInstance.activeTerritory = territory;
+    modalRef.componentInstance.activeArea = this.areaService.getAreaByAreaId(territory.areaId);
+
+    modalRef.result.then(value => {
+      console.log('value ::', value);
+    });
   }
 
   /**

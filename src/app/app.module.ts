@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 
 import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ColorPickerModule } from 'ngx-color-picker';
 
 import { AppComponent } from './app.component';
 import { MapComponent } from './pages/home/map/map.component';
@@ -25,6 +27,7 @@ import {CountryEditResolverService} from './pages/countryEdit/countryEditResolve
 import { CountryDashboardComponent } from './pages/home/country-dashboard/country-dashboard.component';
 import {TerritoryService} from './services/territory.service';
 import {LeafletService} from './services/leaflet.service';
+import { TerritoryModalComponent } from './pages/countryEdit/territory-modal/territory-modal.component';
 
 
 @NgModule({
@@ -35,7 +38,8 @@ import {LeafletService} from './services/leaflet.service';
     CountryListComponent,
     CountryComponent,
     CountryMapComponent,
-    CountryDashboardComponent
+    CountryDashboardComponent,
+    TerritoryModalComponent
   ],
   imports: [
     BrowserModule,
@@ -44,7 +48,9 @@ import {LeafletService} from './services/leaflet.service';
     ReactiveFormsModule,
     FormsModule,
     LoadingBarHttpClientModule,
-    AngularFontAwesomeModule
+    AngularFontAwesomeModule,
+    NgbModule.forRoot(),
+    ColorPickerModule
   ],
   providers: [
     DataService,
@@ -60,6 +66,7 @@ import {LeafletService} from './services/leaflet.service';
     HomeResolverService,
     CountryEditResolverService
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [TerritoryModalComponent]
 })
 export class AppModule { }
