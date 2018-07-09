@@ -9,7 +9,6 @@ import {StateModel} from '../../../models/states.model';
 import {StateService} from '../../../services/state.service';
 import {AreaService} from '../../../services/area.service';
 import {MapService} from '../../../services/map.service';
-import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import {TerritoryService} from '../../../services/territory.service';
 import {BaseService} from '../../../services/base.service';
 
@@ -49,7 +48,6 @@ export class CountryComponent implements OnInit {
               private mapService: MapService,
               private areaService: AreaService,
               private territoryService: TerritoryService,
-              private spinnerService: Ng4LoadingSpinnerService,
               private baseService: BaseService) {
     self = this;
     this.creatingCountry = false;
@@ -156,10 +154,8 @@ export class CountryComponent implements OnInit {
 
   saveCountry() {
     if (this.editCountry) {
-      this.spinnerService.show();
       this.countryService.saveCountry(this.country).subscribe(
         (response: CountryModel) => {
-          this.spinnerService.hide();
           this.router.navigate(['../countries']);
         }
       );
@@ -195,7 +191,6 @@ export class CountryComponent implements OnInit {
 
   saveState() {
     if (this.activeState.countryId !== null) {
-      this.spinnerService.show();
       this.area.polygon =  this.mapService.convertLeafletPolygonToString(this.poly);
       this.mapService.saveArea(this.area).subscribe(
         (response: any) => {
@@ -204,7 +199,6 @@ export class CountryComponent implements OnInit {
           const newState = false;
           this.stateSer.saveState(this.activeState).subscribe(
             (stateResponse: StateModel) => {
-              this.spinnerService.hide();
               this.poly.disableEdit();
               self.showStateEdit = false;
             }
@@ -300,7 +294,6 @@ export class CountryComponent implements OnInit {
    */
   saveTerritory() {
     if (this.activeTerritory.countryId !== null && this.poly) {
-      this.spinnerService.show();
       this.area.polygon =  this.mapService.convertLeafletPolygonToString(this.poly);
       this.mapService.saveArea(this.area).subscribe(
         (response: any) => {
@@ -308,7 +301,6 @@ export class CountryComponent implements OnInit {
           this.activeTerritory.countryId = this.country.id;
           this.territoryService.saveTerritory(this.activeTerritory).subscribe(
             (stateResponse: any) => {
-              this.spinnerService.hide();
               this.poly.disableEdit();
             }
           );
@@ -322,9 +314,7 @@ export class CountryComponent implements OnInit {
    * @param territory
    */
   deleteTerritory(territory) {
-    this.spinnerService.show();
     this.territoryService.deleteTerritory(territory).subscribe(() => {
-      this.spinnerService.hide();
     });
   }
 

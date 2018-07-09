@@ -1,7 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
 import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 
@@ -44,7 +43,6 @@ import {LeafletService} from './services/leaflet.service';
     AppRoutingModule,
     ReactiveFormsModule,
     FormsModule,
-    Ng4LoadingSpinnerModule.forRoot(),
     LoadingBarHttpClientModule,
     AngularFontAwesomeModule
   ],
