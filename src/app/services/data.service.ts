@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
+import { environment } from '../../environments/environment';
 
 @Injectable()
 export class DataService {
 
-  env = 'http://192.168.0.106:1337';
-  // env = 'http://172.20.10.2:1337';
+  // Word gestoor in die environment.ts file
+  env = environment.apiUrl;
 
   constructor(private http: HttpClient) { }
 
@@ -26,6 +27,11 @@ export class DataService {
   update(tableName, data) {
     const query = this.env + '/' + tableName + '/' + data.id;
     return this.http.patch(query, data);
+  }
+
+  delete(tableName, data) {
+    const query = this.env + '/' + tableName + '/' + data.id;
+    return this.http.delete(query, data);
   }
 
   locate(point) {

@@ -59,7 +59,7 @@ export class CountryListComponent implements OnInit {
   }
 
   createNewCountry() {
-    this.countryService.setActiveCountry(null);
+    this.countryService.setActiveCountry(new CountryModel());
     this.router.navigate(['country']);
   }
 

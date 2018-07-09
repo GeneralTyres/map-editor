@@ -19,13 +19,25 @@ export class MapService {
                private territoryService: TerritoryService) { }
 
   convertLeafletPolygonToString(polygon: any) {
+    // Polygon wat ge-save gaan word
     const proPolygon = [];
+    // Stringified polygon wat ge-save word
     let polygonString: string;
     polygon = polygon.getLatLngs();
-    for (let i = 0; i < polygon.length; i++) {
-      proPolygon.push([[]]);
-      for (let s = 0; s < polygon[i][0].length; s++) {
-        proPolygon[i][0].push([polygon[i][0][s].lat, polygon[i][0][s].lng]);
+    // Kyk of dit 'n multi polygon is
+    if (polygon.length > 1) {
+      // Gaan deur alle polygons
+      for (let i = 0; i < polygon.length; i++) {
+        proPolygon.push([[]]);
+        // Gaan deur alle punte van polygon
+        for (let s = 0; s < polygon[i][0].length; s++) {
+          proPolygon[i][0].push([polygon[i][0][s].lat, polygon[i][0][s].lng]);
+        }
+      }
+    } else {
+      // Gaan deur alle punte van polygon
+      for (let s = 0; s < polygon[0].length; s++) {
+        proPolygon.push([polygon[0][s].lat, polygon[0][s].lng]);
       }
     }
     polygonString = JSON.stringify(proPolygon);

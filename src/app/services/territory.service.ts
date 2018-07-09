@@ -10,6 +10,10 @@ export class TerritoryService {
 
   territories: any;
 
+  /**
+   * Laai die gebiede van die database
+   * @return {Subscription}
+   */
   loadTerritories () {
     return this.data.load('territories', 0).subscribe(
       value => {
@@ -18,18 +22,12 @@ export class TerritoryService {
     );
   }
 
-  saveTerritory(territory: any) {
-    if (territory.id) {
-      return this.data.update('territories', territory);
-    } else {
-      return this.data.create('territories', territory);
-    }
-  }
-
-  getTerritories() {
-    return this.territories.slice();
-  }
-
+  /**
+   * Kry al die huidigge gebied vir die lande gebasseer op die datum
+   * @param {number[]} countryIds
+   * @param {number} date
+   * @return {any[]}
+   */
   getTerritoriesByCountryIdAndDate(countryIds: number[], date: number) {
     const territoriesForDate = [];
     // Get all territories
@@ -55,6 +53,32 @@ export class TerritoryService {
   getTerritoriesByCountryId(countryId) {
     const areas = this.base.getObjectsWhereKeysHaveValues(this.territories, {countryId: countryId});
     return areas;
+  }
+
+  getTerritories() {
+    return this.territories.slice();
+  }
+
+  /**
+   * Stoor die gebied
+   * @param territory
+   * @return {Observable<Object>}
+   */
+  saveTerritory(territory: any) {
+    if (territory.id) {
+      return this.data.update('territories', territory);
+    } else {
+      return this.data.create('territories', territory);
+    }
+  }
+
+  /**
+   * Verwyder die gebied
+   * @param territory
+   * @return {Observable<ArrayBuffer>}
+   */
+  deleteTerritory(territory) {
+    return this.data.delete('territories', territory);
   }
 
 }

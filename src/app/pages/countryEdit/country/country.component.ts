@@ -11,6 +11,7 @@ import {AreaService} from '../../../services/area.service';
 import {MapService} from '../../../services/map.service';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import {TerritoryService} from '../../../services/territory.service';
+import {BaseService} from '../../../services/base.service';
 
 let self;
 
@@ -23,8 +24,11 @@ export class CountryComponent implements OnInit {
   @ViewChild('f') slForm: NgForm;
 
   country: CountryModel;
+  // Wysig waardes
+  creatingCountry = false;
   editCountry = true;
   editEras = true;
+  editingTerritory = true;
   // State list
   states: StateModel[];
   activeState: StateModel = new StateModel(null, null, null, '', '', '', 0, 0, 0, '', null, null);
@@ -37,10 +41,7 @@ export class CountryComponent implements OnInit {
   };
   showStateEdit = false;
   territories: any;
-  activeTerritory: any = {
-    name: '',
-    date: null
-  };
+  activeTerritory;
 
   constructor(private countryService: CountryService,
               private router: Router,
@@ -48,17 +49,26 @@ export class CountryComponent implements OnInit {
               private mapService: MapService,
               private areaService: AreaService,
               private territoryService: TerritoryService,
-              private spinnerService: Ng4LoadingSpinnerService) {
+              private spinnerService: Ng4LoadingSpinnerService,
+              private baseService: BaseService) {
     self = this;
+    this.creatingCountry = false;
   }
 
   ngOnInit() {
     this.country = this.countryService.getActiveCountry();
     if (!this.country) {
+      // Die bladsy het geherlaai. Gaan terug na die lande lys
+      this.router.navigate(['countries']);
+    } else if (!this.country.id) {
+      // Maak 'n nuwe land
       this.editCountry = true;
-      this.country = new CountryModel(null, '', '', '', '', '');
+      this.creatingCountry = true;
     } else {
-      this.editCountry = false;
+      // Wysig 'n land
+      this.editCountry = true;
+      this.territories = this.territoryService.getTerritoriesByCountryId(this.country.id);
+      this.loadTerritoryMap();
     }
     // Get country states
     this.states = this.stateSer.getStatesByCountry(this.country).sort(function(a, b) {
@@ -67,8 +77,6 @@ export class CountryComponent implements OnInit {
     if (this.states.length !== 0) {
       this.activateState(this.states[0]);
     }
-    this.territories = this.territoryService.getTerritoriesByCountryId(this.country.id);
-    this.loadTerritoryMap();
   }
 
   loadTerritoryMap() {
@@ -138,15 +146,15 @@ export class CountryComponent implements OnInit {
       this.currentPolygon = e.layer;
       this.fire('editable:enabled');
     });
+    // Save die polygon in die variable
     this.map.editTools.on('editable:drawing:move', function (e) {
       const poly = e.target;
       this.currentPolygon = e.layer;
       self.poly = this.currentPolygon;
-      console.log('this.currentPolygon', this.currentPolygon.getLatLngs());
     });
   }
 
-  onSubmit(form: NgForm) {
+  saveCountry() {
     if (this.editCountry) {
       this.spinnerService.show();
       this.countryService.saveCountry(this.country).subscribe(
@@ -206,25 +214,6 @@ export class CountryComponent implements OnInit {
     }
   }
 
-  saveTerritory() {
-    if (this.activeTerritory.countryId !== null) {
-      this.spinnerService.show();
-      this.area.polygon =  this.mapService.convertLeafletPolygonToString(this.poly);
-      this.mapService.saveArea(this.area).subscribe(
-        (response: any) => {
-          this.activeTerritory.areaId = response.id;
-          this.activeTerritory.countryId = this.country.id;
-          this.territoryService.saveTerritory(this.activeTerritory).subscribe(
-            (stateResponse: any) => {
-              this.spinnerService.hide();
-              this.poly.disableEdit();
-            }
-          );
-        }
-      );
-    }
-  }
-
   createNewState() {
     // Load map
     this.loadTerritoryMap();
@@ -277,35 +266,66 @@ export class CountryComponent implements OnInit {
     if (!area) {
       this.createNewPolygon();
     } else {
-      this.area.colour = area.colour;
+      this.area = area;
       const polygon = JSON.parse(area.polygon);
       this.poly = L.polygon(polygon, {color: area.colour}).addTo(this.map);
     }
     this.map.fitBounds(this.poly.getBounds());
+    this.poly.enableEdit();
   }
 
+  /**
+   * Vertoon die gebied se besonderhede op die bladsy. Skep ook die gebied se area op die kaart
+   * @param territory
+   */
   activateTerritory(territory) {
-    if (this.poly) {
-      this.poly.remove();
-    }
-    const area = this.areaService.getAreaByAreaId(territory.areaId);
+    this.displayAreaById(territory.areaId);
     this.activeTerritory = territory;
-    if (!area) {
-      this.createNewPolygon();
-    } else {
-      this.area.colour = area.colour;
-      const polygon = JSON.parse(area.polygon);
-      this.poly = L.polygon(polygon, {color: area.colour}).addTo(this.map);
-    }
-    this.map.fitBounds(this.poly.getBounds());
   }
 
   /**
    * Skep 'n nuwe gebied
    */
   createNewTerritory() {
-    // Maak nuwe polygon
-    this.createNewPolygon();
+    // Maak nuwe territory
+    this.activeTerritory = {
+      name: '',
+      date: '',
+      countryId: this.country.id
+    };
+  }
+
+  /**
+   * Stoor die gebied en sy area
+   */
+  saveTerritory() {
+    if (this.activeTerritory.countryId !== null && this.poly) {
+      this.spinnerService.show();
+      this.area.polygon =  this.mapService.convertLeafletPolygonToString(this.poly);
+      this.mapService.saveArea(this.area).subscribe(
+        (response: any) => {
+          this.activeTerritory.areaId = response.id;
+          this.activeTerritory.countryId = this.country.id;
+          this.territoryService.saveTerritory(this.activeTerritory).subscribe(
+            (stateResponse: any) => {
+              this.spinnerService.hide();
+              this.poly.disableEdit();
+            }
+          );
+        }
+      );
+    }
+  }
+
+  /**
+   * Verwyder die gebied
+   * @param territory
+   */
+  deleteTerritory(territory) {
+    this.spinnerService.show();
+    this.territoryService.deleteTerritory(territory).subscribe(() => {
+      this.spinnerService.hide();
+    });
   }
 
 }

@@ -11,7 +11,7 @@
 <div class="row">
   <div class="col-md-1"></div>
   <div class="col-md-10">
-    <form (ngSubmit)="onSubmit(f)" #f="ngForm">
+    <form>
       <div class="card">
         <h5 class="card-header">Details</h5>
         <div class="card-body">
@@ -90,7 +90,7 @@
                 <div class="col-md-12">
                   <button
                     class="btn btn-primary"
-                    type="submit">
+                    (click)="saveCountry()">
                     Save Country Details
                   </button>
                 </div>
@@ -99,7 +99,7 @@
           </div>
 
           <!--Era se details-->
-          <div class="row">
+          <div class="row" *ngIf="!creatingCountry">
             <div class="col-md-12 text-center">
               <h3>Eras
                 <span>
@@ -181,7 +181,6 @@
                   </div>
                 </li>
               </ul>
-              <button class="btn btn-success">Save</button>
             </div>
             <div class="col-md-4" *ngIf="editEras">
               <table class="table table-hover">
@@ -224,21 +223,28 @@
             </div>
             <div class="col-md-12">
               <button
-                *ngIf="showStateEdit"
+                *ngIf="editEras"
                 class="btn btn-primary card-link"
                 (click)="saveState()">
                 Save State</button>
             </div>
           </div>
           <!--Territories-->
-          <div class="row">
+          <div class="row" [hidden]="creatingCountry">
             <div class="col-md-12">
               <h3>Territories</h3>
             </div>
             <div class="col-md-12">
               <div class="map-container" id="map"></div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-12">
+              <button
+                class="btn btn-icon-primary"
+                (click)="createNewTerritory()">Add New Territory
+                <span><fa name="plus"></fa></span>
+              </button>
+            </div>
+            <div class="col-md-6" *ngIf="activeTerritory">
               <div class="form-group">
                 <label for="territoryName">Name</label>
                 <input
@@ -275,20 +281,14 @@
                   class="form-control"
                   [(ngModel)]="area.polygonType">
               </div>
-              <button class="btn btn-success">Save</button>
+              <button
+                class="btn btn-success"
+                (click)="saveTerritory()"
+              >Save Territory</button>
             </div>
             <div class="col-md-6">
-              <table class="table">
+              <table class="table table-hover">
                 <thead>
-                  <tr>
-                    <th></th>
-                    <th></th>
-                    <th><button
-                      class="btn btn-icon-primary"
-                      (click)="saveTerritory()">
-                      <span><fa name="plus"></fa></span>
-                    </button></th>
-                  </tr>
                   <tr>
                     <th>Territory Name</th>
                     <th>Date</th>
@@ -303,12 +303,12 @@
                       <div class="btn-group">
                         <button
                           class="btn btn-icon-primary card-link"
-                          (click)="extendState(activeState)">
+                          (click)="extendState(territory)">
                           <span><fa name="copy"></fa></span></button>
                         <button
                           *ngIf="!showStateEdit"
                           class="btn btn-icon-primary card-link"
-                          (click)="editState()">
+                          (click)="deleteTerritory(territory)">
                           <span><fa name="times"></fa></span></button>
                       </div>
                     </td>
