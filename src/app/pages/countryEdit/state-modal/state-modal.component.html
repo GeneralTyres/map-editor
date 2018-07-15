@@ -1,0 +1,84 @@
+<div class="modal-header">
+  <h4 class="modal-title">Hi there!</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.close('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="form-group">
+        <label for="stateName">Name</label>
+        <input
+          type="text"
+          id="stateName"
+          name="stateName"
+          class="form-control"
+          [(ngModel)]="activeState.name">
+      </div>
+      <div class="form-group">
+        <label for="stateDescription">State Description</label>
+        <input
+          type="text"
+          id="stateDescription"
+          name="stateDescription"
+          class="form-control"
+          [(ngModel)]="activeState.description">
+      </div>
+      <div class="form-group">
+        <label for="from">State Date</label>
+        <input
+          type="text"
+          id="from"
+          name="from"
+          class="form-control"
+          placeholder="Date of the map your basing the area on"
+          [(ngModel)]="activeState.date">
+      </div>
+      <div class="form-group">
+        <label for="population">Population</label>
+        <input
+          type="text"
+          id="population"
+          name="population"
+          class="form-control"
+          placeholder="Date of the map your basing the area on"
+          [(ngModel)]="activeState.population">
+      </div>
+      <div class="form-group">
+        <label for="economy">Economy</label>
+        <input
+          type="text"
+          id="economy"
+          name="economy"
+          class="form-control"
+          placeholder="Date of the map your basing the area on"
+          [(ngModel)]="activeState.economy">
+      </div>
+      <div class="form-group">
+        <label for="civilisation">Economy</label>
+        <input
+          type="text"
+          id="civilisation"
+          name="civilisation"
+          class="form-control"
+          placeholder="Date of the map your basing the area on"
+          [(ngModel)]="activeState.civilisation">
+      </div>
+      <div class="form-group">
+        <label for="reference">Reference</label>
+        <input
+          type="text"
+          id="reference"
+          name="reference"
+          class="form-control"
+          placeholder="wikipedia link"
+          [(ngModel)]="activeState.reference">
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn" (click)="save()">Save</button>
+  <button type="button" class="btn" (click)="activeModal.close(activeTerritory)">Close</button>
+</div>

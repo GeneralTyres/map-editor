@@ -1,0 +1,56 @@
+<div class="modal-header">
+  <h4 class="modal-title">Hi there!</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.close()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="map-container" id="map"></div>
+    </div>
+    <div class="col-md-12">
+      <div class="form-group">
+        <label for="territoryName">Name</label>
+        <input
+          type="text"
+          id="territoryName"
+          name="territoryName"
+          class="form-control"
+          [(ngModel)]="activeTerritory.name">
+      </div>
+      <div class="form-group">
+        <label for="territoryDate">Date of creation</label>
+        <input
+          type="text"
+          id="territoryDate"
+          name="territoryDate"
+          class="form-control"
+          [(ngModel)]="activeTerritory.date">
+      </div>
+      <div class="form-group">
+        <label for="colour">Area Colour</label>
+        <input
+          id="colour"
+          name="colour"
+          readonly
+          class="form-control"
+          [(colorPicker)]="activeArea.colour"
+          [style.background]="activeArea.colour">
+      </div>
+      <div class="form-group">
+        <label for="type">State Type</label>
+        <input
+          type="number"
+          id="type"
+          name="type"
+          class="form-control"
+          [(ngModel)]="activeArea.polygonType">
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn" (click)="save()">Save</button>
+  <button type="button" class="btn" (click)="activeModal.close()">Close</button>
+</div>
