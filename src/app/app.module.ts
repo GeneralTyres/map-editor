@@ -28,6 +28,7 @@ import { CountryDashboardComponent } from './pages/home/country-dashboard/countr
 import {TerritoryService} from './services/territory.service';
 import {LeafletService} from './services/leaflet.service';
 import { TerritoryModalComponent } from './pages/countryEdit/territory-modal/territory-modal.component';
+import { StateModalComponent } from './pages/countryEdit/state-modal/state-modal.component';
 
 
 @NgModule({
@@ -39,7 +40,8 @@ import { TerritoryModalComponent } from './pages/countryEdit/territory-modal/ter
     CountryComponent,
     CountryMapComponent,
     CountryDashboardComponent,
-    TerritoryModalComponent
+    TerritoryModalComponent,
+    StateModalComponent
   ],
   imports: [
     BrowserModule,
@@ -67,6 +69,6 @@ import { TerritoryModalComponent } from './pages/countryEdit/territory-modal/ter
     CountryEditResolverService
   ],
   bootstrap: [AppComponent],
-  entryComponents: [TerritoryModalComponent]
+  entryComponents: [TerritoryModalComponent, StateModalComponent]
 })
 export class AppModule { }

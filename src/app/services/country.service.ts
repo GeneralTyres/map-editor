@@ -23,6 +23,7 @@ export class CountryService {
     return new Promise((resolve, reject) =>
       this.data.load('countries', 0).subscribe(
         (response: CountryModel[] ) => {
+          console.log('response ::', response)
           this.countryList = response;
           resolve();
         }
@@ -51,6 +52,7 @@ export class CountryService {
   }
 
   getCountries() {
+    console.log('ping')
     return this.countryList.slice();
   }
 

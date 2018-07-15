@@ -11,7 +11,7 @@ import {CountryEditResolverService} from './pages/countryEdit/countryEditResolve
 const appRoutes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: MapComponent,
-    resolve: {homeLoader: HomeResolverService}},
+    resolve: {loader: HomeResolverService}},
   { path: 'countries', component: CountryListComponent,
     resolve: {loader: ResolverService}
     // children: [

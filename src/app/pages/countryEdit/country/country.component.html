@@ -101,88 +101,9 @@
           <!--Era se details-->
           <div class="row" *ngIf="!creatingCountry">
             <div class="col-md-12 text-center">
-              <h3>Eras
-                <span>
-                  <a
-                    class="btn btn-primary"
-                    (click)="toggleEditEra()">
-                    <span><fa name="pencil"></fa></span></a>
-                </span>
-              </h3>
+              <h3>Eras</h3>
             </div>
-            <div class="col-md-8" *ngIf="editEras">
-              <ul class="list-group list-group-flush">
-                <li class="list-group-item">
-                  <div class="form-group">
-                    <label for="stateName">State Name</label>
-                    <input
-                      type="text"
-                      id="stateName"
-                      name="stateName"
-                      class="form-control"
-                      [(ngModel)]="activeState.name">
-                  </div>
-                </li>
-                <li class="list-group-item">
-                  <div class="form-group">
-                    <label for="stateDescription">State Description</label>
-                    <input
-                      type="text"
-                      id="stateDescription"
-                      name="stateDescription"
-                      class="form-control"
-                      [(ngModel)]="activeState.description">
-                  </div>
-                </li>
-                <li class="list-group-item">
-                  <div class="form-group">
-                    <label for="from">State Date</label>
-                    <input
-                      type="text"
-                      id="from"
-                      name="from"
-                      class="form-control"
-                      placeholder="Date of the map your basing the area on"
-                      [(ngModel)]="activeState.date">
-                  </div>
-                </li>
-                <li class="list-group-item">
-                  <div class="form-group">
-                    <label for="type">Population</label>
-                    <input
-                      type="number"
-                      id="type"
-                      name="type"
-                      class="form-control"
-                      [(ngModel)]="area.polygonType">
-                  </div>
-                </li>
-                <li class="list-group-item">
-                  <div class="form-group">
-                    <label for="type">Economy</label>
-                    <input
-                      type="number"
-                      id="type"
-                      name="type"
-                      class="form-control"
-                      [(ngModel)]="area.polygonType">
-                  </div>
-                </li>
-                <li class="list-group-item">
-                  <div class="form-group">
-                    <label for="type">Reference</label>
-                    <input
-                      type="text"
-                      id="reference"
-                      name="reference"
-                      class="form-control"
-                      placeholder="wikipedia link"
-                      [(ngModel)]="activeState.reference">
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="col-md-4" *ngIf="editEras">
+            <div class="col-md-12">
               <table class="table table-hover">
                 <thead>
                   <tr>
@@ -191,7 +112,7 @@
                     <th><button
                       class="btn btn-icon-primary"
                       (click)="createNewState()">
-                      <span><fa name="plus"></fa></span>
+                      <span><fa name="plus"></fa></span>Add new State
                     </button></th>
                   </tr>
                   <tr>
@@ -201,32 +122,24 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let state of states" (click)="activateState(state)">
+                  <tr *ngFor="let state of states  let idx = index">
                     <td>{{ state.name }}</td>
                     <td>{{ state.date }}</td>
                     <td>
                       <div class="btn-group">
                         <button
                           class="btn btn-icon-primary card-link"
-                          (click)="extendState(activeState)">
-                          <span><fa name="copy"></fa></span></button>
+                          (click)="activateState(state, idx)">
+                          <span><fa name="pencil"></fa></span></button>
                         <button
-                          *ngIf="!showStateEdit"
                           class="btn btn-icon-primary card-link"
-                          (click)="editState()">
+                          (click)="deleteState(state, idx)">
                           <span><fa name="times"></fa></span></button>
                       </div>
                     </td>
                   </tr>
                 </tbody>
               </table>
-            </div>
-            <div class="col-md-12">
-              <button
-                *ngIf="editEras"
-                class="btn btn-primary card-link"
-                (click)="saveState()">
-                Save State</button>
             </div>
           </div>
           <!--Territories-->
@@ -256,7 +169,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let territory of territories">
+                  <tr *ngFor="let territory of territories let idx = index">
                     <td>{{ territory.name }}</td>
                     <td>{{ territory.date }}</td>
                     <td>
@@ -267,16 +180,16 @@
                           <span><fa name="eye"></fa></span></button>
                         <button
                           class="btn btn-icon-primary card-link"
-                          (click)="activateTerritory(territory)">
+                          (click)="activateTerritory(territory, null, idx)">
                           <span><fa name="pencil"></fa></span></button>
                         <button
                           class="btn btn-icon-primary card-link"
-                          (click)="displayAreaById(territory.areaId)">
+                          (click)="duplicateNewTerritory(territory, null, idx)">
                           <span><fa name="copy"></fa></span></button>
                         <button
                           *ngIf="!showStateEdit"
                           class="btn btn-icon-primary card-link"
-                          (click)="deleteTerritory(territory)">
+                          (click)="deleteTerritory(territory, index)">
                           <span><fa name="times"></fa></span></button>
                       </div>
                     </td>

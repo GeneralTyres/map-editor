@@ -9,11 +9,12 @@ import {StateModel} from '../../../models/states.model';
 })
 export class CountryDashboardComponent implements OnInit {
   @Input() activeCountry: CountryModel;
-  @Input() activeState: StateModel;
+  @Input() activeState: StateModel = new StateModel();
 
   constructor() { }
 
   ngOnInit() {
+    console.log('this.activeState ::', this.activeState);
   }
 
 }

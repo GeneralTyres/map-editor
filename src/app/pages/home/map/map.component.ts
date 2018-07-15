@@ -31,7 +31,7 @@ export class MapComponent implements OnInit {
   date: number;
   featureGroup: any = L.featureGroup();
   infobox: any;
-  activeCountry: any;
+  activeCountry: CountryModel;
 
   constructor(private http: HttpClient,
               private data: DataService,
@@ -117,8 +117,11 @@ export class MapComponent implements OnInit {
 
   showYear() {
     this.featureGroup.clearLayers();
+    // Get current countries
     const countries = this.countryService.getCountriesByDate(this.date);
+    // Get the ids for later use
     const countryIds = this.baseService.getPropertyValuesFromArray(countries, 'id');
+    // Kry al die gebiede
     this.displayedTerritories = this.territoryService.getTerritoriesByCountryIdAndDate(countryIds, this.date);
     const areaIds = this.baseService.getPropertyValuesFromArray(this.displayedTerritories, 'areaId');
     const areas = this.areaService.getAreasByIds(areaIds);

@@ -69,10 +69,8 @@ export class MapService {
 
   getCountryAndState(areaId, date) {
     const activeTerritory = this.territoryService.getTerritoryByAreaId(areaId);
-    let activeCountry = this.countryService.getCountryById(activeTerritory.countryId);
-    activeCountry = this.stateService.getStatesByCountryAndDate([activeCountry], date);
-    activeCountry = activeCountry[0];
-    activeCountry.territory = activeTerritory;
+    const activeCountry = this.countryService.getCountryById(activeTerritory.countryId);
+    activeCountry.activeState = this.stateService.getStateByCountryIdAndDate(activeCountry, date);
     return activeCountry;
   }
 
@@ -103,14 +101,6 @@ export class MapService {
         mouseover: this.highlightFeature,
         mouseout: this.resetFeature
       });
-    }
-  }
-
-  saveArea(area) {
-    if (area.id) {
-      return this.data.update('areas', area);
-    } else {
-      return this.data.create('areas', area);
     }
   }
 

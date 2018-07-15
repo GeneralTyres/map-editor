@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {DataService} from './data.service';
 import {BaseService} from './base.service';
+import {CountryModel} from '../models/country.model';
 
 @Injectable()
 export class AreaService {
@@ -10,12 +11,22 @@ export class AreaService {
 
   areas: any;
 
-  loadAreas () {
-    return this.data.load('areas', 0).subscribe(
-      value => {
-        this.areas = value;
-      }
-    );
+  loadAreas() {
+    return new Promise((resolve, reject) =>
+      this.data.load('areas', 0).subscribe(
+        value => {
+          this.areas = value;
+          resolve();
+        }
+      ));
+  }
+
+  saveArea(area) {
+    if (area.id) {
+      return this.data.update('areas', area);
+    } else {
+      return this.data.create('areas', area);
+    }
   }
 
   getAreas() {
@@ -29,6 +40,10 @@ export class AreaService {
 
   getAreasByIds(areaIds: number[]) {
     return this.base.getObjectsWherePropertyHasValues(this.areas, 'id', areaIds);
+  }
+
+  addArea(area) {
+    this.areas.push(area);
   }
 
 }

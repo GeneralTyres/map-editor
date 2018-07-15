@@ -32,6 +32,15 @@ export class StateService {
     }
   }
 
+  /**
+   * Verwyder die era
+   * @param state
+   * @return {Observable<ArrayBuffer>}
+   */
+  deleteState(state) {
+    return this.data.delete('states', state);
+  }
+
   compare(a, b) {
     if (a.toDate < b.toDate) {
       return -1;
@@ -50,6 +59,20 @@ export class StateService {
       }
     }
     return countryStates.sort(this.compare);
+  }
+
+  getStateByCountryIdAndDate(countryId: number, date: number) {
+    let countryStates = this.baseService.getObjectsWhereKeysHaveValues(this.states, {countryId: countryId});
+    countryStates = this.baseService.sortByDate(countryStates, 'decs');
+    let currentState;
+    console.log('countryStates', countryStates);
+    for (let i = 0; i < countryStates.length; i++) {
+      if (countryStates[i].date < date) {
+        currentState = countryStates[i];
+        break;
+      }
+    }
+    return currentState;
   }
 
 
