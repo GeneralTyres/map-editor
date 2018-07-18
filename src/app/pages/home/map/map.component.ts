@@ -24,13 +24,10 @@ export class MapComponent implements OnInit {
   areas: any;
   states: any;
   countries: CountryModel[];
-  // Variables for map
-  displayedCountries: any[];
-  displayStates: any[];
   displayedTerritories: any[];
   date: number;
   featureGroup: any = L.featureGroup();
-  infobox: any;
+  infoBox: any;
   activeCountry: CountryModel;
 
   constructor(private http: HttpClient,
@@ -73,21 +70,21 @@ export class MapComponent implements OnInit {
     const marker = L.marker([39.959882, 4.277765],
       {icon: entityIcon}).addTo(this.map);
 
-    this.infobox = new L.Control();
+    this.infoBox = new L.Control();
 
-    this.infobox.onAdd = function () {
+    this.infoBox.onAdd = function () {
       this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
       this.update();
       return this._div;
     };
 
     // method that we will use to update the control based on feature properties passed
-    this.infobox.update = function (country) {
+    this.infoBox.update = function (country) {
       this._div.innerHTML = (country ?
         '<h4>' + country.name + '</h4><img style="height: 70px; width: 100px" src="' + country.flag + '">'
         : 'Hover over a state');
     };
-    this.infobox.addTo(this.map);
+    this.infoBox.addTo(this.map);
 
     const imageUrl = '../../../../assets/images/Map_Battle_of_Stalingrad-vi.svg',
       imageBounds = new L.LatLngBounds([[50.158220, 39.611708], [46.493444, 46.862684]]);
@@ -110,11 +107,6 @@ export class MapComponent implements OnInit {
     this.areas = this.areaService.getAreas();
   }
 
-  getCountryAndState(areaId) {
-    // self.activeCountry = e.target.country;
-    // self.activeState = e.target.state;
-  }
-
   showYear() {
     this.featureGroup.clearLayers();
     // Get current countries
@@ -128,15 +120,17 @@ export class MapComponent implements OnInit {
     const polygons = this.leafletService.buildPolygonsFromAreas(areas);
     for (let i = 0; i < polygons.length; i++) {
       polygons[i].on('click', function (e) {
-        self.activeCountry = self.mapService.getCountryAndState(e.target.area.id, self.date);
+        self.activeCountry = self.mapService.getCountryForDashboard(e.target.area.id, self.date);
+        self.activeState = self.activeCountry.activeState;
         self.map.fitBounds(e.target.getBounds());
       });
       //   .on('mouseover', function (e) {
-      //   self.infobox.update(e.target.country);
+      //   self.infoBox.update(e.target.country);
       // }).on('mouseout', function (e) {
-      //   self.infobox.update();
+      //   self.infoBox.update();
       // });
     }
+    this.activeCountry = null;
     this.featureGroup = L.featureGroup(polygons);
     this.featureGroup.addTo(this.map);
   }

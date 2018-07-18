@@ -65,41 +65,13 @@ export class StateService {
     let countryStates = this.baseService.getObjectsWhereKeysHaveValues(this.states, {countryId: countryId});
     countryStates = this.baseService.sortByDate(countryStates, 'decs');
     let currentState;
-    console.log('countryStates', countryStates);
     for (let i = 0; i < countryStates.length; i++) {
-      if (countryStates[i].date < date) {
+      if (Number(countryStates[i].date) <= date) {
         currentState = countryStates[i];
         break;
       }
     }
     return currentState;
-  }
-
-
-  /**
-   * Get country object with state object attached.
-   * @param countries
-   * @param date
-   * @return {any}
-   */
-  getStatesByCountryAndDate(countries, date) {
-    // Kry die regte state vir die lande
-    for (let j = 0; j < countries.length; j++) {
-      // Kry lande se states
-      let countryStates = this.baseService.getObjectsWhereKeysHaveValues(this.states, {countryId: countries[j].id});
-      if (countryStates.length > 0) {
-        // Sort country states
-        countryStates = this.baseService.sortByDate(countryStates, 'asc');
-        let selectedState = countryStates[0];
-        for (let c = 0; c < countryStates.length; c++) {
-          if (Number(countryStates[c].date) <= Number(date)) {
-            selectedState = countryStates[c];
-          }
-        }
-        countries[j].state = selectedState;
-      }
-    }
-    return countries;
   }
 
   getNewestStateByCountryId(countryId) {

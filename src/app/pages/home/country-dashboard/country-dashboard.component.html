@@ -10,6 +10,7 @@
         <h5>Current State</h5>
         <p class="card-text" *ngIf="activeState">{{ activeState.name }}</p>
         <p class="card-text" *ngIf="activeState">{{ activeState.description }}</p>
+        <p class="card-text" *ngIf="!activeState">No state for this period</p>
       </div>
     </div>
   </div>

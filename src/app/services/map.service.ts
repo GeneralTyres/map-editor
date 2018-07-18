@@ -67,10 +67,10 @@ export class MapService {
     });
   }
 
-  getCountryAndState(areaId, date) {
+  getCountryForDashboard(areaId, date) {
     const activeTerritory = this.territoryService.getTerritoryByAreaId(areaId);
     const activeCountry = this.countryService.getCountryById(activeTerritory.countryId);
-    activeCountry.activeState = this.stateService.getStateByCountryIdAndDate(activeCountry, date);
+    activeCountry.activeState = this.stateService.getStateByCountryIdAndDate(activeCountry.id, date);
     return activeCountry;
   }
 

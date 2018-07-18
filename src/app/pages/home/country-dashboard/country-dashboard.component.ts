@@ -14,7 +14,6 @@ export class CountryDashboardComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log('this.activeState ::', this.activeState);
   }
 
 }

@@ -23,7 +23,6 @@ export class CountryService {
     return new Promise((resolve, reject) =>
       this.data.load('countries', 0).subscribe(
         (response: CountryModel[] ) => {
-          console.log('response ::', response)
           this.countryList = response;
           resolve();
         }
@@ -52,7 +51,6 @@ export class CountryService {
   }
 
   getCountries() {
-    console.log('ping')
     return this.countryList.slice();
   }
 
@@ -70,18 +68,6 @@ export class CountryService {
       }
     }
     return matchingCountries;
-  }
-
-  /**
-   * Get all the country objects with the current state and territory attached.
-   * @param date
-   */
-  getFullCountriesByDate(date: number) {
-    // Get conutries
-    let currentCountries: CountryModel[] = this.getCountriesByDate(date);
-    const currentCountriesIds: number[] = this.baseService.getPropertyValuesFromArray(currentCountries, 'id');
-    // Get country states
-    currentCountries = this.stateService.getStatesByCountryAndDate(currentCountries, date);
   }
 
 }

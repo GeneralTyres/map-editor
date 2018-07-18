@@ -4,6 +4,8 @@ import 'leaflet-editable';
 import {CountryModel} from '../models/country.model';
 import {StateService} from '../services/state.service';
 import {AreaService} from '../services/area.service';
+import {TerritoryService} from '../services/territory.service';
+import {BaseService} from '../services/base.service';
 
 @Component({
   selector: 'app-country-map',
@@ -14,18 +16,20 @@ export class CountryMapComponent implements OnInit {
   @Input() mapCountry: CountryModel;
 
   map: any;
-  newestState: any;
+  territories: any;
   newestArea: any;
 
-  constructor(private stateService: StateService,
-              private areaService: AreaService) { }
+  constructor(private territoryService: TerritoryService,
+              private areaService: AreaService,
+              private baseService: BaseService) { }
 
   ngOnInit() {
     if (this.mapCountry.hasOwnProperty('id')) {
       if (this.mapCountry.id) {
-        this.newestState = this.stateService.getNewestStateByCountryId(this.mapCountry.id);
-        if (this.newestState) {
-          this.newestArea = this.areaService.getAreaByAreaId(this.newestState.areaId);
+        this.territories = this.territoryService.getTerritoriesByCountryId(this.mapCountry.id);
+        this.territories = this.baseService.sortByDate(this.territories, 'desc');
+        if (this.territories.length > 0) {
+          this.newestArea = this.areaService.getAreaByAreaId(this.territories[0].areaId);
         }
       }
       this.buildMap();
@@ -41,7 +45,7 @@ export class CountryMapComponent implements OnInit {
       });
     // initialize the map on the "map" div with a given center and zoom
     this.map = L.map('countryMap').setView([-0.163360, 13.053125], 3).addLayer(osm);
-    if (this.mapCountry.id && this.newestState) {
+    if (this.mapCountry.id && this.territories.length > 0) {
       const newState = L.polygon(JSON.parse(this.newestArea.polygon),
         {color: this.newestArea.colour, dashArray: '15, 10, 5'}).addTo(this.map);
       this.map.fitBounds(newState.getBounds());
