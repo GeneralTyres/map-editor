@@ -37,33 +37,39 @@
       </div>
       <div class="form-group">
         <label for="population">Population</label>
-        <input
-          type="text"
+        <select
           id="population"
           name="population"
           class="form-control"
-          placeholder="Date of the map your basing the area on"
           [(ngModel)]="activeState.population">
+          <option *ngFor="let type of populationOptions" [value]="type.id">
+            {{type.name}}
+          </option>
+        </select>
       </div>
       <div class="form-group">
         <label for="economy">Economy</label>
-        <input
-          type="text"
+        <select
           id="economy"
           name="economy"
           class="form-control"
-          placeholder="Date of the map your basing the area on"
           [(ngModel)]="activeState.economy">
+          <option *ngFor="let type of economyOptions" [value]="type.id">
+            {{type.name}}
+          </option>
+        </select>
       </div>
       <div class="form-group">
-        <label for="civilisation">Economy</label>
-        <input
-          type="text"
+        <label for="civilisation">Human Sub Species</label>
+        <select
           id="civilisation"
           name="civilisation"
           class="form-control"
-          placeholder="Date of the map your basing the area on"
           [(ngModel)]="activeState.civilisation">
+          <option *ngFor="let type of humanSubTypesOptions" [value]="type.id">
+            {{type.name}}
+          </option>
+        </select>
       </div>
       <div class="form-group">
         <label for="reference">Reference</label>

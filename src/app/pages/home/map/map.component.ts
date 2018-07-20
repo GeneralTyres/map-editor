@@ -50,15 +50,21 @@ export class MapComponent implements OnInit {
   loadMap() {
     // const osmUrl = 'http://{s}.tile.osm.org/{z}/{x}/{y}.png';
     // const satiliteUrl = 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
-    const satiliteUrl = 'https://mt0.google.com/vt/lyrs=p&x={x}&y={y}&z={z}',
-      osmAttrib = '&copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-      osm = L.tileLayer(satiliteUrl, {
-        maxZoom: 18,
-        attribution: osmAttrib
-      });
+    // const satiliteUrl = 'https://mt0.google.com/vt/lyrs=p&x={x}&y={y}&z={z}',
+    //   osmAttrib = '&copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    //   osm = L.tileLayer(satiliteUrl, {
+    //     maxZoom: 18,
+    //     attribution: osmAttrib
+    //   });
+    const terrain = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiaXNhd255dSIsImEiOiJBWEh1dUZZIn0.SiiexWxHHESIegSmW8wedQ', {
+      attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+      maxZoom: 10,
+      id: 'isawnyu.map-knmctlkh',
+      accessToken: 'pk.eyJ1IjoiaXNhd255dSIsImEiOiJBWEh1dUZZIn0.SiiexWxHHESIegSmW8wedQ'
+    });
 
     // initialize the map on the "map" div with a given center and zoom
-    this.map = L.map('map').setView([43.1, 1.2], 5).addLayer(osm);
+    this.map = L.map('map').setView([43.1, 1.2], 5).addLayer(terrain);
 
     const entityIcon = new L.DivIcon({
       className: '',
@@ -84,15 +90,11 @@ export class MapComponent implements OnInit {
         '<h4>' + country.name + '</h4><img style="height: 70px; width: 100px" src="' + country.flag + '">'
         : 'Hover over a state');
     };
-    this.infoBox.addTo(this.map);
+    // this.infoBox.addTo(this.map);
 
     const imageUrl = '../../../../assets/images/Map_Battle_of_Stalingrad-vi.svg',
       imageBounds = new L.LatLngBounds([[50.158220, 39.611708], [46.493444, 46.862684]]);
     L.imageOverlay(imageUrl, imageBounds).addTo(this.map);
-
-    const imageUrl2 = '../../../../assets/images/testCar.svg',
-      imageBounds2 = new L.LatLngBounds([[51.350012, 4.054811], [49.587958, 7.194893]]);
-    L.imageOverlay(imageUrl2, imageBounds2).addTo(this.map);
   }
 
   eventHandler(event) {

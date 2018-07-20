@@ -10,6 +10,48 @@ import {StateService} from '../../../services/state.service';
 export class StateModalComponent implements OnInit {
 
   @Input() activeState;
+  economyOptions = [
+    {
+      name: 'Good',
+      id: 0
+    },
+    {
+      name: 'Bad',
+      id: 1
+    },
+    {
+      name: 'Steadfast',
+      id: 2
+    }
+  ];
+  humanSubTypesOptions = [
+    {
+      name: 'White',
+      id: 0
+    },
+    {
+      name: 'Black',
+      id: 1
+    },
+    {
+      name: 'Chines',
+      id: 2
+    }
+  ];
+  populationOptions = [
+    {
+      name: 'White',
+      id: 0
+    },
+    {
+      name: 'Black',
+      id: 1
+    },
+    {
+      name: 'Chines',
+      id: 2
+    }
+  ];
 
   constructor(public activeModal: NgbActiveModal,
               private stateService: StateService) { }

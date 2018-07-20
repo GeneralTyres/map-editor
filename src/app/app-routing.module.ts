@@ -7,11 +7,15 @@ import {CountryComponent} from './pages/countryEdit/country/country.component';
 import {ResolverService} from './resolver.service';
 import {HomeResolverService} from './pages/home/homeResolver.service';
 import {CountryEditResolverService} from './pages/countryEdit/countryEditResolver.service';
+import {LoginPageResolverService} from './pages/login/loginPageResolver.service';
+import {LoginPageComponent} from './pages/login/login-page/login-page.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: MapComponent,
     resolve: {loader: HomeResolverService}},
+  { path: 'login', component: LoginPageComponent,
+    resolve: {loader: LoginPageResolverService}},
   { path: 'countries', component: CountryListComponent,
     resolve: {loader: ResolverService}
     // children: [

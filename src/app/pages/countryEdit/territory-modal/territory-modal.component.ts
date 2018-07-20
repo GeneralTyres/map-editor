@@ -20,6 +20,20 @@ export class TerritoryModalComponent implements OnInit {
   // activeArea: any;
   map: any;
   editPolygon: any;
+  stateTypeOptions = [
+    {
+      name: 'Unified People',
+      dashArray: 0
+    },
+    {
+      name: 'Tribal',
+      dashArray: 4
+    },
+    {
+      name: 'Species',
+      dashArray: 8
+    }
+  ];
 
   constructor(public activeModal: NgbActiveModal,
               private areaService: AreaService,
@@ -115,7 +129,7 @@ export class TerritoryModalComponent implements OnInit {
     //   this.editPolygon.remove();
     // }
     if (!this.activeArea.polygon) {
-      // his.createNewPolygon();t
+      // his.createNewPolygon();
     } else {
       const polygon = JSON.parse(this.activeArea.polygon);
       this.editPolygon = L.polygon(polygon, {color: this.activeArea.colour}).addTo(this.map);

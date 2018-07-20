@@ -51,6 +51,7 @@ export class LeafletService {
   }
 
   buildPolygonsFromAreas(areas) {
+    console.log('areas ::', areas)
     const polygons = [];
     for (let i = 0; i < areas.length; i++) {
       let lineTpye = '';
@@ -65,7 +66,7 @@ export class LeafletService {
             weight: 2,
             opacity: 0.6,
             color: 'white',
-            dashArray: '3',
+            dashArray: String(areas[i].polygonType),
             fillOpacity: 0.2
           }).on({
           mouseover: this.highlightFeature,

@@ -131,7 +131,7 @@ export class CountryComponent implements OnInit {
     modalRef.componentInstance.activeState = state;
     modalRef.result.then(value => {
       // Doen iets na save
-      if (!index) {
+      if ((index === undefined || index === null) && value) {
         this.states.push(value);
       }
     });
@@ -176,7 +176,7 @@ export class CountryComponent implements OnInit {
     // Wanneer die modal toe maak
     modalRef.result.then(value => {
       // Doen iets na save
-      if (!index) {
+      if ((index === undefined || index === null) && value) {
         this.territories.push(value);
       }
     });

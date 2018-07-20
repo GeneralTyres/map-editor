@@ -2,15 +2,15 @@
   <div class="col-md-12">
     <div class="card" *ngIf="activeCountry">
       <div class="card-body">
+        <h3 class="card-title text-center">{{ activeCountry.name }}</h3>
         <div class="text-center">
           <img src="{{ activeCountry.flag }}" alt="" class="dashboard-flag img-thumbnail">
         </div>
-        <h5 class="card-title">{{ activeCountry.name }}</h5>
-        <p class="card-text">{{ activeCountry.description }}</p>
-        <h5>Current State</h5>
-        <p class="card-text" *ngIf="activeState">{{ activeState.name }}</p>
-        <p class="card-text" *ngIf="activeState">{{ activeState.description }}</p>
-        <p class="card-text" *ngIf="!activeState">No state for this period</p>
+        <p class="card-text text-center">{{ activeCountry.fromDate }} - {{ activeCountry.toDate }}</p>
+        <p class="card-text text-center">{{ activeCountry.description }}</p>
+        <h5 class="card-text text-center" *ngIf="activeState">Era: {{ activeState.name }}</h5>
+        <p class="card-text text-center" *ngIf="activeState">{{ activeState.description }}</p>
+        <p class="card-text text-center" *ngIf="!activeState">No state for this period</p>
       </div>
     </div>
   </div>
