@@ -9,10 +9,14 @@
         <a class="nav-link" href="#" routerLink="/home">Home <span class="sr-only">(current)</span></a>
       </li>
       <li
-        class="nav-item"
-        routerLinkActive="active"
+        class="nav-item dropdown"
         *ngIf="activeUser.id !== 0">
-        <a class="nav-link" href="#" routerLink="/countries">Countries</a>
+        <div ngbDropdown class="d-inline-block">
+          <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>Data</button>
+          <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+            <button class="dropdown-item" href="#" routerLink="/countries">Countries</button>
+          </div>
+        </div>
       </li>
     </ul>
     <ul class="navbar-nav">
