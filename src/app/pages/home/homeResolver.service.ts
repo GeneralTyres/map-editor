@@ -19,8 +19,6 @@ export class HomeResolverService implements Resolve<any> {
     promises.push(this.stateService.loadStates());
     promises.push(this.areaService.loadAreas());
     promises.push(this.territoryService.loadTerritories());
-    return Promise.all(promises).then( value => {
-
-    });
+    return Promise.all(promises);
   }
 }

@@ -45,6 +45,8 @@ export class MapComponent implements OnInit {
   ngOnInit() {
     this.getData();
     this.loadMap();
+    this.date = Math.floor(Math.random() * 2000) + 1;
+    this.showYear();
   }
 
   loadMap() {
@@ -73,8 +75,8 @@ export class MapComponent implements OnInit {
       iconAnchor: [25, 50]
     });
 
-    const marker = L.marker([39.959882, 4.277765],
-      {icon: entityIcon}).addTo(this.map);
+    // const marker = L.marker([39.959882, 4.277765],
+    //   {icon: entityIcon}).addTo(this.map);
 
     this.infoBox = new L.Control();
 
@@ -92,9 +94,9 @@ export class MapComponent implements OnInit {
     };
     // this.infoBox.addTo(this.map);
 
-    const imageUrl = '../../../../assets/images/Map_Battle_of_Stalingrad-vi.svg',
-      imageBounds = new L.LatLngBounds([[50.158220, 39.611708], [46.493444, 46.862684]]);
-    L.imageOverlay(imageUrl, imageBounds).addTo(this.map);
+    // const imageUrl = '../../../../assets/images/Map_Battle_of_Stalingrad-vi.svg',
+    //   imageBounds = new L.LatLngBounds([[50.158220, 39.611708], [46.493444, 46.862684]]);
+    // L.imageOverlay(imageUrl, imageBounds).addTo(this.map);
   }
 
   eventHandler(event) {

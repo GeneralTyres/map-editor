@@ -1,5 +1,5 @@
 <div class="modal-header">
-  <h4 class="modal-title">Hi there!</h4>
+  <h4 class="modal-title">Add/Edit State</h4>
   <button type="button" class="close" aria-label="Close" (click)="activeModal.close('Cross click')">
     <span aria-hidden="true">&times;</span>
   </button>
@@ -16,14 +16,9 @@
           class="form-control"
           [(ngModel)]="activeState.name">
       </div>
-      <div class="form-group">
-        <label for="stateDescription">State Description</label>
-        <input
-          type="text"
-          id="stateDescription"
-          name="stateDescription"
-          class="form-control"
-          [(ngModel)]="activeState.description">
+      <div>
+        <label>State Description</label>
+        <quill-editor [(ngModel)]="activeState.description" theme='snow' [style]="{height: '250px'}"></quill-editor>
       </div>
       <div class="form-group">
         <label for="from">State Date</label>

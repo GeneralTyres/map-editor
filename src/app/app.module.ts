@@ -5,6 +5,7 @@ import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ColorPickerModule } from 'ngx-color-picker';
+import { QuillModule } from 'ngx-quill';
 
 import { AppComponent } from './app.component';
 import { MapComponent } from './pages/home/map/map.component';
@@ -56,7 +57,8 @@ import {LoginPageResolverService} from './pages/login/loginPageResolver.service'
     LoadingBarHttpClientModule,
     AngularFontAwesomeModule,
     NgbModule.forRoot(),
-    ColorPickerModule
+    ColorPickerModule,
+    QuillModule
   ],
   providers: [
     DataService,
