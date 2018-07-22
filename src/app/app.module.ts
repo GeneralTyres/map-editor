@@ -30,7 +30,7 @@ import {TerritoryService} from './services/territory.service';
 import {LeafletService} from './services/leaflet.service';
 import { TerritoryModalComponent } from './pages/countryEdit/territory-modal/territory-modal.component';
 import { StateModalComponent } from './pages/countryEdit/state-modal/state-modal.component';
-import {UsersService} from './services/users.service';
+import {UsersService} from './services/user.service';
 import { LoginPageComponent } from './pages/login/login-page/login-page.component';
 import {LoginPageResolverService} from './pages/login/loginPageResolver.service';
 

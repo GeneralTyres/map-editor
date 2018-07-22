@@ -101,4 +101,17 @@ export class BaseService {
     });
   }
 
+  /**
+   * Kyk of die waarde geldig is.
+   * @param value
+   * @return {boolean}
+   */
+  isNotEmpty(value) {
+    let isNotEmpty = false;
+    if (value !== null && value !== undefined) {
+      isNotEmpty = true;
+    }
+    return isNotEmpty;
+  }
+
 }

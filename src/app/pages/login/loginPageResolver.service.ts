@@ -1,7 +1,7 @@
 import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from '@angular/router';
 import {Injectable} from '@angular/core';
 
-import {UsersService} from '../../services/users.service';
+import {UsersService} from '../../services/user.service';
 
 @Injectable()
 export class LoginPageResolverService implements Resolve<any> {

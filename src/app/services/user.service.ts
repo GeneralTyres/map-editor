@@ -46,6 +46,7 @@ export class UsersService {
   }
 
   setActiveUser(user: UserModel) {
+    sessionStorage.setItem('activeUser', JSON.stringify(user));
     this.activeUser = user;
   }
 
