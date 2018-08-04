@@ -6,9 +6,9 @@ import { environment } from '../../environments/environment';
 export class DataService {
 
   // Word gestoor in die environment.ts file
-  // env = environment.apiUrl;
+  env = environment.apiUrl;
   // env = 'http://192.168.1.12:1337';
-  env = 'http://127.0.0.1:1337';
+  // env = 'http://127.0.0.1:1337';
 
   constructor(private http: HttpClient) { }
 

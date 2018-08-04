@@ -28,10 +28,12 @@ export class MapService {
     if (polygon.length > 1) {
       // Gaan deur alle polygons
       for (let i = 0; i < polygon.length; i++) {
-        proPolygon.push([[]]);
-        // Gaan deur alle punte van polygon
-        for (let s = 0; s < polygon[i][0].length; s++) {
-          proPolygon[i][0].push([polygon[i][0][s].lat, polygon[i][0][s].lng]);
+        if (polygon[i][0].length > 3) {
+          proPolygon.push([[]]);
+          // Gaan deur alle punte van polygon
+          for (let s = 0; s < polygon[i][0].length; s++) {
+            proPolygon[i][0].push([polygon[i][0][s].lat, polygon[i][0][s].lng]);
+          }
         }
       }
     } else {

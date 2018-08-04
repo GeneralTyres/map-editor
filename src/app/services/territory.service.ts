@@ -18,7 +18,7 @@ export class TerritoryService {
     return this.data.load('territories', 0).subscribe(
       value => {
         this.territories = this.base.sortByDate(value, 'desc');
-        console.log('this.territories ::', this.territories)
+        console.log('this.territories ::', this.territories);
       }
     );
   }
