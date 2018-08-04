@@ -22,7 +22,12 @@
   border-left-color: rgb(0, 123, 255);
 }
 
-.card {
+.card-light-panel {
+  margin: 10px;
+  background-color: #676767 !important;
+}
+
+.card-dark {
   background-color: #393939 !important;
 }
 

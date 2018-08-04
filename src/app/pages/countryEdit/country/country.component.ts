@@ -88,6 +88,9 @@ export class CountryComponent implements OnInit {
 
     // initialize the map on the "map" div with a given center and zoom
     this.territoryPreviewMap = L.map('territoryPreview', {editable: true}).setView([-0.163360, 13.053125], 3).addLayer(osm);
+    if (this.territories.length > 0) {
+      this.displayAreaById(this.territories[0].areaId);
+    }
   }
 
   saveCountry() {

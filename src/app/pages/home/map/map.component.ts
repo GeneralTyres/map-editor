@@ -47,7 +47,7 @@ export class MapComponent implements OnInit {
     this.getData();
     this.loadMap();
     this.date = Math.floor(Math.random() * 2000) + 1;
-    this.showYear();
+    this.showYear(this.date);
   }
 
   loadMap() {
@@ -130,7 +130,7 @@ export class MapComponent implements OnInit {
 
   eventHandler(event) {
     if (event.keyCode === 13) {
-      this.showYear();
+      this.showYear(this.date);
     }
   }
 
@@ -140,7 +140,10 @@ export class MapComponent implements OnInit {
     this.areas = this.areaService.getAreas();
   }
 
-  showYear() {
+  showYear(date) {
+    if (this.baseService.isNotEmpty(date)) {
+      this.date = Number(date);
+    }
     this.featureGroup.clearLayers();
     // Get current countries
     const countries = this.countryService.getCountriesByDate(this.date);

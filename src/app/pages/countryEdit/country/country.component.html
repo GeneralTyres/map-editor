@@ -11,79 +11,85 @@
 <div class="row">
   <div class="col-md-1"></div>
   <div class="col-md-10">
-      <div class="card">
+      <div class="card card-dark">
         <h5 class="card-header">Details</h5>
         <div class="card-body">
-          <div class="row">
-            <div class="col-md-12 text-center">
-              <h3>Country Information
-                <span>
-                  <a
-                    class="btn btn-primary"
-                    (click)="toggleEditCountry()">
-                    <span><fa name="pencil"></fa></span></a>
-                </span>
-              </h3>
-            </div>
-            <div class="col-md-4"></div>
-            <div class="col-md-4 text-center">
-              <img src="{{ country.flag }}" alt="" style="height: 300px; width: 100%">
-            </div>
-            <div class="col-md-4"></div>
-            <div class="col-md-12">
-              <div class="form-group">
-                <label for="name">Name</label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  class="form-control"
-                  [(ngModel)] = "country.name"
-                  [readonly]="!editCountry">
-              </div>
-              <div class="form-group">
-                <label>Description</label>
-                <p *ngIf="country.description.length > 20" class="text-danger">To long</p>
-                <quill-editor [(ngModel)]="country.description" theme='snow' [style]="{height: '250px'}"></quill-editor>
-              </div>
-
-              <div class="form-group">
-                <div class="row">
-                  <div class="col-md-6">
-                    <label for="fromDate">From Date</label>
+          <div class="card card-light-panel">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-4 text-center">
+                  <h3>
+                    <span>
+                      <img src="../../../../assets/images/icons/parthenon.svg" style="width: 30px;">
+                    </span>
+                    {{ country.name }}
+                    <span>
+                      <a
+                        class="btn btn-primary"
+                        (click)="toggleEditCountry()">
+                        <span><fa name="pencil"></fa></span></a>
+                    </span>
+                  </h3>
+                  <img src="{{ country.flag }}" alt="" style="height: 300px; width: 100%">
+                </div>
+                <div class="col-md-8">
+                  <div class="form-group">
+                    <label for="name">Name</label>
                     <input
                       type="text"
-                      id="fromDate"
-                      name="fromDate"
-                      class="form-control"
-                      [(ngModel)] = "country.fromDate"
+                      id="name"
+                      name="name"
+                      class="form-control is-valid"
+                      [(ngModel)] = "country.name"
                       [readonly]="!editCountry">
+                      <div class="valid-feedback">
+                        Looks good!
+                      </div>
                   </div>
-                  <div class="col-md-6">
-                    <label for="toDate">To Date</label>
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <label for="fromDate">From Date</label>
+                        <input
+                          type="text"
+                          id="fromDate"
+                          name="fromDate"
+                          class="form-control"
+                          [(ngModel)] = "country.fromDate"
+                          [readonly]="!editCountry">
+                      </div>
+                      <div class="col-md-6">
+                        <label for="toDate">To Date</label>
+                        <input
+                          type="text"
+                          id="toDate"
+                          name="toDate"
+                          class="form-control"
+                          [(ngModel)] = "country.toDate"
+                          [readonly]="!editCountry">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group custom-file" *ngIf="editCountry">
+                    <!--<label for="toDate">Flag</label>-->
                     <input
-                      type="text"
-                      id="toDate"
-                      name="toDate"
-                      class="form-control"
-                      [(ngModel)] = "country.toDate"
-                      [readonly]="!editCountry">
+                      type="file"
+                      id="flagFile"
+                      name="flagFile"
+                      class="form-control custom-file-input"
+                      (change)="processImage($event)">
+                    <label class="custom-file-label" for="flagFile">Upload country flag</label>
                   </div>
                 </div>
-              </div>
-              <div class="form-group" *ngIf="editCountry">
-                <label for="toDate">Flag</label>
-                <input
-                  type="file"
-                  id="flagFile"
-                  name="flagFile"
-                  class="form-control"
-                  (change)="processImage($event)">
-              </div>
-              <div class="row text-center" *ngIf="editCountry">
                 <div class="col-md-12">
+
+                  <div class="form-group">
+                    <label>Description</label>
+                    <p *ngIf="country.description.length > 20" class="text-danger">To long</p>
+                    <quill-editor [(ngModel)]="country.description" theme='snow' [style]="{height: '250px'}"></quill-editor>
+                  </div>
                   <button
-                    class="btn btn-primary"
+                    class="btn btn-primary pull-right"
                     (click)="saveCountry()">
                     Save Country Details
                   </button>
@@ -92,61 +98,64 @@
             </div>
           </div>
 
-          <!--Era se details-->
-          <div class="row" *ngIf="!creatingCountry">
-            <div class="col-md-12 text-center">
-              <h3>Eras</h3>
+          <div class="container card card-light-panel">
+            <div class="text-center">
+              <h3>
+                <span><img src="../../../../assets/images/icons/torch.svg" style="width: 30px;"></span>
+                <u><strong>Eras</strong></u></h3>
             </div>
-            <div class="col-md-12">
-              <table class="table table-hover">
-                <thead>
-                  <tr>
-                    <th></th>
-                    <th></th>
-                    <th><button
-                      class="btn btn-icon-primary"
-                      (click)="createNewState()">
-                      <span><fa name="plus"></fa></span>Add new State
-                    </button></th>
-                  </tr>
-                  <tr>
-                    <th>State Name</th>
-                    <th>Date</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let state of states  let idx = index">
-                    <td>{{ state.name }}</td>
-                    <td>{{ state.date }}</td>
-                    <td>
-                      <div class="btn-group">
-                        <button
-                          class="btn btn-icon-primary card-link"
-                          (click)="activateState(state, idx)">
-                          <span><fa name="pencil"></fa></span></button>
-                        <button
-                          class="btn btn-icon-primary card-link"
-                          (click)="deleteState(state, idx)">
-                          <span><fa name="times"></fa></span></button>
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+            <table class="table table-hover">
+              <thead>
+              <tr>
+                <th></th>
+                <th></th>
+                <th><button
+                  class="btn btn-icon-primary"
+                  (click)="createNewState()">
+                  <span><fa name="plus"></fa></span>Add new Era
+                </button></th>
+              </tr>
+              <tr>
+                <th>State Name</th>
+                <th>Date</th>
+                <th>Actions</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let state of states  let idx = index">
+                <td>{{ state.name }}</td>
+                <td>{{ state.date }}</td>
+                <td>
+                  <div class="btn-group">
+                    <button
+                      class="btn btn-icon-primary card-link"
+                      (click)="activateState(state, idx)">
+                      <span><fa name="pencil"></fa></span></button>
+                    <button
+                      class="btn btn-icon-primary card-link"
+                      (click)="deleteState(state, idx)">
+                      <span><fa name="times"></fa></span></button>
+                  </div>
+                </td>
+              </tr>
+              </tbody>
+            </table>
           </div>
+
           <!--Territories-->
-          <div class="row" [hidden]="creatingCountry">
-            <div class="col-md-12">
-              <h3>Territories</h3>
-            </div>
-            <div class="col-md-12">
-              <div class="map-container" id="territoryPreview"></div>
-            </div>
-            <div class="col-md-12">
-              <table class="table table-hover">
-                <thead>
+          <div class="card card-light-panel">
+            <div class="row" [hidden]="creatingCountry">
+              <div class="col-md-12 text-center">
+                <h3>
+                  <span><img src="../../../../assets/images/icons/laurel.svg" style="width: 30px;"></span>
+                  <u><strong>Territories</strong></u></h3>
+              </div>
+              <div class="col-md-12">
+                <div class="map-container" id="territoryPreview"></div>
+              </div>
+              <div class="col-md-12">
+                <table class="table table-hover">
+                  <thead>
                   <tr>
                     <th></th>
                     <th></th>
@@ -161,8 +170,8 @@
                     <th>Date</th>
                     <th>Actions</th>
                   </tr>
-                </thead>
-                <tbody>
+                  </thead>
+                  <tbody>
                   <tr *ngFor="let territory of territories let idx = index">
                     <td>{{ territory.name }}</td>
                     <td>{{ territory.date }}</td>
@@ -188,8 +197,9 @@
                       </div>
                     </td>
                   </tr>
-                </tbody>
-              </table>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
