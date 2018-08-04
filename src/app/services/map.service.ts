@@ -34,6 +34,9 @@ export class MapService {
           for (let s = 0; s < polygon[i][0].length; s++) {
             proPolygon[i][0].push([polygon[i][0][s].lat, polygon[i][0][s].lng]);
           }
+        } else {
+          polygon.splice(i, 1);
+          i--;
         }
       }
     } else {
