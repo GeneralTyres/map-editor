@@ -9,6 +9,8 @@
         <p class="card-text text-center">{{ activeCountry.fromDate }} - {{ activeCountry.toDate }}</p>
         <div class="card-text text-center" [innerHTML]="activeCountry.description"></div>
         <h5 class="card-text text-center" *ngIf="activeState">Era: {{ activeState.name }}</h5>
+        <span title="Good Economy"><img class="statusIcon" src="../../../../assets/images/icons/coins.svg" alt=""></span>
+        <span><img class="statusIcon" src="../../../../assets/images/icons/coins.svg" alt=""></span>
         <div class="card-text text-center" *ngIf="activeState" [innerHTML]="activeState.description"></div>
         <p class="card-text text-center" *ngIf="!activeState">No state for this period</p>
       </div>

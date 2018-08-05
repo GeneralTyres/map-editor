@@ -58,6 +58,10 @@ export class CountryComponent implements OnInit {
   }
 
   ngOnInit() {
+    const user = sessionStorage.getItem('activeUser');
+    if (!this.baseService.isNotEmpty(user)) {
+      this.router.navigate(['home']);
+    }
     this.country = this.countryService.getActiveCountry();
     if (!this.country) {
       // Die bladsy het geherlaai. Gaan terug na die lande lys

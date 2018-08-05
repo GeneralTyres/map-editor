@@ -9,3 +9,13 @@
 .close {
   color: white;
 }
+
+.modal-form-icon {
+  width: 30px;
+  padding-bottom: 10px;
+}
+
+.quillBackground {
+  background-color: white;
+  color: black;
+}

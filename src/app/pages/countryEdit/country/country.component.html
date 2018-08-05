@@ -98,57 +98,61 @@
             </div>
           </div>
 
-          <div class="container card card-light-panel">
-            <div class="text-center">
-              <h3>
-                <span><img src="../../../../assets/images/icons/torch.svg" style="width: 30px;"></span>
-                <u><strong>Eras</strong></u></h3>
+          <div class="card card-light-panel">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="">
+                  <h1>
+                    <span><img src="../../../../assets/images/icons/torch.svg" style="width: 30px;"></span>
+                    <u><strong>Eras</strong></u></h1>
+                </div>
+                <table class="table table-hover">
+                  <thead>
+                  <tr>
+                    <th></th>
+                    <th></th>
+                    <th><button
+                      class="btn btn-icon-primary pull-right"
+                      (click)="createNewState()">
+                      <span><fa name="plus"></fa></span>Add new Era
+                    </button></th>
+                  </tr>
+                  <tr>
+                    <th>State Name</th>
+                    <th>Date</th>
+                    <th>Actions</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr *ngFor="let state of states  let idx = index">
+                    <td>{{ state.name }}</td>
+                    <td>{{ state.date }}</td>
+                    <td>
+                      <div class="btn-group">
+                        <button
+                          class="btn btn-icon-primary card-link"
+                          (click)="activateState(state, idx)">
+                          <span><fa name="pencil"></fa></span></button>
+                        <button
+                          class="btn btn-icon-primary card-link"
+                          (click)="deleteState(state, idx)">
+                          <span><fa name="times"></fa></span></button>
+                      </div>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
-            <table class="table table-hover">
-              <thead>
-              <tr>
-                <th></th>
-                <th></th>
-                <th><button
-                  class="btn btn-icon-primary"
-                  (click)="createNewState()">
-                  <span><fa name="plus"></fa></span>Add new Era
-                </button></th>
-              </tr>
-              <tr>
-                <th>State Name</th>
-                <th>Date</th>
-                <th>Actions</th>
-              </tr>
-              </thead>
-              <tbody>
-              <tr *ngFor="let state of states  let idx = index">
-                <td>{{ state.name }}</td>
-                <td>{{ state.date }}</td>
-                <td>
-                  <div class="btn-group">
-                    <button
-                      class="btn btn-icon-primary card-link"
-                      (click)="activateState(state, idx)">
-                      <span><fa name="pencil"></fa></span></button>
-                    <button
-                      class="btn btn-icon-primary card-link"
-                      (click)="deleteState(state, idx)">
-                      <span><fa name="times"></fa></span></button>
-                  </div>
-                </td>
-              </tr>
-              </tbody>
-            </table>
           </div>
 
           <!--Territories-->
           <div class="card card-light-panel">
             <div class="row" [hidden]="creatingCountry">
-              <div class="col-md-12 text-center">
-                <h3>
-                  <span><img src="../../../../assets/images/icons/laurel.svg" style="width: 30px;"></span>
-                  <u><strong>Territories</strong></u></h3>
+              <div class="col-md-12">
+                <h1>
+                  <span><img src="../../../../assets/images/icons/laurel.svg" style="width: 35px;"></span>
+                  <u><strong>Territories</strong></u></h1>
               </div>
               <div class="col-md-12">
                 <div class="map-container" id="territoryPreview"></div>
@@ -160,8 +164,9 @@
                     <th></th>
                     <th></th>
                     <th><button
-                      class="btn btn-icon-primary"
-                      (click)="createNewTerritory()">Add New Territory
+                      class="btn btn-icon-primary pull-right"
+                      (click)="createNewTerritory()">
+                      Add New Territory
                       <span><fa name="plus"></fa></span>
                     </button></th>
                   </tr>

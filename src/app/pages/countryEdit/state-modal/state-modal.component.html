@@ -17,11 +17,15 @@
           [(ngModel)]="activeState.name">
       </div>
       <div>
-        <label>State Description</label>
-        <quill-editor [(ngModel)]="activeState.description" theme='snow' [style]="{height: '250px'}"></quill-editor>
+        <label><img src="../../../../assets/images/icons/Logo.svg" class="modal-form-icon">
+          State Description</label>
+        <div class="quillBackground">
+          <quill-editor [(ngModel)]="activeState.description" theme='snow' [style]="{height: '250px'}"></quill-editor>
+        </div>
       </div>
-      <div class="form-group">
-        <label for="from">State Date</label>
+      <div class="form-group" style="padding-top: 10px">
+        <label for="from"><img src="../../../../assets/images/icons/hourglass.svg" class="modal-form-icon">
+          State Date</label>
         <input
           type="text"
           id="from"
@@ -31,19 +35,17 @@
           [(ngModel)]="activeState.date">
       </div>
       <div class="form-group">
-        <label for="population">Population</label>
-        <select
-          id="population"
-          name="population"
-          class="form-control"
-          [(ngModel)]="activeState.population">
-          <option *ngFor="let type of populationOptions" [value]="type.id">
-            {{type.name}}
-          </option>
-        </select>
+        <label for="population">
+          <img src="../../../../assets/images/icons/population.svg" class="modal-form-icon">
+          Population</label>
+        <input type="number"
+               class="form-control"
+               id="population"
+               [(ngModel)]="activeState.population">
       </div>
       <div class="form-group">
-        <label for="economy">Economy</label>
+        <label for="economy"><img src="../../../../assets/images/icons/coins.svg" class="modal-form-icon">
+          Economy</label>
         <select
           id="economy"
           name="economy"
@@ -55,7 +57,8 @@
         </select>
       </div>
       <div class="form-group">
-        <label for="civilisation">Human Sub Species</label>
+        <label for="civilisation"><img src="../../../../assets/images/icons/nefertiti.svg" class="modal-form-icon">
+          Government Type</label>
         <select
           id="civilisation"
           name="civilisation"
@@ -67,13 +70,14 @@
         </select>
       </div>
       <div class="form-group">
-        <label for="reference">Reference</label>
+        <label for="reference"><img src="../../../../assets/images/icons/wikipedia.svg" class="modal-form-icon">
+          Reference</label>
         <input
           type="text"
           id="reference"
           name="reference"
           class="form-control"
-          placeholder="wikipedia link"
+          placeholder="Wikipedia link"
           [(ngModel)]="activeState.reference">
       </div>
     </div>

@@ -26,6 +26,10 @@ export class CountryListComponent implements OnInit {
   }
 
   ngOnInit() {
+    const user = sessionStorage.getItem('activeUser');
+    if (!this.baseService.isNotEmpty(user)) {
+      this.router.navigate(['home']);
+    }
     this.getData();
   }
 
