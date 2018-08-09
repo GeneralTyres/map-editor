@@ -7,10 +7,10 @@ export class StateModel {
     public name: string = '',
     public description: string = '',
     public population: number = 0,
-    public economy: number = 0,
+    public traits: string = '',
     public civilisation: number = 0,
     public reference: string = '',
-    public createdAt: number = 0,
-    public updatedAt: number = 0
+    public createdAt: string = undefined,
+    public updatedAt: string = undefined
   ) {}
 }

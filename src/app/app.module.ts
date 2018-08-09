@@ -37,6 +37,7 @@ import { TraitManagementComponent } from './pages/customisation/trait-management
 import {TraitService} from './services/trait.service';
 import {TraitManagementResolverService} from './pages/customisation/trait-management/traitManagementResolver.service';
 import {SafeHtml} from './pipes/safeHtml.pipe';
+import {NgMultiSelectDropDownModule} from 'ng-multiselect-dropdown';
 
 
 @NgModule({
@@ -63,6 +64,7 @@ import {SafeHtml} from './pipes/safeHtml.pipe';
     LoadingBarHttpClientModule,
     AngularFontAwesomeModule,
     NgbModule.forRoot(),
+    NgMultiSelectDropDownModule.forRoot(),
     ColorPickerModule,
     QuillModule
   ],
