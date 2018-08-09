@@ -1,0 +1,13 @@
+.trait-icon {
+  width: 100px;
+  height: 100px;
+}
+
+.trait-list-icon {
+  width: 30px;
+  height: 30px;
+}
+
+.list-group-item {
+  cursor: pointer;
+}

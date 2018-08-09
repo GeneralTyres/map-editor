@@ -9,6 +9,8 @@ import {HomeResolverService} from './pages/home/homeResolver.service';
 import {CountryEditResolverService} from './pages/countryEdit/countryEditResolver.service';
 import {LoginPageResolverService} from './pages/login/loginPageResolver.service';
 import {LoginPageComponent} from './pages/login/login-page/login-page.component';
+import {TraitManagementComponent} from './pages/customisation/trait-management/trait-management.component';
+import {TraitManagementResolverService} from './pages/customisation/trait-management/traitManagementResolver.service';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -27,6 +29,8 @@ const appRoutes: Routes = [
   },
   { path: 'country', component: CountryComponent,
     resolve: {loader: CountryEditResolverService} },
+  { path: 'traitManagement', component: TraitManagementComponent,
+    resolve: {loader: TraitManagementResolverService} },
   { path: 'states', component: CountryListComponent,
     children: [
       { path: '', component: CountryListComponent },

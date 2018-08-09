@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
+import {DomSanitizer} from '@angular/platform-browser';
 
 let self;
 
 @Injectable()
 export class BaseService {
 
-  constructor() {
+  constructor(private domSanitizer: DomSanitizer) {
     self = this;
   }
 
@@ -112,6 +113,24 @@ export class BaseService {
       isNotEmpty = true;
     }
     return isNotEmpty;
+  }
+
+  /**
+   * Transform a file into base64 code
+   * @param input
+   * @param item
+   * @param propertyName
+   */
+  getFileBase64(input, item, propertyName) {
+    const file = (input.target.files[0]);
+    // Create a FileReader
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    // Add an event listener to deal with the file when the reader is complete
+    reader.addEventListener('load', (event: any) => {
+      // Get the event.target.result from the reader (base64 of the image)
+      item[propertyName] = event.target.result;
+    }, false);
   }
 
 }

@@ -33,6 +33,10 @@ import { StateModalComponent } from './pages/countryEdit/state-modal/state-modal
 import {UsersService} from './services/user.service';
 import { LoginPageComponent } from './pages/login/login-page/login-page.component';
 import {LoginPageResolverService} from './pages/login/loginPageResolver.service';
+import { TraitManagementComponent } from './pages/customisation/trait-management/trait-management.component';
+import {TraitService} from './services/trait.service';
+import {TraitManagementResolverService} from './pages/customisation/trait-management/traitManagementResolver.service';
+import {SafeHtml} from './pipes/safeHtml.pipe';
 
 
 @NgModule({
@@ -46,7 +50,9 @@ import {LoginPageResolverService} from './pages/login/loginPageResolver.service'
     CountryDashboardComponent,
     TerritoryModalComponent,
     StateModalComponent,
-    LoginPageComponent
+    LoginPageComponent,
+    TraitManagementComponent,
+    SafeHtml
   ],
   imports: [
     BrowserModule,
@@ -70,11 +76,13 @@ import {LoginPageResolverService} from './pages/login/loginPageResolver.service'
     TerritoryService,
     LeafletService,
     UsersService,
+    TraitService,
     // Resolvers
     ResolverService,
     HomeResolverService,
     CountryEditResolverService,
-    LoginPageResolverService
+    LoginPageResolverService,
+    TraitManagementResolverService
   ],
   bootstrap: [AppComponent],
   entryComponents: [TerritoryModalComponent, StateModalComponent]
