@@ -34,3 +34,7 @@
 .list-group-item-action {
   background-color: #393939 !important;
 }
+
+.row {
+  width: 100%;
+}

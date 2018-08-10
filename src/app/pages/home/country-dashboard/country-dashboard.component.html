@@ -8,9 +8,18 @@
         </div>
         <p class="card-text text-center">{{ activeCountry.fromDate }} - {{ activeCountry.toDate }}</p>
         <div class="card-text text-center" [innerHTML]="activeCountry.description"></div>
-        <h5 class="card-text text-center" *ngIf="activeState">Era: {{ activeState.name }}</h5>
-        <span title="Good Economy"><img class="statusIcon" src="../../../../assets/images/icons/coins.svg" alt=""></span>
-        <span><img class="statusIcon" src="../../../../assets/images/icons/coins.svg" alt=""></span>
+        <div *ngIf="activeState">
+          <h5 class="card-text text-center">Era: {{ activeState.name }}</h5>
+          <div *ngIf="activeState.traits.length > 0">
+          <span
+            *ngFor="let trait of activeState.traits"
+            title="{{ trait.description }}">
+          <img
+            class="statusIcon"
+            [src]="trait.icon | safeHtml">
+        </span>
+          </div>
+        </div>
         <div class="card-text text-center" *ngIf="activeState" [innerHTML]="activeState.description"></div>
         <p class="card-text text-center" *ngIf="!activeState">No state for this period</p>
       </div>

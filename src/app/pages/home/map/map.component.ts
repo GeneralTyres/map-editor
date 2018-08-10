@@ -11,6 +11,7 @@ import {AreaService} from '../../../services/area.service';
 import {TerritoryService} from '../../../services/territory.service';
 import {BaseService} from '../../../services/base.service';
 import {LeafletService} from '../../../services/leaflet.service';
+import {Subject} from 'rxjs/index';
 
 let self;
 @Component({

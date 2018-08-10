@@ -1,6 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {StateService} from '../../../services/state.service';
+import {TraitService} from '../../../services/trait.service';
+import {BaseService} from '../../../services/base.service';
 
 @Component({
   selector: 'app-state-modal',
@@ -8,25 +10,12 @@ import {StateService} from '../../../services/state.service';
   styleUrls: ['./state-modal.component.css']
 })
 export class StateModalComponent implements OnInit {
-  dropdownList = [];
-  selectedItems = [];
+  traits = [];
+  selectedTraits = [];
+  iconTraits = [];
   dropdownSettings = {};
 
   @Input() activeState;
-  economyOptions = [
-    {
-      name: 'Good',
-      id: 0
-    },
-    {
-      name: 'Bad',
-      id: 1
-    },
-    {
-      name: 'Steadfast',
-      id: 2
-    }
-  ];
   humanSubTypesOptions = [
     {
       name: 'White',
@@ -56,37 +45,43 @@ export class StateModalComponent implements OnInit {
     }
   ];
 
+
   constructor(public activeModal: NgbActiveModal,
-              private stateService: StateService) { }
+              private baseService: BaseService,
+              private stateService: StateService,
+              private traitsService: TraitService) { }
 
   ngOnInit() {
-    this.dropdownList = [
-      { item_id: 1, item_text: 'Mumbai' },
-      { item_id: 2, item_text: 'Bangaluru' },
-      { item_id: 3, item_text: 'Pune' },
-      { item_id: 4, item_text: 'Navsari' },
-      { item_id: 5, item_text: 'New Delhi' }
-    ];
-    this.selectedItems = [
-      { item_id: 3, item_text: 'Pune' },
-      { item_id: 4, item_text: 'Navsari' }
-    ];
     this.dropdownSettings = {
       singleSelection: false,
-      idField: 'item_id',
-      textField: 'item_text',
+      idField: 'id',
+      textField: 'name',
       selectAllText: 'Select All',
       unSelectAllText: 'UnSelect All',
       itemsShowLimit: 3,
       allowSearchFilter: true
     };
-
+    this.traits = this.traitsService.getTraits();
+    console.log('this.traits ::', this.traits)
+    console.log('this.activeState ::', this.activeState)
+    if (this.activeState.traits.length > 0) {
+      this.selectedTraits = this.traitsService.getTraitsByIds(JSON.parse(this.activeState.traits));
+      this.iconTraits = this.traitsService.getTraitsByIds(JSON.parse(this.activeState.traits));
+    }
   }
 
   save() {
+    const traitIds = this.baseService.getPropertyValuesFromArray(this.selectedTraits, 'id');
+    this.activeState.traits = JSON.stringify(traitIds);
+    console.log('this.activeState ::', this.activeState)
     this.stateService.saveState(this.activeState).subscribe((state: any) => {
       this.activeModal.close(state);
     });
+  }
+
+  onSelect() {
+    const traitIds = this.baseService.getPropertyValuesFromArray(this.selectedTraits, 'id');
+    this.iconTraits = this.baseService.getObjectsWherePropertyHasValues(this.traits, 'id', traitIds);
   }
 
 }

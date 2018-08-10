@@ -63,7 +63,7 @@ export class StateService {
 
   getStateByCountryIdAndDate(countryId: number, date: number) {
     let countryStates = this.baseService.getObjectsWhereKeysHaveValues(this.states, {countryId: countryId});
-    countryStates = this.baseService.sortByDate(countryStates, 'decs');
+    countryStates = this.baseService.sortByDate(countryStates, 'desc');
     let currentState;
     for (let i = 0; i < countryStates.length; i++) {
       if (Number(countryStates[i].date) <= date) {

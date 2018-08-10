@@ -6,6 +6,8 @@ import {AreaService} from './area.service';
 import {CountryService} from './country.service';
 import {TerritoryService} from './territory.service';
 import {StateService} from './state.service';
+import {TraitService} from './trait.service';
+import {isString} from 'util';
 
 @Injectable()
 export class MapService {
@@ -16,7 +18,8 @@ export class MapService {
                private countryService: CountryService,
                private data: DataService,
                private stateService: StateService,
-               private territoryService: TerritoryService) { }
+               private territoryService: TerritoryService,
+               private traitsService: TraitService) { }
 
   convertLeafletPolygonToString(polygon: any) {
     // Polygon wat ge-save gaan word
@@ -76,6 +79,18 @@ export class MapService {
     const activeTerritory = this.territoryService.getTerritoryByAreaId(areaId);
     const activeCountry = this.countryService.getCountryById(activeTerritory.countryId);
     activeCountry.activeState = this.stateService.getStateByCountryIdAndDate(activeCountry.id, date);
+    console.log('activeCountry.activeState ::', activeCountry.activeState)
+    // Check of iets gesave is voor json.parse en check of dit nie al klaar geparse is nie
+    if (this.baseService.isNotEmpty(activeCountry.activeState)) {
+      if (activeCountry.activeState.traits.length > 0 &&
+        isString(activeCountry.activeState.traits)) {
+        activeCountry.activeState.traits = JSON.parse(activeCountry.activeState.traits);
+        activeCountry.activeState.traits = this.traitsService.getTraitsByIds(activeCountry.activeState.traits);
+      } else if (isString(activeCountry.activeState.traits)) {
+        // As dit nog 'n string is dan is dit nog nie geparse nie
+        activeCountry.activeState.traits = [];
+      }
+    }
     return activeCountry;
   }
 

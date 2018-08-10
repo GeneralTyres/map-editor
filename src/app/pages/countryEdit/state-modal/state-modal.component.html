@@ -44,24 +44,17 @@
                [(ngModel)]="activeState.population">
       </div>
       <div class="form-group">
-        <label for="economy"><img src="../../../../assets/images/icons/coins.svg" class="modal-form-icon">
+        <label>
+          <img *ngFor="let trait of iconTraits" [src]="trait.icon | safeHtml" class="modal-form-icon">
           Traits</label>
         <ng-multiselect-dropdown
           [placeholder]="'custom placeholder'"
-          [data]="dropdownList"
-          [(ngModel)]="selectedItems"
+          [data]="traits"
+          [(ngModel)]="selectedTraits"
           [settings]="dropdownSettings"
+          (onSelect)="onSelect($event)"
         >
         </ng-multiselect-dropdown>
-        <!--<select-->
-          <!--id="economy"-->
-          <!--name="economy"-->
-          <!--class="form-control"-->
-          <!--[(ngModel)]="activeState.traits">-->
-          <!--<option *ngFor="let type of economyOptions" [value]="type.id">-->
-            <!--{{type.name}}-->
-          <!--</option>-->
-        <!--</select>-->
       </div>
       <div class="form-group">
         <label for="civilisation"><img src="../../../../assets/images/icons/nefertiti.svg" class="modal-form-icon">

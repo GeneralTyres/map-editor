@@ -51,7 +51,6 @@ export class LeafletService {
   }
 
   buildPolygonsFromAreas(areas) {
-    console.log('areas ::', areas)
     const polygons = [];
     for (let i = 0; i < areas.length; i++) {
       let lineTpye = '';
