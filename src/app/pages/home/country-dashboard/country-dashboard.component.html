@@ -6,10 +6,11 @@
         <div class="text-center">
           <img src="{{ activeCountry.flag }}" alt="" class="dashboard-flag img-thumbnail">
         </div>
-        <p class="card-text text-center">{{ activeCountry.fromDate }} - {{ activeCountry.toDate }}</p>
-        <div class="card-text text-center" [innerHTML]="activeCountry.description"></div>
+        <p class="card-text text-center">{{ activeCountry.fromDate | yearDisplayer }} - {{ activeCountry.toDate | yearDisplayer }}</p>
+        <div class="card-text" [innerHTML]="activeCountry.description"></div>
+        <hr>
         <div *ngIf="activeState">
-          <h5 class="card-text text-center">Era: {{ activeState.name }}</h5>
+          <h4 class="card-text">{{ activeState.name }}</h4>
           <div *ngIf="activeState.traits.length > 0">
           <span
             *ngFor="let trait of activeState.traits"
@@ -20,8 +21,8 @@
         </span>
           </div>
         </div>
-        <div class="card-text text-center" *ngIf="activeState" [innerHTML]="activeState.description"></div>
-        <p class="card-text text-center" *ngIf="!activeState">No state for this period</p>
+        <div class="card-text" *ngIf="activeState" [innerHTML]="activeState.description"></div>
+        <p class="card-text" *ngIf="!activeState">No state for this period</p>
       </div>
     </div>
   </div>

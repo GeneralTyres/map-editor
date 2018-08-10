@@ -38,6 +38,7 @@ import {TraitService} from './services/trait.service';
 import {TraitManagementResolverService} from './pages/customisation/trait-management/traitManagementResolver.service';
 import {SafeHtml} from './pipes/safeHtml.pipe';
 import {NgMultiSelectDropDownModule} from 'ng-multiselect-dropdown';
+import {YearDisplayerPipe} from './pipes/yearDisplayer.pipe';
 
 
 @NgModule({
@@ -53,7 +54,8 @@ import {NgMultiSelectDropDownModule} from 'ng-multiselect-dropdown';
     StateModalComponent,
     LoginPageComponent,
     TraitManagementComponent,
-    SafeHtml
+    SafeHtml,
+    YearDisplayerPipe
   ],
   imports: [
     BrowserModule,
