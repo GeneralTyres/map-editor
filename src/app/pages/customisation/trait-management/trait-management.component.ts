@@ -16,6 +16,7 @@ export class TraitManagementComponent implements OnInit {
   traits: TraitModel[];
   displayedTraits: TraitModel[];
   activeTrait: TraitModel = new TraitModel();
+  searchText = '';
 
   constructor(
     private baseService: BaseService,
