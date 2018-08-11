@@ -6,7 +6,7 @@ export class TerritoryModel {
     public date: number = 0,
     public name: string = '',
     public reference: string = '',
-    public createdAt: number = 0,
-    public updatedAt: number = 0
+    public createdAt: string = undefined,
+    public updatedAt: string = undefined,
   ) {}
 }

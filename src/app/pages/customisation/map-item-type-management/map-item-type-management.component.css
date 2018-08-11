@@ -1,0 +1,13 @@
+.mapItemType-icon {
+  width: 100px;
+  height: 100px;
+}
+
+.mapItemType-list-icon {
+  width: 30px;
+  height: 30px;
+}
+
+.list-group-item {
+  cursor: pointer;
+}

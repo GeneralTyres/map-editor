@@ -39,6 +39,10 @@ import {TraitManagementResolverService} from './pages/customisation/trait-manage
 import {SafeHtml} from './pipes/safeHtml.pipe';
 import {NgMultiSelectDropDownModule} from 'ng-multiselect-dropdown';
 import {YearDisplayerPipe} from './pipes/yearDisplayer.pipe';
+import {MapItemService} from './services/mapItem.service';
+import {MapItemTypeService} from './services/mapItemType.service';
+import {MapItemTypeManagementComponent} from './pages/customisation/map-item-type-management/map-item-type-management.component';
+import {MapItemTypeManagementResolverService} from './pages/customisation/map-item-type-management/mapItemTypeManagementResolver.service';
 
 
 @NgModule({
@@ -54,6 +58,7 @@ import {YearDisplayerPipe} from './pipes/yearDisplayer.pipe';
     StateModalComponent,
     LoginPageComponent,
     TraitManagementComponent,
+    MapItemTypeManagementComponent,
     SafeHtml,
     YearDisplayerPipe
   ],
@@ -75,6 +80,8 @@ import {YearDisplayerPipe} from './pipes/yearDisplayer.pipe';
     CountryService,
     StateService,
     MapService,
+    MapItemService,
+    MapItemTypeService,
     AreaService,
     BaseService,
     TerritoryService,
@@ -86,7 +93,8 @@ import {YearDisplayerPipe} from './pipes/yearDisplayer.pipe';
     HomeResolverService,
     CountryEditResolverService,
     LoginPageResolverService,
-    TraitManagementResolverService
+    TraitManagementResolverService,
+    MapItemTypeManagementResolverService
   ],
   bootstrap: [AppComponent],
   entryComponents: [TerritoryModalComponent, StateModalComponent]

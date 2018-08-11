@@ -5,7 +5,7 @@ export class AreaModel {
     public polygonType: number =  0,
     public colour: string = '',
     public reference: string = '',
-    public createdAt: number = 0,
-    public updatedAt: number = 0
+    public createdAt: string = undefined,
+    public updatedAt: string = undefined,
   ) {}
 }

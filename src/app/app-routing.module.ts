@@ -11,6 +11,8 @@ import {LoginPageResolverService} from './pages/login/loginPageResolver.service'
 import {LoginPageComponent} from './pages/login/login-page/login-page.component';
 import {TraitManagementComponent} from './pages/customisation/trait-management/trait-management.component';
 import {TraitManagementResolverService} from './pages/customisation/trait-management/traitManagementResolver.service';
+import {MapItemTypeManagementComponent} from './pages/customisation/map-item-type-management/map-item-type-management.component';
+import {MapItemTypeManagementResolverService} from './pages/customisation/map-item-type-management/mapItemTypeManagementResolver.service';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -31,6 +33,8 @@ const appRoutes: Routes = [
     resolve: {loader: CountryEditResolverService} },
   { path: 'traitManagement', component: TraitManagementComponent,
     resolve: {loader: TraitManagementResolverService} },
+  { path: 'mapItemTypeManagement', component: MapItemTypeManagementComponent,
+    resolve: {loader: MapItemTypeManagementResolverService} },
   { path: 'states', component: CountryListComponent,
     children: [
       { path: '', component: CountryListComponent },
