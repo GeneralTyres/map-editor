@@ -1,4 +1,10 @@
-# MapEditor
+# Atenika
+
+This is a project aimed at creating visual repensentation of history. Reading trough books and wikipedia pages can sometimes be tiresom and some people don't even bother. However, history is an important resource for knowledge, wisdom and just plainly interesting facts. The benifits of a population who knows and understands the events their and other's history can not be understated.
+
+Thus we are trying to display history in a visual, minimal reading form.
+
+## Development Information
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.7.2.
 
