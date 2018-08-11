@@ -7,6 +7,16 @@ This is a project aimed at creating visual repensentation of history. Reading tr
 Thus we are trying to display history in a visual, minimal reading form.
 Demo: http://41.185.93.19/home
 
+Here's our logo (hover to see the title text):
+
+Inline-style: 
+![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Logo Title Text 1")
+
+Reference-style: 
+![alt text][logo]
+
+[logo]: https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Logo Title Text 2"
+
 ## Development Information
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.7.2.
