@@ -10,7 +10,7 @@ Demo: http://41.185.93.19/home
 Here's our logo (hover to see the title text):
 
 Inline-style: 
-![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Logo Title Text 1")
+![alt text](https://78.media.tumblr.com/d49872bdd186de46943b4cacc5865a3e/tumblr_ow0m5soDKq1soqrhbo1_1280.jpg "Logo Title Text 1")
 
 Reference-style: 
 ![alt text][logo]
