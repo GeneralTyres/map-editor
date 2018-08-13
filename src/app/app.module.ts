@@ -43,6 +43,7 @@ import {MapItemService} from './services/mapItem.service';
 import {MapItemTypeService} from './services/mapItemType.service';
 import {MapItemTypeManagementComponent} from './pages/customisation/map-item-type-management/map-item-type-management.component';
 import {MapItemTypeManagementResolverService} from './pages/customisation/map-item-type-management/mapItemTypeManagementResolver.service';
+import { ReferenceWidgetComponent } from './pages/shared-components/reference-widget/reference-widget.component';
 
 
 @NgModule({
@@ -60,7 +61,8 @@ import {MapItemTypeManagementResolverService} from './pages/customisation/map-it
     TraitManagementComponent,
     MapItemTypeManagementComponent,
     SafeHtml,
-    YearDisplayerPipe
+    YearDisplayerPipe,
+    ReferenceWidgetComponent
   ],
   imports: [
     BrowserModule,

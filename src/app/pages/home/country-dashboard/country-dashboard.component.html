@@ -8,21 +8,23 @@
         </div>
         <p class="card-text text-center">{{ activeCountry.fromDate | yearDisplayer }} - {{ activeCountry.toDate | yearDisplayer }}</p>
         <div class="card-text" [innerHTML]="activeCountry.description"></div>
+        <app-reference-widget></app-reference-widget>
         <hr>
         <div *ngIf="activeState">
           <h4 class="card-text">{{ activeState.name }}</h4>
           <div *ngIf="activeState.traits.length > 0">
-          <span
-            *ngFor="let trait of activeState.traits"
-            title="{{ trait.description }}">
-          <img
-            class="statusIcon"
-            [src]="trait.icon | safeHtml">
-        </span>
+            <span
+              *ngFor="let trait of activeState.traits"
+              title="{{ trait.description }}">
+            <img
+              class="statusIcon"
+              [src]="trait.icon | safeHtml">
+            </span>
           </div>
         </div>
         <div class="card-text" *ngIf="activeState" [innerHTML]="activeState.description"></div>
         <p class="card-text" *ngIf="!activeState">No state for this period</p>
+        <app-reference-widget></app-reference-widget>
       </div>
     </div>
   </div>
