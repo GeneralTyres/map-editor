@@ -1,8 +1,10 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {StateService} from '../../../services/state.service';
 import {TraitService} from '../../../services/trait.service';
 import {BaseService} from '../../../services/base.service';
+import {ReferenceWidgetComponent} from '../../shared-components/reference-widget/reference-widget.component';
+import {ReferenceModel} from '../../../models/reference.model';
 
 @Component({
   selector: 'app-state-modal',
@@ -16,6 +18,7 @@ export class StateModalComponent implements OnInit {
   dropdownSettings = {};
 
   @Input() activeState;
+  @ViewChild(ReferenceWidgetComponent) refWid: ReferenceWidgetComponent;
   humanSubTypesOptions = [
     {
       name: 'White',
@@ -30,21 +33,6 @@ export class StateModalComponent implements OnInit {
       id: 2
     }
   ];
-  populationOptions = [
-    {
-      name: 'White',
-      id: 0
-    },
-    {
-      name: 'Black',
-      id: 1
-    },
-    {
-      name: 'Chines',
-      id: 2
-    }
-  ];
-
 
   constructor(public activeModal: NgbActiveModal,
               private baseService: BaseService,
@@ -71,11 +59,15 @@ export class StateModalComponent implements OnInit {
   }
 
   save() {
-    const traitIds = this.baseService.getPropertyValuesFromArray(this.selectedTraits, 'id');
-    this.activeState.traits = JSON.stringify(traitIds);
-    console.log('this.activeState ::', this.activeState)
-    this.stateService.saveState(this.activeState).subscribe((state: any) => {
-      this.activeModal.close(state);
+    this.refWid.saveReference().subscribe((value: ReferenceModel) => {
+      console.log('value ::', value);
+      this.activeState.referenceId = value.id;
+      const traitIds = this.baseService.getPropertyValuesFromArray(this.selectedTraits, 'id');
+      this.activeState.traits = JSON.stringify(traitIds);
+      console.log('this.activeState ::', this.activeState);
+      this.stateService.saveState(this.activeState).subscribe((state: any) => {
+        this.activeModal.close(state);
+      });
     });
   }
 

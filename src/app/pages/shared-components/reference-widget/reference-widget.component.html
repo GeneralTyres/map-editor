@@ -1,36 +1,105 @@
-<div class="btn-group pull-right" role="group">
-  <a
-    role="button"
-    class="btn btn-secondary"
-    placement="top"
-    ngbTooltip="Wikipedia"
-    href="https://en.wikipedia.org/wiki/Main_Page"
-    target="_blank">
-    <span><i class="fa fa-wikipedia-w" aria-hidden="true"></i></span>
-  </a>
-  <a
-    role="button"
-    class="btn btn-secondary"
-    placement="top"
-    ngbTooltip="YouTube"
-    href="https://youtube.com"
-    target="_blank">
-    <span><i class="fa fa-youtube-play" aria-hidden="true"></i></span>
-  </a>
-  <a
-    role="button"
-    class="btn btn-secondary"
-    placement="top"
-    ngbTooltip="Internet Archive"
-    href="https://archive.org/"
-    target="_blank">
-    <span><img src="../../../../assets/images/icons/parthenon.svg" style="width: 16px;"></span>
-  </a>
-  <a
-    role="button"
-    class="btn btn-secondary"
-    placement="top"
-    ngbTooltip="Reference list">
-    <span><i class="fa fa-book" aria-hidden="true"></i></span>
-  </a>
+<div class="row">
+  <div class="col-md-12">
+    <div class="btn-group pull-right" role="group" *ngIf="!editMode">
+      <a
+        *ngIf="reference.wikipediaURL"
+        role="button"
+        class="btn btn-secondary"
+        placement="top"
+        ngbTooltip="Wikipedia"
+        href="{{ reference.wikipediaURL }}"
+        target="_blank">
+        <span><i class="fa fa-wikipedia-w" aria-hidden="true"></i></span>
+      </a>
+      <a
+        *ngIf="reference.youTubeURL"
+        role="button"
+        class="btn btn-secondary"
+        placement="top"
+        ngbTooltip="YouTube"
+        href="{{ reference.youTubeURL }}"
+        target="_blank">
+        <span><i class="fa fa-youtube-play" aria-hidden="true"></i></span>
+      </a>
+      <a
+        *ngIf="reference.internetArchiveURL"
+        role="button"
+        class="btn btn-secondary"
+        placement="top"
+        ngbTooltip="{{ reference.internetArchiveURL }}"
+        href="https://archive.org/"
+        target="_blank">
+        <span><img src="../../../../assets/images/icons/parthenon.svg" style="width: 16px;"></span>
+      </a>
+      <button
+        *ngIf="this.textReferenceList.length > 0"
+        type="button"
+        class="btn btn-secondary"
+        placement="top"
+        ngbTooltip="Reference list"
+        (click)="showReferenceModal()">
+        <span><i class="fa fa-book" aria-hidden="true"></i></span>
+      </button>
+    </div>
+    <div *ngIf="editMode">
+      <label><img src="../../../../assets/images/icons/wikipedia.svg" class="modal-form-icon">
+        References</label>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="basic-addon1"><i class="fa fa-wikipedia-w" aria-hidden="true"></i></span>
+        </div>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="wikipedia.com"
+          aria-label="Username"
+          aria-describedby="basic-addon1"
+          [(ngModel)]="reference.wikipediaURL">
+      </div>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="basic-addon1"><i class="fa fa-youtube-play" aria-hidden="true"></i></span>
+        </div>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="youtube.com"
+          aria-label="Username"
+          aria-describedby="basic-addon1"
+          [(ngModel)]="reference.youTubeURL">
+      </div>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="basic-addon1"><img src="../../../../assets/images/icons/parthenon.svg" style="width: 16px;"></span>
+        </div>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="archive.com"
+          aria-label="Username"
+          aria-describedby="basic-addon1"
+          [(ngModel)]="reference.internetArchiveURL">
+      </div>
+      <div class="input-group mb-3" *ngFor="let text of textReferenceList let idx = index">
+        <div class="input-group-prepend">
+      <span
+        class="input-group-text addRef"
+        (click)="addTextReference()">
+        <i class="fa fa-plus" aria-hidden="true"></i></span>
+        </div>
+        <input
+          name="textRef"
+          type="text"
+          class="form-control"
+          placeholder="Text Reference"
+          aria-label="Username"
+          aria-describedby="basic-addon1"
+          [(ngModel)]="text.text">
+        <div class="input-group-append">
+          <span class="input-group-text" id="basic-addon2">{{ idx + 1 }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>

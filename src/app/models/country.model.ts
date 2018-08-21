@@ -5,6 +5,7 @@ export class CountryModel {
               public fromDate: string = '',
               public toDate: string = '',
               public flag: string = '',
+              public referenceId: number = null,
               public createdAt: string = undefined,
               public updatedAt: string = undefined,
   ) {}

@@ -12,7 +12,7 @@ export class MapItemService {
 
   loadMapItems() {
     return new Promise((resolve, reject) =>
-      this.data.load('mapItems', 0).subscribe(
+      this.data.load('mapItems', 0, null).subscribe(
         value => {
           this.mapItems = value;
           resolve();

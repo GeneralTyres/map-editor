@@ -69,17 +69,10 @@
           </option>
         </select>
       </div>
-      <div class="form-group">
-        <label for="reference"><img src="../../../../assets/images/icons/wikipedia.svg" class="modal-form-icon">
-          Reference</label>
-        <input
-          type="text"
-          id="reference"
-          name="reference"
-          class="form-control"
-          placeholder="Wikipedia link"
-          [(ngModel)]="activeState.reference">
-      </div>
+      <app-reference-widget
+        [referenceId]="activeState.referenceId"
+        [editMode]="true">
+      </app-reference-widget>
     </div>
   </div>
 </div>

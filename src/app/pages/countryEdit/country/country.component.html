@@ -82,12 +82,15 @@
                   </div>
                 </div>
                 <div class="col-md-12">
-
                   <div class="form-group">
                     <label>Description</label>
                     <p *ngIf="country.description.length > 20" class="text-danger">To long</p>
                     <quill-editor [(ngModel)]="country.description" theme='snow' [style]="{height: '250px'}"></quill-editor>
                   </div>
+                  <app-reference-widget
+                    [referenceId]="country.referenceId"
+                    [editMode]="true">
+                  </app-reference-widget>
                   <button
                     class="btn btn-primary pull-right"
                     (click)="saveCountry()">
@@ -124,7 +127,7 @@
                   </tr>
                   </thead>
                   <tbody>
-                  <tr *ngFor="let state of states  let idx = index">
+                  <tr *ngFor="let state of states let idx = index">
                     <td>{{ state.name }}</td>
                     <td>{{ state.date }}</td>
                     <td>

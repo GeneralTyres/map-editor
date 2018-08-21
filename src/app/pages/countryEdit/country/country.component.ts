@@ -16,6 +16,8 @@ import {TerritoryModalComponent} from '../territory-modal/territory-modal.compon
 import {StateModalComponent} from '../state-modal/state-modal.component';
 import {TerritoryModel} from '../../../models/territory.model';
 import {AreaModel} from '../../../models/area.model';
+import {ReferenceWidgetComponent} from '../../shared-components/reference-widget/reference-widget.component';
+import {ReferenceModel} from '../../../models/reference.model';
 
 let self;
 
@@ -26,6 +28,7 @@ let self;
 })
 export class CountryComponent implements OnInit {
   @ViewChild('f') slForm: NgForm;
+  @ViewChild(ReferenceWidgetComponent) refWid: ReferenceWidgetComponent;
 
   country: CountryModel;
   // Wysig waardes
@@ -98,13 +101,17 @@ export class CountryComponent implements OnInit {
   }
 
   saveCountry() {
-    if (this.editCountry) {
-      this.countryService.saveCountry(this.country).subscribe(
-        (response: CountryModel) => {
-          this.router.navigate(['../countries']);
-        }
-      );
-    }
+    this.refWid.saveReference().subscribe((value: ReferenceModel) => {
+      if (this.editCountry) {
+        this.country.referenceId = value.id;
+        this.countryService.saveCountry(this.country).subscribe(
+          (response: CountryModel) => {
+            this.router.navigate(['../countries']);
+          }
+        );
+      }
+    });
+
   }
 
   /**

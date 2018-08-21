@@ -9,7 +9,7 @@ export class StateModel {
     public population: number = 0,
     public traits: string = '',
     public civilisation: number = 0,
-    public reference: string = '',
+    public referenceId: number = null,
     public createdAt: string = undefined,
     public updatedAt: string = undefined
   ) {}

@@ -8,7 +8,10 @@
         </div>
         <p class="card-text text-center">{{ activeCountry.fromDate | yearDisplayer }} - {{ activeCountry.toDate | yearDisplayer }}</p>
         <div class="card-text" [innerHTML]="activeCountry.description"></div>
-        <app-reference-widget></app-reference-widget>
+        <app-reference-widget
+          [referenceId]="activeCountry.referenceId"
+          [editMode]="false">
+        </app-reference-widget>
         <hr>
         <div *ngIf="activeState">
           <h4 class="card-text">{{ activeState.name }}</h4>
@@ -21,10 +24,14 @@
               [src]="trait.icon | safeHtml">
             </span>
           </div>
+          <div class="card-text" *ngIf="activeState" [innerHTML]="activeState.description"></div>
+          <p class="card-text" *ngIf="!activeState">No state for this period</p>
+          <app-reference-widget
+            [referenceId]="activeState.referenceId"
+            [editMode]="false">
+          </app-reference-widget>
         </div>
-        <div class="card-text" *ngIf="activeState" [innerHTML]="activeState.description"></div>
-        <p class="card-text" *ngIf="!activeState">No state for this period</p>
-        <app-reference-widget></app-reference-widget>
+
       </div>
     </div>
   </div>

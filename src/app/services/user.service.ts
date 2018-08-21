@@ -16,7 +16,7 @@ export class UsersService {
 
   loadUsers() {
     return new Promise((resolve, reject) =>
-      this.data.load('users', 0).subscribe(
+      this.data.load('users', 0, null).subscribe(
         (value: UserModel[]) => {
           this.users = value;
           resolve();

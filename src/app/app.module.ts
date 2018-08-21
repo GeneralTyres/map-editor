@@ -44,6 +44,8 @@ import {MapItemTypeService} from './services/mapItemType.service';
 import {MapItemTypeManagementComponent} from './pages/customisation/map-item-type-management/map-item-type-management.component';
 import {MapItemTypeManagementResolverService} from './pages/customisation/map-item-type-management/mapItemTypeManagementResolver.service';
 import { ReferenceWidgetComponent } from './pages/shared-components/reference-widget/reference-widget.component';
+import {ReferenceService} from './services/reference.service';
+import { ReferenceTextModalComponent } from './pages/shared-components/reference-widget/reference-text-modal/reference-text-modal.component';
 
 
 @NgModule({
@@ -62,7 +64,8 @@ import { ReferenceWidgetComponent } from './pages/shared-components/reference-wi
     MapItemTypeManagementComponent,
     SafeHtml,
     YearDisplayerPipe,
-    ReferenceWidgetComponent
+    ReferenceWidgetComponent,
+    ReferenceTextModalComponent
   ],
   imports: [
     BrowserModule,
@@ -90,6 +93,7 @@ import { ReferenceWidgetComponent } from './pages/shared-components/reference-wi
     LeafletService,
     UsersService,
     TraitService,
+    ReferenceService,
     // Resolvers
     ResolverService,
     HomeResolverService,
@@ -99,6 +103,6 @@ import { ReferenceWidgetComponent } from './pages/shared-components/reference-wi
     MapItemTypeManagementResolverService
   ],
   bootstrap: [AppComponent],
-  entryComponents: [TerritoryModalComponent, StateModalComponent]
+  entryComponents: [TerritoryModalComponent, StateModalComponent, ReferenceTextModalComponent]
 })
 export class AppModule { }

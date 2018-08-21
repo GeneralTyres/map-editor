@@ -1,0 +1,9 @@
+.modal-form-icon {
+  width: 30px;
+  padding-bottom: 10px;
+}
+
+.addRef:hover {
+  background-color: green;
+  cursor: pointer;
+}

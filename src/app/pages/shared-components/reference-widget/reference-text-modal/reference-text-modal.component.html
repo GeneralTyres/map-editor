@@ -1,0 +1,15 @@
+<div class="modal-header">
+  <h4 class="modal-title">Reference List</h4>
+</div>
+<div class="modal-body">
+  <div class="row">
+    <div class="col-md-12">
+      <ol>
+        <li *ngFor="let reference of referenceList">{{ reference.text }}</li>
+      </ol>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn" (click)="activeModal.close()">Close</button>
+</div>

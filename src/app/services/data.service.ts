@@ -12,11 +12,15 @@ export class DataService {
 
   constructor(private http: HttpClient) { }
 
-  load(tableName, limit) {
-    const query =
-      this.env + '/' +
-      tableName +
-      '?limit=' + (limit ? limit : 1000);
+  load(tableName, limit, whereClause) {
+    let query =
+      this.env + '/' + tableName;
+    if (whereClause) {
+      whereClause = JSON.stringify(whereClause);
+      query += '?where=' + whereClause;
+    } else {
+      query += '?limit=' + (limit ? limit : 1000);
+    }
     return this.http.get(query);
   }
 

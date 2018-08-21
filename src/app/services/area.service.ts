@@ -13,7 +13,7 @@ export class AreaService {
 
   loadAreas() {
     return new Promise((resolve, reject) =>
-      this.data.load('areas', 0).subscribe(
+      this.data.load('areas', 0, null).subscribe(
         value => {
           this.areas = value;
           resolve();

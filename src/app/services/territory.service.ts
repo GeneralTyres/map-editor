@@ -15,7 +15,7 @@ export class TerritoryService {
    * @return {Subscription}
    */
   loadTerritories () {
-    return this.data.load('territories', 0).subscribe(
+    return this.data.load('territories', 0, null).subscribe(
       value => {
         this.territories = this.base.sortByDate(value, 'desc');
       }

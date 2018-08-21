@@ -16,7 +16,7 @@ export class TraitService {
 
   loadTraits() {
     return new Promise((resolve, reject) =>
-      this.data.load(tableName, 0).subscribe(
+      this.data.load(tableName, 0, null).subscribe(
         ( value: TraitModel[] ) => {
           this.traits = value;
           resolve();
