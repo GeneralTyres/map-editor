@@ -46,6 +46,7 @@ import {MapItemTypeManagementResolverService} from './pages/customisation/map-it
 import { ReferenceWidgetComponent } from './pages/shared-components/reference-widget/reference-widget.component';
 import {ReferenceService} from './services/reference.service';
 import { ReferenceTextModalComponent } from './pages/shared-components/reference-widget/reference-text-modal/reference-text-modal.component';
+import { CountryModalComponent } from './pages/countryEdit/country-modal/country-modal.component';
 
 
 @NgModule({
@@ -65,7 +66,8 @@ import { ReferenceTextModalComponent } from './pages/shared-components/reference
     SafeHtml,
     YearDisplayerPipe,
     ReferenceWidgetComponent,
-    ReferenceTextModalComponent
+    ReferenceTextModalComponent,
+    CountryModalComponent
   ],
   imports: [
     BrowserModule,
@@ -103,6 +105,10 @@ import { ReferenceTextModalComponent } from './pages/shared-components/reference
     MapItemTypeManagementResolverService
   ],
   bootstrap: [AppComponent],
-  entryComponents: [TerritoryModalComponent, StateModalComponent, ReferenceTextModalComponent]
+  entryComponents: [
+    TerritoryModalComponent,
+    StateModalComponent,
+    ReferenceTextModalComponent,
+    CountryModalComponent]
 })
 export class AppModule { }

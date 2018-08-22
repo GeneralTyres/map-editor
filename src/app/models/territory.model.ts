@@ -5,7 +5,7 @@ export class TerritoryModel {
     public areaId: number = 0,
     public date: number = 0,
     public name: string = '',
-    public referenceId: number = null,
+    public referenceId: number = 0,
     public createdAt: string = undefined,
     public updatedAt: string = undefined,
   ) {}

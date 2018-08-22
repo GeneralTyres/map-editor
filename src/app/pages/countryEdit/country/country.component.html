@@ -23,79 +23,13 @@
                       <img src="../../../../assets/images/icons/parthenon.svg" style="width: 30px;">
                     </span>
                     {{ country.name }}
-                    <span>
-                      <a
-                        class="btn btn-primary"
-                        (click)="toggleEditCountry()">
-                        <span><fa name="pencil"></fa></span></a>
-                    </span>
                   </h3>
                   <img src="{{ country.flag }}" alt="" style="height: 300px; width: 100%">
                 </div>
                 <div class="col-md-8">
-                  <div class="form-group">
-                    <label for="name">Name</label>
-                    <input
-                      type="text"
-                      id="name"
-                      name="name"
-                      class="form-control is-valid"
-                      [(ngModel)] = "country.name"
-                      [readonly]="!editCountry">
-                      <div class="valid-feedback">
-                        Looks good!
-                      </div>
-                  </div>
-                  <div class="form-group">
-                    <div class="row">
-                      <div class="col-md-6">
-                        <label for="fromDate">From Date</label>
-                        <input
-                          type="text"
-                          id="fromDate"
-                          name="fromDate"
-                          class="form-control"
-                          [(ngModel)] = "country.fromDate"
-                          [readonly]="!editCountry">
-                      </div>
-                      <div class="col-md-6">
-                        <label for="toDate">To Date</label>
-                        <input
-                          type="text"
-                          id="toDate"
-                          name="toDate"
-                          class="form-control"
-                          [(ngModel)] = "country.toDate"
-                          [readonly]="!editCountry">
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-group custom-file" *ngIf="editCountry">
-                    <!--<label for="toDate">Flag</label>-->
-                    <input
-                      type="file"
-                      id="flagFile"
-                      name="flagFile"
-                      class="form-control custom-file-input"
-                      (change)="processImage($event)">
-                    <label class="custom-file-label" for="flagFile">Upload country flag</label>
-                  </div>
-                </div>
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label>Description</label>
-                    <p *ngIf="country.description.length > 20" class="text-danger">To long</p>
-                    <quill-editor [(ngModel)]="country.description" theme='snow' [style]="{height: '250px'}"></quill-editor>
-                  </div>
-                  <app-reference-widget
-                    [referenceId]="country.referenceId"
-                    [editMode]="true">
-                  </app-reference-widget>
-                  <button
-                    class="btn btn-primary pull-right"
-                    (click)="saveCountry()">
-                    Save Country Details
-                  </button>
+                  <p class="card-text text-center">{{ country.fromDate | yearDisplayer }} -
+                     {{ country.toDate | yearDisplayer }}</p>
+                  <div class="card-text" [innerHTML]="country.description"></div>
                 </div>
               </div>
             </div>

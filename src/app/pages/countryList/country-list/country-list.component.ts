@@ -4,6 +4,8 @@ import {CountryService} from '../../../services/country.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {StateService} from '../../../services/state.service';
 import {BaseService} from '../../../services/base.service';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {CountryModalComponent} from '../../countryEdit/country-modal/country-modal.component';
 
 let self;
 
@@ -13,6 +15,8 @@ let self;
   styleUrls: ['./country-list.component.css']
 })
 export class CountryListComponent implements OnInit {
+
+  activeCountry: CountryModel = new CountryModel();
   countries: CountryModel[] = [];
   displayedCountries: CountryModel[] = [];
   searchText = '';
@@ -21,7 +25,8 @@ export class CountryListComponent implements OnInit {
               private stateService: StateService,
               private route: ActivatedRoute,
               private router: Router,
-              private baseService: BaseService) {
+              private baseService: BaseService,
+              private modalService: NgbModal) {
     self = this;
   }
 
@@ -63,8 +68,16 @@ export class CountryListComponent implements OnInit {
   }
 
   createNewCountry() {
-    this.countryService.setActiveCountry(new CountryModel());
-    this.router.navigate(['country']);
+    const modalRef = this.modalService.open(CountryModalComponent, { size: 'lg', beforeDismiss: () => false });
+    this.activeCountry = new CountryModel();
+    modalRef.componentInstance.activeCountry = this.activeCountry;
+    modalRef.result.then((value: CountryModel) => {
+      if (this.baseService.isNotEmpty(value)) {
+        // Doen iets na save
+        this.countryService.setActiveCountry(value);
+        this.router.navigate(['country']);
+      }
+    });
   }
 
 }

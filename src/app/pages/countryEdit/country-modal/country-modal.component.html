@@ -1,0 +1,70 @@
+<div class="modal-header">
+  <h4 class="modal-title">Create/Edit Country</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.close('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="row">
+    <div class="col-md-12">
+      <img src="{{ activeCountry.flag }}" alt="" style="height: 300px; width: 100%">
+      <div class="form-group">
+        <label for="countryName">Name</label>
+        <input
+          type="text"
+          id="countryName"
+          name="countryName"
+          class="form-control"
+          [(ngModel)]="activeCountry.name">
+      </div>
+      <div class="form-group custom-file">
+        <input
+          type="file"
+          id="flagFile"
+          name="flagFile"
+          class="form-control custom-file-input"
+          (change)="processImage($event)">
+        <label class="custom-file-label" for="flagFile">Upload country flag</label>
+      </div>
+      <div>
+        <label><img src="../../../../assets/images/icons/Logo.svg" class="modal-form-icon">
+          Country Description</label>
+        <div class="quillBackground">
+          <quill-editor [(ngModel)]="activeCountry.description" theme='snow' [style]="{height: '250px'}"></quill-editor>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="row">
+          <div class="col-md-6">
+            <label for="fromDate"><img src="../../../../assets/images/icons/hourglass.svg" class="modal-form-icon">
+              From Date</label>
+            <input
+              type="number"
+              id="fromDate"
+              name="fromDate"
+              class="form-control"
+              [(ngModel)] = "activeCountry.fromDate">
+          </div>
+          <div class="col-md-6">
+            <label for="toDate"><img src="../../../../assets/images/icons/hourglass.svg" class="modal-form-icon">
+              To Date</label>
+            <input
+              type="number"
+              id="toDate"
+              name="toDate"
+              class="form-control"
+              [(ngModel)] = "activeCountry.toDate">
+          </div>
+        </div>
+      </div>
+      <app-reference-widget
+        [referenceId]="activeCountry.referenceId"
+        [editMode]="true">
+      </app-reference-widget>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn" (click)="saveCountry()">Save</button>
+  <button type="button" class="btn" (click)="activeModal.close()">Close</button>
+</div>

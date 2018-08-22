@@ -34,7 +34,6 @@ export class CountryComponent implements OnInit {
   // Wysig waardes
   creatingCountry = false;
   editCountry = true;
-  editEras = true;
   // State list
   states: StateModel[];
   territoryPreviewMap: any;
@@ -94,44 +93,13 @@ export class CountryComponent implements OnInit {
       });
 
     // initialize the map on the "map" div with a given center and zoom
-    this.territoryPreviewMap = L.map('territoryPreview', {editable: true}).setView([-0.163360, 13.053125], 3).addLayer(osm);
+    this.territoryPreviewMap = L.map(
+      'territoryPreview',
+      {editable: true}).setView([-0.163360, 13.053125],
+      3).addLayer(osm);
     if (this.territories.length > 0) {
       this.displayAreaById(this.territories[0].areaId);
     }
-  }
-
-  saveCountry() {
-    this.refWid.saveReference().subscribe((value: ReferenceModel) => {
-      if (this.editCountry) {
-        this.country.referenceId = value.id;
-        this.countryService.saveCountry(this.country).subscribe(
-          (response: CountryModel) => {
-            this.router.navigate(['../countries']);
-          }
-        );
-      }
-    });
-
-  }
-
-  /**
-   * Maak die land besonderede bewerkbaar
-   */
-  toggleEditCountry() {
-    this.editCountry = !this.editCountry;
-  }
-
-  processImage(input) {
-    const file = (input.target.files[0]);
-    // Create a FileReader
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    // Add an event listener to deal with the file when the reader is complete
-    reader.addEventListener('load', (event: any) => {
-      // Get the event.target.result from the reader (base64 of the image)
-      const base64 = event.target.result;
-      this.country.flag = base64;
-    }, false);
   }
 
   createNewState() {

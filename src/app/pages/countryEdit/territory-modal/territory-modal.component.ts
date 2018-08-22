@@ -1,9 +1,10 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {NgbModal, NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {TerritoryService} from '../../../services/territory.service';
 import {AreaService} from '../../../services/area.service';
-import {AreaModel} from '../../../models/area.model';
 import {MapService} from '../../../services/map.service';
+import {ReferenceModel} from '../../../models/reference.model';
+import {ReferenceWidgetComponent} from '../../shared-components/reference-widget/reference-widget.component';
 
 let self;
 
@@ -17,6 +18,7 @@ export class TerritoryModalComponent implements OnInit {
   @Input() activeTerritory;
   @Input() activeArea;
   @Input() closeFunction;
+  @ViewChild(ReferenceWidgetComponent) refWid: ReferenceWidgetComponent;
   // activeArea: any;
   map: any;
   editPolygon: any;
@@ -121,7 +123,6 @@ export class TerritoryModalComponent implements OnInit {
     });
     // Save die polygon in die variable
     this.map.editTools.on('editable:drawing:move', function (e) {
-      const poly = e.target;
       this.currentPolygon = e.layer;
       self.editPolygon = this.currentPolygon;
     });
@@ -139,15 +140,18 @@ export class TerritoryModalComponent implements OnInit {
   }
 
   save() {
-    this.activeArea.polygon = this.mapSerivce.convertLeafletPolygonToString(this.editPolygon);
-    // Save die area
-    this.areaService.saveArea(this.activeArea).subscribe((area: any) => {
-      this.areaService.addArea(area);
-      // Set die gebied se areaId
-      this.activeTerritory.areaId = area.id;
-      // Save die territory
-      this.territoryService.saveTerritory(this.activeTerritory).subscribe(territory => {
-        this.activeModal.close(territory);
+    this.refWid.saveReference().subscribe((value: ReferenceModel) => {
+      this.activeArea.polygon = this.mapSerivce.convertLeafletPolygonToString(this.editPolygon);
+      // Save die area
+      this.areaService.saveArea(this.activeArea).subscribe((area: any) => {
+        this.areaService.addArea(area);
+        // Set die gebied se areaId
+        this.activeTerritory.areaId = area.id;
+        this.activeTerritory.referenceId = value.id;
+        // Save die territory
+        this.territoryService.saveTerritory(this.activeTerritory).subscribe(territory => {
+          this.activeModal.close(territory);
+        });
       });
     });
   }
