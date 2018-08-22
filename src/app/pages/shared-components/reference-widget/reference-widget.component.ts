@@ -11,7 +11,12 @@ import {ReferenceTextModalComponent} from './reference-text-modal/reference-text
   styleUrls: ['./reference-widget.component.css']
 })
 export class ReferenceWidgetComponent implements OnInit {
-  @Input() referenceId: number;
+  private _referenceId: number;
+
+  @Input() set referenceId(value: number) {
+    this._referenceId = value;
+    this.displayNewReference();
+  }
   @Input() editMode: boolean;
 
   reference: ReferenceModel = new ReferenceModel();
@@ -22,10 +27,14 @@ export class ReferenceWidgetComponent implements OnInit {
               private modalService: NgbModal) { }
 
   ngOnInit() {
-    console.log('this.referenceId ::', this.referenceId);
-    if (this.baseService.isNotEmpty(this.referenceId) && this.referenceId !== 0) {
+    this.displayNewReference();
+  }
+
+  displayNewReference() {
+    if (this.baseService.isNotEmpty(this._referenceId) && this._referenceId !== 0) {
       this.loadReference();
     } else {
+      this.reference = new ReferenceModel();
       if (this.editMode && this.textReferenceList.length === 0) {
         this.textReferenceList = [{text: ''}];
       }
@@ -33,12 +42,10 @@ export class ReferenceWidgetComponent implements OnInit {
   }
 
   loadReference() {
-    console.log('this.referenceId ::', this.referenceId)
-    const id = this.referenceId;
+    const id = this._referenceId;
     this.referenceService.loadReferenceById(id).then(
       ( value: ReferenceModel ) => {
         this.reference = value[0];
-        console.log('this.reference ::', this.reference)
         this.textReferenceList = JSON.parse(this.reference.referenceText);
         if (this.editMode && this.textReferenceList.length === 0) {
           this.textReferenceList = [{text: ''}];
@@ -69,13 +76,11 @@ export class ReferenceWidgetComponent implements OnInit {
   saveReference() {
     this.checkTextReferences();
     this.reference.referenceText = JSON.stringify(this.textReferenceList);
-    console.log('this.reference ::', this.reference);
     return this.referenceService.saveReference(this.reference);
   }
 
   showReferenceModal() {
     const modalRef = this.modalService.open(ReferenceTextModalComponent, { size: 'lg', beforeDismiss: () => false });
-    console.log('this.textReferenceList ::', this.textReferenceList);
     modalRef.componentInstance.referenceList = this.textReferenceList;
     modalRef.result.then(value => {
       // Doen iets na toe maak
