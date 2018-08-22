@@ -1,21 +1,58 @@
-<div class="row">
-  <div class="col-md-12">
-    <div class="card card-light-panel" *ngIf="activeCountry">
-      <div class="card-body">
-        <h3 class="card-title text-center">{{ activeCountry.name }}</h3>
-        <div class="text-center">
-          <img src="{{ activeCountry.flag }}" alt="" class="dashboard-flag img-thumbnail">
-        </div>
-        <p class="card-text text-center">{{ activeCountry.fromDate | yearDisplayer }} - {{ activeCountry.toDate | yearDisplayer }}</p>
-        <div class="card-text" [innerHTML]="activeCountry.description"></div>
-        <app-reference-widget
-          [referenceId]="activeCountry.referenceId"
-          [editMode]="false">
-        </app-reference-widget>
-        <hr>
-        <div *ngIf="activeState">
-          <h4 class="card-text">{{ activeState.name }}</h4>
-          <div *ngIf="activeState.traits.length > 0">
+<!--<div class="row">-->
+  <!--<div class="col-md-12">-->
+    <!--<div class="card card-light-panel" *ngIf="activeCountry">-->
+      <!--<div class="card-body">-->
+        <!--<h3 class="card-title text-center">{{ activeCountry.name }}</h3>-->
+        <!--<div class="text-center">-->
+          <!--<img src="{{ activeCountry.flag }}" alt="" class="dashboard-flag img-thumbnail">-->
+        <!--</div>-->
+        <!--<p class="card-text text-center">{{ activeCountry.fromDate | yearDisplayer }} - {{ activeCountry.toDate | yearDisplayer }}</p>-->
+        <!--<div class="card-text" [innerHTML]="activeCountry.description"></div>-->
+        <!--<app-reference-widget-->
+          <!--[referenceId]="activeCountry.referenceId"-->
+          <!--[editMode]="false">-->
+        <!--</app-reference-widget>-->
+        <!--<hr>-->
+        <!--<div *ngIf="activeState">-->
+          <!--<h4 class="card-text">{{ activeState.name }}</h4>-->
+          <!--<div *ngIf="activeState.traits.length > 0">-->
+            <!--<span-->
+              <!--*ngFor="let trait of activeState.traits"-->
+              <!--title="{{ trait.description }}">-->
+            <!--<img-->
+              <!--class="statusIcon"-->
+              <!--[src]="trait.icon | safeHtml">-->
+            <!--</span>-->
+          <!--</div>-->
+          <!--<div class="card-text" *ngIf="activeState" [innerHTML]="activeState.description"></div>-->
+          <!--<p class="card-text" *ngIf="!activeState">No state for this period</p>-->
+          <!--<app-reference-widget-->
+            <!--[referenceId]="activeState.referenceId"-->
+            <!--[editMode]="false">-->
+          <!--</app-reference-widget>-->
+        <!--</div>-->
+
+      <!--</div>-->
+    <!--</div>-->
+  <!--</div>-->
+<!--</div>-->
+
+<div class="card card-light-panel countryDashboard" *ngIf="activeCountry">
+  <div class="card-body">
+    <h3 class="card-title text-center">{{ activeCountry.name }}</h3>
+    <div class="text-center">
+      <img src="{{ activeCountry.flag }}" alt="" class="dashboard-flag img-thumbnail">
+    </div>
+    <p class="card-text text-center">{{ activeCountry.fromDate | yearDisplayer }} - {{ activeCountry.toDate | yearDisplayer }}</p>
+    <div class="card-text" [innerHTML]="activeCountry.description"></div>
+    <app-reference-widget
+      [referenceId]="activeCountry.referenceId"
+      [editMode]="false">
+    </app-reference-widget>
+    <hr>
+    <div *ngIf="activeState">
+      <h4 class="card-text">{{ activeState.name }}</h4>
+      <div *ngIf="activeState.traits.length > 0">
             <span
               *ngFor="let trait of activeState.traits"
               title="{{ trait.description }}">
@@ -23,16 +60,14 @@
               class="statusIcon"
               [src]="trait.icon | safeHtml">
             </span>
-          </div>
-          <div class="card-text" *ngIf="activeState" [innerHTML]="activeState.description"></div>
-          <p class="card-text" *ngIf="!activeState">No state for this period</p>
-          <app-reference-widget
-            [referenceId]="activeState.referenceId"
-            [editMode]="false">
-          </app-reference-widget>
-        </div>
-
       </div>
+      <div class="card-text" *ngIf="activeState" [innerHTML]="activeState.description"></div>
+      <p class="card-text" *ngIf="!activeState">No state for this period</p>
+      <app-reference-widget
+        [referenceId]="activeState.referenceId"
+        [editMode]="false">
+      </app-reference-widget>
     </div>
+
   </div>
 </div>

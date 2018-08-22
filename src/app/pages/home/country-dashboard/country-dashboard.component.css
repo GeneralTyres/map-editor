@@ -12,6 +12,14 @@
   width: 300px;
 }
 
+.countryDashboard {
+  width: 400px;
+  position: fixed;
+  top: 90px;
+  right: 0px;
+  z-index: 9999;
+}
+
 .row {
   margin-right: 0px;
   margin-left: 0px;
