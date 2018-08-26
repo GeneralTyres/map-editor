@@ -105,23 +105,26 @@ export class MapService {
     return activeCountry;
   }
 
-  getMapItemLayer(date) {
+  getMapItemLayer(date, zoomLevel) {
     const mapItems = this.mapItemService.getMapItemsByDate(date);
     const itemMarkers = [];
     for (let i = 0; i < mapItems.length; i++) {
       if (this.baseService.isNotEmptyOrZero(mapItems[i].latitude) &&
         this.baseService.isNotEmptyOrZero(mapItems[i].longitude)) {
-        const icon = this.mapItemTypeService.getMapItemTypeByMapItemTypeId(mapItems[i].itemType).icon;
-        // Create divIcon with item name
-        const divIcon = new L.DivIcon({
-          className: 'map-item-marker',
-          html: '<div class="row map-item-marker"><div class="col-md-3">' +
-          '<img class="map-item-icon float-left" src="' + icon + '"/></div>' +
-          '<div class="col-md-8"><p class="map-item-label">' + mapItems[i].name + '</p></div></div>'
-        });
-        const newLatLng = new L.LatLng(mapItems[i].latitude, mapItems[i].longitude);
-        const marker = L.marker(newLatLng, {icon: divIcon});
-        itemMarkers.push(marker);
+        const mapType = this.mapItemTypeService.getMapItemTypeByMapItemTypeId(mapItems[i].itemType);
+
+        if (mapType.zoomLevel <= zoomLevel) {
+          // Create divIcon with item name
+          const divIcon = new L.DivIcon({
+            className: 'map-item-marker',
+            html: '<div class="row map-item-marker"><div class="col-md-3">' +
+            '<img class="map-item-icon float-left" src="' + mapType.icon + '"/></div>' +
+            '<div class="col-md-8"><p class="map-item-label">' + mapItems[i].name + '</p></div></div>'
+          });
+          const newLatLng = new L.LatLng(mapItems[i].latitude, mapItems[i].longitude);
+          const marker = L.marker(newLatLng, {icon: divIcon});
+          itemMarkers.push(marker);
+        }
       }
     }
     return itemMarkers;

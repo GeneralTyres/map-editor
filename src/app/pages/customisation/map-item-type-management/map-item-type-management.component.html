@@ -29,6 +29,16 @@
             id="description"
             [(ngModel)]="activeMapItemType.description">
         </div>
+        <div class="form-group">
+          <label for="zoomLevel"><img src="../../../../assets/images/icons/hourglass.svg" class="modal-form-icon">
+            Zoom Level</label>
+          <input
+            type="number"
+            id="zoomLevel"
+            name="zoomLevel"
+            class="form-control"
+            [(ngModel)] = "activeMapItemType.zoomLevel">
+        </div>
         <a
           class="btn btn-primary"
           (click)="saveMapItemType()"

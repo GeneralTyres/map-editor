@@ -67,6 +67,7 @@ export class MapItemTypeManagementComponent implements OnInit {
   }
 
   activateMapItemType(mapItemType) {
+    console.log('mapItemType ::', mapItemType);
     this.activeMapItemType = mapItemType;
   }
 

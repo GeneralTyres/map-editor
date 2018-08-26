@@ -87,6 +87,9 @@ export class MapComponent implements OnInit {
     // });
     // initialize the map on the "map" div with a given center and zoom
     this.map = L.map('map').setView([43.1, 1.2], 5).addLayer(terrain);
+    this.map.on('zoomend', function() {
+      self.showYear(self.date);
+    });
     // this.map.addLayer(roads);
     // this.map.addLayer(water);
     // this.map.addLayer(river);
@@ -172,9 +175,9 @@ export class MapComponent implements OnInit {
     this.featureGroup = L.featureGroup(polygons);
     this.featureGroup.addTo(this.map);
 
-    // Add die icon
+    // Add die map items
     this.mapItemFeatureGroup.clearLayers();
-    this.mapItemFeatureGroup = L.featureGroup(this.mapService.getMapItemLayer(this.date));
+    this.mapItemFeatureGroup = L.featureGroup(this.mapService.getMapItemLayer(this.date, this.map.getZoom()));
     this.mapItemFeatureGroup.addTo(this.map);
   }
 
