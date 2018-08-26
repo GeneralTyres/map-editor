@@ -115,9 +115,9 @@ export class MapService {
         // Create divIcon with item name
         const divIcon = new L.DivIcon({
           className: 'map-item-marker',
-          html: '<div class="row map-item-marker"><div class="col-md-4">' +
+          html: '<div class="row map-item-marker"><div class="col-md-3">' +
           '<img class="map-item-icon float-left" src="' + icon + '"/></div>' +
-          '<div class="col-md-8" style="padding: 0"><p class="map-item-label">' + mapItems[i].name + '</p></div></div>'
+          '<div class="col-md-8"><p class="map-item-label">' + mapItems[i].name + '</p></div></div>'
         });
         const newLatLng = new L.LatLng(mapItems[i].latitude, mapItems[i].longitude);
         const marker = L.marker(newLatLng, {icon: divIcon});
