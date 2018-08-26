@@ -50,5 +50,7 @@
 }
 
 .map-item-label {
+  width: max-content;
+  max-width: 200px;
   font-size: 16px;
 }
