@@ -2,7 +2,7 @@
   <div class="col-md-1"></div>
   <div class="col-md-10">
     <app-country-map
-      [mapCountry]='country'>
+      [mapCountry]='activeCountry'>
     </app-country-map>
   </div>
   <div class="col-md-1"></div>
@@ -22,15 +22,21 @@
                     <span>
                       <img src="../../../../assets/images/icons/parthenon.svg" style="width: 30px;">
                     </span>
-                    {{ country.name }}
+                    {{ activeCountry.name }}
                   </h3>
-                  <img src="{{ country.flag }}" alt="" style="height: 300px; width: 100%">
+                  <img src="{{ activeCountry.flag }}" alt="" style="height: 300px; width: 100%">
                 </div>
                 <div class="col-md-8">
-                  <p class="card-text text-center">{{ country.fromDate | yearDisplayer }} -
-                     {{ country.toDate | yearDisplayer }}</p>
-                  <div class="card-text" [innerHTML]="country.description"></div>
+                  <p class="card-text text-center">{{ activeCountry.fromDate | yearDisplayer }} -
+                     {{ activeCountry.toDate | yearDisplayer }}</p>
+                  <div class="card-text" [innerHTML]="activeCountry.description"></div>
                 </div>
+              </div>
+              <div class="row">
+                <button
+                  type="button"
+                  class="btn btn-primary btn-block"
+                  (click)="editCountry()">Edit Country</button>
               </div>
             </div>
           </div>

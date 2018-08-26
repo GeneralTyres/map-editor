@@ -18,6 +18,7 @@ import {TerritoryModel} from '../../../models/territory.model';
 import {AreaModel} from '../../../models/area.model';
 import {ReferenceWidgetComponent} from '../../shared-components/reference-widget/reference-widget.component';
 import {ReferenceModel} from '../../../models/reference.model';
+import {CountryModalComponent} from '../country-modal/country-modal.component';
 
 let self;
 
@@ -30,10 +31,9 @@ export class CountryComponent implements OnInit {
   @ViewChild('f') slForm: NgForm;
   @ViewChild(ReferenceWidgetComponent) refWid: ReferenceWidgetComponent;
 
-  country: CountryModel;
+  activeCountry: CountryModel;
   // Wysig waardes
   creatingCountry = false;
-  editCountry = true;
   // State list
   states: StateModel[];
   territoryPreviewMap: any;
@@ -64,22 +64,20 @@ export class CountryComponent implements OnInit {
     if (!this.baseService.isNotEmpty(user)) {
       this.router.navigate(['home']);
     }
-    this.country = this.countryService.getActiveCountry();
-    if (!this.country) {
+    this.activeCountry = this.countryService.getActiveCountry();
+    if (!this.activeCountry) {
       // Die bladsy het geherlaai. Gaan terug na die lande lys
       this.router.navigate(['countries']);
-    } else if (!this.country.id) {
+    } else if (!this.activeCountry.id) {
       // Maak 'n nuwe land
-      this.editCountry = true;
       this.creatingCountry = true;
     } else {
-      // Wysig 'n land
-      this.editCountry = true;
-      this.territories = this.territoryService.getTerritoriesByCountryId(this.country.id);
+      // Wysig 'n land\
+      this.territories = this.territoryService.getTerritoriesByCountryId(this.activeCountry.id);
       this.loadTerritoryMap();
     }
     // Get country states
-    this.states = this.stateSer.getStatesByCountry(this.country).sort(function(a, b) {
+    this.states = this.stateSer.getStatesByCountry(this.activeCountry).sort(function(a, b) {
       return b.date - a.date;
     });
   }
@@ -102,9 +100,21 @@ export class CountryComponent implements OnInit {
     }
   }
 
+  editCountry() {
+    const modalRef = this.modalService.open(CountryModalComponent, { size: 'lg', beforeDismiss: () => false });
+    modalRef.componentInstance.activeCountry = this.activeCountry;
+    modalRef.result.then((value: CountryModel) => {
+      if (this.baseService.isNotEmpty(value)) {
+        // Doen iets na save
+        this.countryService.setActiveCountry(value);
+        this.router.navigate(['country']);
+      }
+    });
+  }
+
   createNewState() {
     const newState = new StateModel();
-    newState.countryId = this.country.id;
+    newState.countryId = this.activeCountry.id;
     this.activateState(newState, null);
   }
 
@@ -170,7 +180,7 @@ export class CountryComponent implements OnInit {
   createNewTerritory() {
     // Maak nuwe territory
     const newTerritory = new TerritoryModel();
-    newTerritory.countryId = this.country.id;
+    newTerritory.countryId = this.activeCountry.id;
     this.activateTerritory(newTerritory, new AreaModel(), null);
   }
 
@@ -185,7 +195,7 @@ export class CountryComponent implements OnInit {
     newArea.polygon = dupArea.polygon;
     newArea.polygonType = dupArea.polygonType;
     newArea.colour = dupArea.colour;
-    newTerritory.countryId = this.country.id;
+    newTerritory.countryId = this.activeCountry.id;
     this.activateTerritory(newTerritory, newArea, null);
   }
 
