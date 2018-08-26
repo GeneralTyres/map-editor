@@ -1,0 +1,21 @@
+.map-container {
+  height: 300px;
+  width: 100%;
+}
+
+.modal-header, .modal-body, .modal-footer {
+  background-color: #292b2c;
+}
+
+.modal-content {
+  background-color: #292b2c;
+  color: white;
+}
+.close {
+  color: white;
+}
+
+.modal-form-icon {
+  width: 30px;
+  padding-bottom: 10px;
+}

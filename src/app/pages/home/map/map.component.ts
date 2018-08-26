@@ -27,6 +27,7 @@ export class MapComponent implements OnInit {
   countries: CountryModel[];
   displayedTerritories: any[];
   date: number;
+  mapItemFeatureGroup: any = L.featureGroup();
   featureGroup: any = L.featureGroup();
   infoBox: any;
   activeCountry: CountryModel;
@@ -170,6 +171,11 @@ export class MapComponent implements OnInit {
     this.activeCountry = null;
     this.featureGroup = L.featureGroup(polygons);
     this.featureGroup.addTo(this.map);
+
+    // Add die icon
+    this.mapItemFeatureGroup.clearLayers();
+    this.mapItemFeatureGroup = L.featureGroup(this.mapService.getMapItemLayer(this.date));
+    this.mapItemFeatureGroup.addTo(this.map);
   }
 
 }

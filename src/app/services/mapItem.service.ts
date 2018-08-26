@@ -48,7 +48,9 @@ export class MapItemService {
   getMapItemsByDate(date: number) {
     const filteredMapItems = [];
     for (let i = 0; i < this.mapItems.length; i++) {
-      if (this.mapItems[i].fromDate <= date && this.mapItems[i].toDate < date) {
+      if (this.mapItems[i].toDate > date) {
+      }
+      if (this.mapItems[i].fromDate <= date && this.mapItems[i].toDate > date) {
         filteredMapItems.push(this.mapItems[i]);
       }
     }

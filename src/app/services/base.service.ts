@@ -116,6 +116,19 @@ export class BaseService {
   }
 
   /**
+   * Kyk of die waarde geldig is.
+   * @param value
+   * @return {boolean}
+   */
+  isNotEmptyOrZero(value) {
+    let isNotEmpty = false;
+    if (value !== null && value !== undefined && value !== 0) {
+      isNotEmpty = true;
+    }
+    return isNotEmpty;
+  }
+
+  /**
    * Transform a file into base64 code
    * @param input
    * @param item

@@ -13,6 +13,8 @@ import {TraitManagementComponent} from './pages/customisation/trait-management/t
 import {TraitManagementResolverService} from './pages/customisation/trait-management/traitManagementResolver.service';
 import {MapItemTypeManagementComponent} from './pages/customisation/map-item-type-management/map-item-type-management.component';
 import {MapItemTypeManagementResolverService} from './pages/customisation/map-item-type-management/mapItemTypeManagementResolver.service';
+import {MapItemManagementComponent} from './pages/map-item-management/map-item-management.component';
+import {MapItemManagementResolverService} from './pages/map-item-management/mapItemManagementResolver.service';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -28,6 +30,9 @@ const appRoutes: Routes = [
     //   { path: ':id', component: RecipeDetailComponent },
     //   { path: ':id/edit', component: RecipeEditComponent },
     // ]
+  },
+  { path: 'map-item-management', component: MapItemManagementComponent,
+    resolve: {loader: MapItemManagementResolverService}
   },
   { path: 'country', component: CountryComponent,
     resolve: {loader: CountryEditResolverService} },

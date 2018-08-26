@@ -1,0 +1,97 @@
+<div class="modal-header">
+  <h4 class="modal-title">Create/Edit Map Item</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.close('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="map-container" id="mapItemMap"></div>
+    </div>
+    Click on map
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="form-group">
+        <label for="mapItemName">Name</label>
+        <input
+          type="text"
+          id="mapItemName"
+          name="mapItemName"
+          class="form-control"
+          [(ngModel)]="activeMapItem.name">
+      </div>
+      <div class="form-group">
+        <label for="fromDate"><img src="../../../../assets/images/icons/hourglass.svg" class="modal-form-icon">
+          Latitude</label>
+        <input
+          type="number"
+          id="latitude"
+          name="latitude"
+          class="form-control"
+          [(ngModel)] = "activeMapItem.latitude">
+      </div>
+      <div class="form-group">
+        <label for="fromDate"><img src="../../../../assets/images/icons/hourglass.svg" class="modal-form-icon">
+          Longitude</label>
+        <input
+          type="number"
+          id="longitude"
+          name="longitude"
+          class="form-control"
+          [(ngModel)] = "activeMapItem.longitude">
+      </div>
+      <div>
+        <label><img src="../../../../assets/images/icons/Logo.svg" class="modal-form-icon">
+          Map Item Description</label>
+        <div class="quillBackground">
+          <quill-editor [(ngModel)]="activeMapItem.description" theme='snow' [style]="{height: '250px'}"></quill-editor>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="row">
+          <div class="col-md-6">
+            <label for="fromDate"><img src="../../../../assets/images/icons/hourglass.svg" class="modal-form-icon">
+              From Date</label>
+            <input
+              type="number"
+              id="fromDate"
+              name="fromDate"
+              class="form-control"
+              [(ngModel)] = "activeMapItem.fromDate">
+          </div>
+          <div class="col-md-6">
+            <label for="toDate"><img src="../../../../assets/images/icons/hourglass.svg" class="modal-form-icon">
+              To Date</label>
+            <input
+              type="number"
+              id="toDate"
+              name="toDate"
+              class="form-control"
+              [(ngModel)] = "activeMapItem.toDate">
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>
+          Item Type</label>
+        <ng-multiselect-dropdown
+          [placeholder]="'custom placeholder'"
+          [data]="mapItemTypes"
+          [(ngModel)]="activeMapItem.itemType"
+          [settings]="dropDownSettings"
+        >
+        </ng-multiselect-dropdown>
+      </div>
+      <app-reference-widget
+        [referenceId]="activeMapItem.referenceId"
+        [editMode]="true">
+      </app-reference-widget>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn" (click)="saveMapItem()">Save</button>
+  <button type="button" class="btn" (click)="activeModal.close()">Close</button>
+</div>

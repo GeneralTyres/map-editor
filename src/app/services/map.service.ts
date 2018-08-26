@@ -8,10 +8,19 @@ import {TerritoryService} from './territory.service';
 import {StateService} from './state.service';
 import {TraitService} from './trait.service';
 import {isString} from 'util';
+import {MapItemService} from './mapItem.service';
+import {MapItemTypeService} from './mapItemType.service';
 
 @Injectable()
 export class MapService {
   style: any;
+  icon = L.icon({
+    iconUrl: '../../../../../assets/images/icons/torch.svg',
+
+    iconSize:     [38, 95], // size of the icon
+    iconAnchor:   [20, 50], // point of the icon which will correspond to marker's location
+    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+  });
 
   constructor( private areaService: AreaService,
                private baseService: BaseService,
@@ -19,7 +28,9 @@ export class MapService {
                private data: DataService,
                private stateService: StateService,
                private territoryService: TerritoryService,
-               private traitsService: TraitService) { }
+               private traitsService: TraitService,
+               private mapItemService: MapItemService,
+               private mapItemTypeService: MapItemTypeService) { }
 
   convertLeafletPolygonToString(polygon: any) {
     // Polygon wat ge-save gaan word
@@ -92,6 +103,28 @@ export class MapService {
       }
     }
     return activeCountry;
+  }
+
+  getMapItemLayer(date) {
+    const mapItems = this.mapItemService.getMapItemsByDate(date);
+    const itemMarkers = [];
+    for (let i = 0; i < mapItems.length; i++) {
+      if (this.baseService.isNotEmptyOrZero(mapItems[i].latitude) &&
+        this.baseService.isNotEmptyOrZero(mapItems[i].longitude)) {
+        const icon = this.mapItemTypeService.getMapItemTypeByMapItemTypeId(mapItems[i].itemType).icon;
+        // Create divIcon with item name
+        const divIcon = new L.DivIcon({
+          className: 'map-item-marker',
+          html: '<div class="row map-item-marker"><div class="col-md-4">' +
+          '<img class="map-item-icon float-left" src="' + icon + '"/></div>' +
+          '<div class="col-md-8" style="padding: 0"><p class="map-item-label">' + mapItems[i].name + '</p></div></div>'
+        });
+        const newLatLng = new L.LatLng(mapItems[i].latitude, mapItems[i].longitude);
+        const marker = L.marker(newLatLng, {icon: divIcon});
+        itemMarkers.push(marker);
+      }
+    }
+    return itemMarkers;
   }
 
   getAreasForMap(date: number) {
