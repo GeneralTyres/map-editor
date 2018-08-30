@@ -1,59 +1,61 @@
-<div class="map-container" id="map"></div>
-<app-country-dashboard [activeCountry]="activeCountry" [activeState]="activeState"></app-country-dashboard>
-
-<div class="row">
-  <div class="col-md-4"></div>
-  <div class="col-md-4">
-    <ul class="pagination">
-      <li class="page-item">
-        <button
-          class="btn btn-danger"
-          (click)="showYear(date - 10)"
-          title="Go backward 10 years">10<fa name="arrow-left"></fa>
-        </button>
-      </li>
-      <li class="page-item">
-        <button
-          class="btn btn-danger"
-          (click)="showYear(date - 1)"
-          title="Go backward 1 year">1<fa name="arrow-left"></fa>
-        </button>
-      </li>
-      <li class="page-item">
+<div class="page-map-container">
+  <div class="map-container" id="map"></div>
+  <div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+      <ul class="pagination">
+        <li class="page-item">
+          <button
+            class="btn btn-danger"
+            (click)="showYear(date - 10)"
+            title="Go backward 10 years">10<fa name="arrow-left"></fa>
+          </button>
+        </li>
+        <li class="page-item">
+          <button
+            class="btn btn-danger"
+            (click)="showYear(date - 1)"
+            title="Go backward 1 year">1<fa name="arrow-left"></fa>
+          </button>
+        </li>
+        <li class="page-item">
           <div class="input-group mb-3">
-          <input
-            type="text"
-            class="form-control"
-            placeholder="-500"
-            aria-label="Recipient's username"
-            aria-describedby="basic-addon2"
-            [(ngModel)] = 'date'
-            (keypress)="eventHandler($event)">
-          <div class="input-group-append">
-            <button
-              class="btn btn-primary"
-              type="button"
-              (click)="showYear(date)">Go To Date</button>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="-500"
+              aria-label="Recipient's username"
+              aria-describedby="basic-addon2"
+              [(ngModel)] = 'date'
+              (keypress)="eventHandler($event)">
+            <div class="input-group-append">
+              <button
+                class="btn btn-primary"
+                type="button"
+                (click)="showYear(date)">Go To Date</button>
+            </div>
           </div>
-        </div>
-      </li>
-      <li class="page-item">
-        <button
-          class="btn btn-success"
-          (click)="showYear(date + 1)"
-          title="Go forward 1 year">1<fa name="arrow-right"></fa>
-        </button>
-      </li>
-      <li class="page-item">
-        <button
-          class="btn btn-success"
-          (click)="showYear(date + 10)"
-          title="Go forward 10 years">10<fa name="arrow-right"></fa>
-      </button>
-      </li>
-    </ul>
+        </li>
+        <li class="page-item">
+          <button
+            class="btn btn-success"
+            (click)="showYear(date + 1)"
+            title="Go forward 1 year">1<fa name="arrow-right"></fa>
+          </button>
+        </li>
+        <li class="page-item">
+          <button
+            class="btn btn-success"
+            (click)="showYear(date + 10)"
+            title="Go forward 10 years">10<fa name="arrow-right"></fa>
+          </button>
+        </li>
+      </ul>
+    </div>
+    <div class="col-md-4"></div>
   </div>
-  <div class="col-md-4"></div>
 </div>
+
+<app-country-dashboard [activeCountry]="activeCountry" [activeState]="activeState"></app-country-dashboard>
 
 

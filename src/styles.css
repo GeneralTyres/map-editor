@@ -54,3 +54,7 @@
   max-width: 200px;
   font-size: 16px;
 }
+
+html, body {
+  height: 100%;
+}

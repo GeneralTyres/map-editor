@@ -1,6 +1,10 @@
 .map-container {
-  height: 850px;
+  height: 100%;
   width: 100%;
+}
+
+.page-map-container {
+  height: 87%;
 }
 
 .flag-img {

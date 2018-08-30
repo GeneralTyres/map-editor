@@ -88,7 +88,7 @@ export class MapComponent implements OnInit {
     // initialize the map on the "map" div with a given center and zoom
     this.map = L.map('map').setView([43.1, 1.2], 5).addLayer(terrain);
     this.map.on('zoomend', function() {
-      self.showYear(self.date);
+      self.refreshMapItems();
     });
     // this.map.addLayer(roads);
     // this.map.addLayer(water);
@@ -174,13 +174,18 @@ export class MapComponent implements OnInit {
     this.activeCountry = null;
     this.featureGroup = L.featureGroup(polygons);
     this.featureGroup.addTo(this.map);
+    this.refreshMapItems();
+  }
 
+  /**
+   * Refreshes all the map items (markers)
+   */
+  refreshMapItems() {
     // Add die map items
     this.mapItemFeatureGroup.clearLayers();
     this.mapItemFeatureGroup = L.featureGroup(this.mapService.getMapItemLayer(this.date, this.map.getZoom()));
     this.mapItemFeatureGroup.addTo(this.map);
   }
-
 }
 // -----------------------------//
 // getAreas (e) {
