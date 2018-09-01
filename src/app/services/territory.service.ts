@@ -39,7 +39,9 @@ export class TerritoryService {
       const countryTerritories = this.base.getObjectsWhereKeysHaveValues(territoriesByDate, {countryId: countryIds[i]});
       // Kies die eerste een want die goed is gesort volgends datum. Nuutste een eerste. So the eerste index sal die een wees wat ons soek.
       if (countryTerritories.length > 0) {
-        territoriesForDate.push(countryTerritories[0]);
+        if (!countryTerritories[0].inExile) {
+          territoriesForDate.push(countryTerritories[0]);
+        }
       }
     }
     return territoriesForDate;

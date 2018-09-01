@@ -38,19 +38,19 @@
 <!--</div>-->
 
 <div class="card card-light-panel countryDashboard" *ngIf="activeCountry">
-  <div class="card-body">
+  <div class="card-body" style="height: 100%">
     <h3 class="card-title text-center">{{ activeCountry.name }}</h3>
     <div class="text-center">
       <img src="{{ activeCountry.flag }}" alt="" class="dashboard-flag img-thumbnail">
     </div>
     <p class="card-text text-center">{{ activeCountry.fromDate | yearDisplayer }} - {{ activeCountry.toDate | yearDisplayer }}</p>
-    <div class="card-text" [innerHTML]="activeCountry.description"></div>
+    <div class="longtext" [innerHTML]="activeCountry.description"></div>
     <app-reference-widget
       [referenceId]="activeCountry.referenceId"
       [editMode]="false">
     </app-reference-widget>
     <hr>
-    <div *ngIf="activeState">
+    <div *ngIf="activeState" style="height: 100%">
       <h4 class="card-text">{{ activeState.name }}</h4>
       <div *ngIf="activeState.traits.length > 0">
             <span
@@ -61,7 +61,7 @@
               [src]="trait.icon | safeHtml">
             </span>
       </div>
-      <div class="card-text" *ngIf="activeState" [innerHTML]="activeState.description"></div>
+      <div class="longtext" *ngIf="activeState" [innerHTML]="activeState.description"></div>
       <p class="card-text" *ngIf="!activeState">No state for this period</p>
       <app-reference-widget
         [referenceId]="activeState.referenceId"

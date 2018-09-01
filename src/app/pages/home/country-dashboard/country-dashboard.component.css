@@ -18,10 +18,16 @@
   top: 90px;
   right: 0px;
   z-index: 9999;
+  height: 80%;
 }
 
 .row {
   margin-right: 0px;
   margin-left: 0px;
+}
+
+.longtext {
+  height: 29%;
+  overflow: auto;
 }
 
