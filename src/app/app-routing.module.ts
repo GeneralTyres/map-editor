@@ -15,6 +15,7 @@ import {MapItemTypeManagementComponent} from './pages/customisation/map-item-typ
 import {MapItemTypeManagementResolverService} from './pages/customisation/map-item-type-management/mapItemTypeManagementResolver.service';
 import {MapItemManagementComponent} from './pages/map-item-management/map-item-management.component';
 import {MapItemManagementResolverService} from './pages/map-item-management/mapItemManagementResolver.service';
+import {AboutUsComponent} from './pages/about-us/about-us.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -34,6 +35,8 @@ const appRoutes: Routes = [
   { path: 'map-item-management', component: MapItemManagementComponent,
     resolve: {loader: MapItemManagementResolverService}
   },
+  { path: 'about-us', component: AboutUsComponent
+  },
   { path: 'country', component: CountryComponent,
     resolve: {loader: CountryEditResolverService} },
   { path: 'traitManagement', component: TraitManagementComponent,
@@ -45,8 +48,7 @@ const appRoutes: Routes = [
       { path: '', component: CountryListComponent },
       { path: ':id', component: CountryListComponent },
     ]
-  },
-  // { path: 'shopping-list', component: ShoppingListComponent },
+  }
 ];
 
 @NgModule({

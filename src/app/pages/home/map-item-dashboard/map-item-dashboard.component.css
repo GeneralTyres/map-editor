@@ -6,3 +6,8 @@
   z-index: 9999;
   height: 80%;
 }
+
+.typeIcon {
+  cursor: pointer;
+  height: 35px;
+}

@@ -119,7 +119,6 @@ export class MapService {
   getMapItemLayer(date, zoomLevel) {
     const mapItems = this.mapItemService.getMapItemsByDate(date);
     const itemMarkers = [];
-    console.log('mapItems ::', mapItems);
     for (let i = 0; i < mapItems.length; i++) {
       if (this.baseService.isNotEmptyOrZero(mapItems[i].latitude) &&
         this.baseService.isNotEmptyOrZero(mapItems[i].longitude)) {

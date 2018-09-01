@@ -26,7 +26,6 @@ export class ReferenceService {
   loadReferenceById(id: number) {
     return new Promise((resolve, reject) => {
       const whereClause = {id: id};
-      console.log('whereClause ::', whereClause)
       this.data.load(tableName, 0, whereClause).subscribe(
         ( value: ReferenceModel[] ) => {
           resolve(value);

@@ -51,6 +51,7 @@ import { MapItemManagementComponent } from './pages/map-item-management/map-item
 import { MapItemModalComponent } from './pages/map-item-management/map-item-modal/map-item-modal.component';
 import {MapItemManagementResolverService} from './pages/map-item-management/mapItemManagementResolver.service';
 import {MapItemDashboardComponent} from './pages/home/map-item-dashboard/map-item-dashboard.component';
+import { AboutUsComponent } from './pages/about-us/about-us.component';
 
 
 @NgModule({
@@ -74,7 +75,8 @@ import {MapItemDashboardComponent} from './pages/home/map-item-dashboard/map-ite
     CountryModalComponent,
     MapItemManagementComponent,
     MapItemModalComponent,
-    MapItemDashboardComponent
+    MapItemDashboardComponent,
+    AboutUsComponent
   ],
   imports: [
     BrowserModule,
