@@ -13,12 +13,11 @@ import {TerritoryService} from '../../../services/territory.service';
 import {BaseService} from '../../../services/base.service';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {TerritoryModalComponent} from '../territory-modal/territory-modal.component';
-import {StateModalComponent} from '../state-modal/state-modal.component';
 import {TerritoryModel} from '../../../models/territory.model';
 import {AreaModel} from '../../../models/area.model';
 import {ReferenceWidgetComponent} from '../../shared-components/reference-widget/reference-widget.component';
-import {ReferenceModel} from '../../../models/reference.model';
 import {CountryModalComponent} from '../country-modal/country-modal.component';
+import {StateModalComponent} from '../state-modal/state-modal.component';
 
 let self;
 

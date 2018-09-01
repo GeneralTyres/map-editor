@@ -50,6 +50,7 @@ import { CountryModalComponent } from './pages/countryEdit/country-modal/country
 import { MapItemManagementComponent } from './pages/map-item-management/map-item-management.component';
 import { MapItemModalComponent } from './pages/map-item-management/map-item-modal/map-item-modal.component';
 import {MapItemManagementResolverService} from './pages/map-item-management/mapItemManagementResolver.service';
+import {MapItemDashboardComponent} from './pages/home/map-item-dashboard/map-item-dashboard.component';
 
 
 @NgModule({
@@ -72,7 +73,8 @@ import {MapItemManagementResolverService} from './pages/map-item-management/mapI
     ReferenceTextModalComponent,
     CountryModalComponent,
     MapItemManagementComponent,
-    MapItemModalComponent
+    MapItemModalComponent,
+    MapItemDashboardComponent
   ],
   imports: [
     BrowserModule,

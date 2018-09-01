@@ -12,6 +12,7 @@ import {TerritoryService} from '../../../services/territory.service';
 import {BaseService} from '../../../services/base.service';
 import {LeafletService} from '../../../services/leaflet.service';
 import {Subject} from 'rxjs/index';
+import {MapItemModel} from '../../../models/mapItem.model';
 
 let self;
 @Component({
@@ -32,6 +33,7 @@ export class MapComponent implements OnInit {
   infoBox: any;
   activeCountry: CountryModel;
   activeState: any;
+  activeMapItem: MapItemModel;
 
   constructor(private http: HttpClient,
               private data: DataService,
@@ -43,6 +45,12 @@ export class MapComponent implements OnInit {
               private baseService: BaseService,
               private leafletService: LeafletService) {
     self = this;
+    this.mapService.componentMethodCalled$.subscribe(
+      (value) => {
+        self.activeCountry = null;
+        this.activeMapItem = value;
+      }
+    );
   }
 
   ngOnInit() {
@@ -161,6 +169,7 @@ export class MapComponent implements OnInit {
     const polygons = this.leafletService.buildPolygonsFromAreas(areas);
     for (let i = 0; i < polygons.length; i++) {
       polygons[i].on('click', function (e) {
+        self.activeMapItem = null;
         self.activeCountry = self.mapService.getCountryForDashboard(e.target.area.id, self.date);
         self.activeState = self.activeCountry.activeState;
         self.map.fitBounds(e.target.getBounds());

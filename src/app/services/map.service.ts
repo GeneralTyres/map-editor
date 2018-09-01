@@ -10,6 +10,10 @@ import {TraitService} from './trait.service';
 import {isString} from 'util';
 import {MapItemService} from './mapItem.service';
 import {MapItemTypeService} from './mapItemType.service';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {Subject} from 'rxjs/index';
+
+let self;
 
 @Injectable()
 export class MapService {
@@ -22,6 +26,11 @@ export class MapService {
     popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
   });
 
+  // Observable string sources
+  private componentMethodCallSource = new Subject<any>();
+  // Observable string streams
+  componentMethodCalled$ = this.componentMethodCallSource.asObservable();
+
   constructor( private areaService: AreaService,
                private baseService: BaseService,
                private countryService: CountryService,
@@ -30,7 +39,10 @@ export class MapService {
                private territoryService: TerritoryService,
                private traitsService: TraitService,
                private mapItemService: MapItemService,
-               private mapItemTypeService: MapItemTypeService) { }
+               private mapItemTypeService: MapItemTypeService,
+               private modalService: NgbModal) {
+    self = this;
+  }
 
   convertLeafletPolygonToString(polygon: any) {
     // Polygon wat ge-save gaan word
@@ -90,7 +102,6 @@ export class MapService {
     const activeTerritory = this.territoryService.getTerritoryByAreaId(areaId);
     const activeCountry = this.countryService.getCountryById(activeTerritory.countryId);
     activeCountry.activeState = this.stateService.getStateByCountryIdAndDate(activeCountry.id, date);
-    console.log('activeCountry.activeState ::', activeCountry.activeState)
     // Check of iets gesave is voor json.parse en check of dit nie al klaar geparse is nie
     if (this.baseService.isNotEmpty(activeCountry.activeState)) {
       if (activeCountry.activeState.traits.length > 0 &&
@@ -108,6 +119,7 @@ export class MapService {
   getMapItemLayer(date, zoomLevel) {
     const mapItems = this.mapItemService.getMapItemsByDate(date);
     const itemMarkers = [];
+    console.log('mapItems ::', mapItems);
     for (let i = 0; i < mapItems.length; i++) {
       if (this.baseService.isNotEmptyOrZero(mapItems[i].latitude) &&
         this.baseService.isNotEmptyOrZero(mapItems[i].longitude)) {
@@ -122,7 +134,9 @@ export class MapService {
             '<div class="col-md-8"><p class="map-item-label">' + mapItems[i].name + '</p></div></div>'
           });
           const newLatLng = new L.LatLng(mapItems[i].latitude, mapItems[i].longitude);
-          const marker = L.marker(newLatLng, {icon: divIcon});
+          const marker: any = L.marker(newLatLng, {icon: divIcon});
+          marker.mapItem = mapItems[i];
+          marker.on('click', this.openMapItemModal);
           itemMarkers.push(marker);
         }
       }
@@ -130,7 +144,18 @@ export class MapService {
     return itemMarkers;
   }
 
-  getAreasForMap(date: number) {
+  openMapItemModal(e) {
+    self.componentMethodCallSource.next(e.target.mapItem);
+    // self.parentScope.ge;
+    // const mapItem = e.target.mapItem;
+    // const modalRef = self.modalService.open(MapItemModalComponent, { size: 'lg', beforeDismiss: () => false });
+    // modalRef.componentInstance.activeMapItem = mapItem;
+    // modalRef.result.then(value => {
+    //   // Doen iets na modal toe is
+    // });
+  }
+
+  getCountryLayer(date: number) {
     // Get current countries
     const currentCountries = this.countryService.getCountriesByDate(date);
     // Kry land ids

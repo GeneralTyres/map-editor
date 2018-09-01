@@ -60,9 +60,16 @@ export class MapItemTypeManagementComponent implements OnInit {
   }
 
   saveMapItemType() {
+    let created = false;
+    if (!this.baseService.isNotEmptyOrZero(this.activeMapItemType)) {
+      created = true;
+    }
     // this.activeMapItemType.icon = this.activeMapItemType.icon.changingThisBreaksApplicationSecurity;
     this.mapItemTypeService.saveMapItemType(this.activeMapItemType).subscribe((value: MapItemTypeModel) => {
       this.activeMapItemType = value;
+      if (created) {
+        this.displayedMapItemTypes.push(value);
+      }
     });
   }
 
