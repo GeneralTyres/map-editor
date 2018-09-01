@@ -52,6 +52,9 @@ import { MapItemModalComponent } from './pages/map-item-management/map-item-moda
 import {MapItemManagementResolverService} from './pages/map-item-management/mapItemManagementResolver.service';
 import {MapItemDashboardComponent} from './pages/home/map-item-dashboard/map-item-dashboard.component';
 import { AboutUsComponent } from './pages/about-us/about-us.component';
+import {PathTypeService} from './services/pathType.service';
+import {PathTypeManagementResolverService} from './pages/customisation/path-type-management/pathTypeManagementResolver.service';
+import {PathTypeManagementComponent} from './pages/customisation/path-type-management/path-type-management.component';
 
 
 @NgModule({
@@ -76,7 +79,8 @@ import { AboutUsComponent } from './pages/about-us/about-us.component';
     MapItemManagementComponent,
     MapItemModalComponent,
     MapItemDashboardComponent,
-    AboutUsComponent
+    AboutUsComponent,
+    PathTypeManagementComponent
   ],
   imports: [
     BrowserModule,
@@ -105,6 +109,7 @@ import { AboutUsComponent } from './pages/about-us/about-us.component';
     UsersService,
     TraitService,
     ReferenceService,
+    PathTypeService,
     // Resolvers
     ResolverService,
     HomeResolverService,
@@ -112,7 +117,8 @@ import { AboutUsComponent } from './pages/about-us/about-us.component';
     LoginPageResolverService,
     TraitManagementResolverService,
     MapItemTypeManagementResolverService,
-    MapItemManagementResolverService
+    MapItemManagementResolverService,
+    PathTypeManagementResolverService
   ],
   bootstrap: [AppComponent],
   entryComponents: [

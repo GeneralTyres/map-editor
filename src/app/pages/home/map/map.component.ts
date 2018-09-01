@@ -12,6 +12,7 @@ import {TerritoryService} from '../../../services/territory.service';
 import {BaseService} from '../../../services/base.service';
 import {LeafletService} from '../../../services/leaflet.service';
 import {Subject} from 'rxjs/index';
+import {antPath} from '../../../../../node_modules/leaflet-ant-path/dist/leaflet-ant-path';
 import {MapItemModel} from '../../../models/mapItem.model';
 
 let self;
@@ -139,6 +140,14 @@ export class MapComponent implements OnInit {
     // const imageUrl = '../../../../assets/images/Map_Battle_of_Stalingrad-vi.svg',
     //   imageBounds = new L.LatLngBounds([[50.158220, 39.611708], [46.493444, 46.862684]]);
     // L.imageOverlay(imageUrl, imageBounds).addTo(this.map);
+    this.drawPath();
+  }
+
+  drawPath() {
+    const path = antPath([[30.327842, 1.748552], [28.103481, 5.965457],[19.261887, 8.864580]],
+      {"delay":400,"dashArray":[10,20],"weight":5,"color":"#0000FF","pulseColor":"#FFFFFF","paused":false,"reverse":false}
+    );
+    this.map.addLayer(path);
   }
 
   eventHandler(event) {

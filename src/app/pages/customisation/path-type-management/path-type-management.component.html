@@ -1,0 +1,148 @@
+<div class="row">
+  <div class="col-md-8">
+    <div class="card bg-secondary">
+      <div>
+        <div class="path-map-container" id="map"></div>
+      </div>
+      <div class="card-body">
+        <div class="form-group">
+          <label for="name">Name:</label>
+          <input
+            type="text"
+            class="form-control"
+            id="name"
+            [(ngModel)]="activePathType.name">
+        </div>
+        <div class="form-group">
+          <label for="name">Description:</label>
+          <input
+            type="text"
+            class="form-control"
+            id="description"
+            [(ngModel)]="activePathType.description">
+        </div>
+        <div class="form-check-inline">
+          <label class="form-check-label">
+            <input
+              type="checkbox"
+              class="form-check-input"
+              [(ngModel)]="activeOptions.paused"
+              (change)="drawPath()">
+            Paused ({{activeOptions.paused}})
+          </label>
+        </div>
+        <div class="form-check-inline">
+          <label class="form-check-label">
+            <input
+              type="checkbox"
+              class="form-check-input"
+              [(ngModel)]="activeOptions.reverse"
+              (change)="drawPath()">
+            Reverse ({{activeOptions.reverse}})
+          </label>
+        </div>
+        <div class="form-class">
+          <label for="delay">Delay ({{activeOptions.delay}})</label>
+          <input
+            type="range"
+            class="custom-range"
+            min="1"
+            max="800"
+            step="1"
+            id="delay"
+            [(ngModel)]="activeOptions.delay"
+            (change)="drawPath()">
+        </div>
+        <div class="form-class">
+          <label for="weight">Weight ({{activeOptions.weight}})</label>
+          <input
+            type="range"
+            class="custom-range"
+            min="1"
+            max="20"
+            step="1"
+            id="weight"
+            [(ngModel)]="activeOptions.weight"
+            (change)="drawPath()">
+        </div>
+        <div class="form-class">
+          <label for="weight">DashArray1 ({{activeOptions.dashArray1}})</label>
+          <input
+            type="range"
+            class="custom-range"
+            min="1"
+            max="100"
+            step="1"
+            id="dashArray1"
+            [(ngModel)]="activeOptions.dashArray1"
+            (change)="drawPath()"
+          >
+          <label for="weight">DashArray2 ({{activeOptions.dashArray1}})</label>
+          <input
+            type="range"
+            class="custom-range"
+            min="1"
+            max="100"
+            step="1"
+            id="dashArray2"
+            [(ngModel)]="activeOptions.dashArray2"
+            (change)="drawPath()">
+        </div>
+        <div class="form-group">
+          <label for="colour">Colour ({{activeOptions.colour}})</label>
+          <input
+            id="colour"
+            name="colour"
+            readonly
+            class="form-control"
+            [(colorPicker)]="activeOptions.colour"
+            [style.background]="activeOptions.colour"
+            (change)="drawPath()">
+        </div>
+        <div class="form-group">
+          <label for="colour">Pulse Colour ({{activeOptions.pulseColour}})</label>
+          <input
+            id="pulseColour"
+            name="colour"
+            readonly
+            class="form-control"
+            [(colorPicker)]="activeOptions.pulseColour"
+            [style.background]="activeOptions.pulseColour"
+            (change)="drawPath()">
+        </div>
+        <a
+          class="btn btn-primary"
+          (click)="savePathType()"
+        >Save PathType</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="form-group input-group mb-2">
+      <div class="input-group-prepend">
+        <div class="input-group-text"><fa name="search"></fa></div>
+      </div>
+      <input
+        type="text"
+        id="search"
+        class="form-control"
+        placeholder="Silk Road"
+        [(ngModel)]="searchText"
+        autocomplete="off"
+        (ngModelChange)="search()">
+      <button
+        class="btn btn-primary pull-right"
+        (click)="createNewPathType()">
+        Add new PathType
+      </button>
+    </div>
+    <ul class="list-group">
+      <li
+        *ngFor="let pathType of displayedPathTypes"
+        class="list-group-item list-group-item-dark"
+        (click)="activatePathType(pathType)">
+        {{ pathType.name }}
+      </li>
+    </ul>
+  </div>
+</div>
