@@ -1,0 +1,8 @@
+<div class="card card-light-panel mapItemDashboard" *ngIf="activeMapItem">
+  <h4>{{ activeMapItem.name }}</h4>
+  <div  [innerHTML]="activeMapItem.description"></div>
+  <app-reference-widget
+    [referenceId]="activeMapItem.referenceId"
+    [editMode]="false">
+  </app-reference-widget>
+</div>
