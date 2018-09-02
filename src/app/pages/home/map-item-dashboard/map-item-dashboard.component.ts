@@ -10,7 +10,7 @@ import {BaseService} from '../../../services/base.service';
   styleUrls: ['./map-item-dashboard.component.css']
 })
 export class MapItemDashboardComponent implements OnInit {
-  private _activeMapItem: MapItemModel;
+  public _activeMapItem: MapItemModel;
   activeMapItemType: MapItemTypeModel;
   @Input() set activeMapItem(value: MapItemModel) {
     this._activeMapItem = value;
