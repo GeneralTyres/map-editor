@@ -18,6 +18,8 @@ import {MapItemManagementResolverService} from './pages/map-item-management/mapI
 import {AboutUsComponent} from './pages/about-us/about-us.component';
 import {PathTypeManagementResolverService} from './pages/customisation/path-type-management/pathTypeManagementResolver.service';
 import {PathTypeManagementComponent} from './pages/customisation/path-type-management/path-type-management.component';
+import {PathManagementComponent} from './pages/path-management/path-management.component';
+import {PathManagementResolverService} from './pages/path-management/pathManagementResolver.service';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -39,6 +41,9 @@ const appRoutes: Routes = [
   },
   { path: 'path-type-management', component: PathTypeManagementComponent,
     resolve: {loader: PathTypeManagementResolverService}
+  },
+  { path: 'path-management', component: PathManagementComponent,
+    resolve: {loader: PathManagementResolverService}
   },
   { path: 'about-us', component: AboutUsComponent
   },

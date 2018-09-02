@@ -102,7 +102,12 @@ export class MapItemModalComponent implements OnInit {
       const latLngs = [ this.marker.getLatLng() ];
       const markerBounds = L.latLngBounds(latLngs);
       this.map.fitBounds(markerBounds);
+      this.map.setZoom(8);
     }
+    // Om die map weer te center
+    setTimeout(function() {
+      self.map.invalidateSize();
+    }, 100);
   }
 
   drawMarkers(newLatLng) {

@@ -137,6 +137,10 @@ export class TerritoryModalComponent implements OnInit {
       this.editPolygon.enableEdit();
       this.map.fitBounds(this.editPolygon.getBounds());
     }
+    // Om die map weer te center
+    setTimeout(function() {
+      self.map.invalidateSize();
+    }, 100);
   }
 
   save() {

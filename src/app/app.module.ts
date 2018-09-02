@@ -55,6 +55,10 @@ import { AboutUsComponent } from './pages/about-us/about-us.component';
 import {PathTypeService} from './services/pathType.service';
 import {PathTypeManagementResolverService} from './pages/customisation/path-type-management/pathTypeManagementResolver.service';
 import {PathTypeManagementComponent} from './pages/customisation/path-type-management/path-type-management.component';
+import {PathManagementComponent} from './pages/path-management/path-management.component';
+import {PathManagementResolverService} from './pages/path-management/pathManagementResolver.service';
+import {PathService} from './services/path.service';
+import {PathModalComponent} from './pages/path-management/path-modal/path-modal.component';
 
 
 @NgModule({
@@ -80,7 +84,9 @@ import {PathTypeManagementComponent} from './pages/customisation/path-type-manag
     MapItemModalComponent,
     MapItemDashboardComponent,
     AboutUsComponent,
-    PathTypeManagementComponent
+    PathTypeManagementComponent,
+    PathManagementComponent,
+    PathModalComponent
   ],
   imports: [
     BrowserModule,
@@ -110,6 +116,7 @@ import {PathTypeManagementComponent} from './pages/customisation/path-type-manag
     TraitService,
     ReferenceService,
     PathTypeService,
+    PathService,
     // Resolvers
     ResolverService,
     HomeResolverService,
@@ -118,7 +125,8 @@ import {PathTypeManagementComponent} from './pages/customisation/path-type-manag
     TraitManagementResolverService,
     MapItemTypeManagementResolverService,
     MapItemManagementResolverService,
-    PathTypeManagementResolverService
+    PathTypeManagementResolverService,
+    PathManagementResolverService
   ],
   bootstrap: [AppComponent],
   entryComponents: [
@@ -126,6 +134,7 @@ import {PathTypeManagementComponent} from './pages/customisation/path-type-manag
     StateModalComponent,
     ReferenceTextModalComponent,
     CountryModalComponent,
-    MapItemModalComponent]
+    MapItemModalComponent,
+    PathModalComponent]
 })
 export class AppModule { }

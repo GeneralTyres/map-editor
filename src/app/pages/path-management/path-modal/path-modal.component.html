@@ -1,0 +1,74 @@
+<div class="modal-header">
+  <h4 class="modal-title">Create/Edit Map Item</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.close('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div>
+    <div class="map-container" id="pathMap"></div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="form-group">
+        <label for="pathName">Name</label>
+        <input
+          type="text"
+          id="pathName"
+          name="pathName"
+          class="form-control"
+          [(ngModel)]="activePath.name">
+      </div>
+      <div>
+        <label><img src="../../../../assets/images/icons/Logo.svg" class="modal-form-icon">
+          Map Item Description</label>
+        <div class="quillBackground">
+          <quill-editor [(ngModel)]="activePath.description" theme='snow' [style]="{height: '250px'}"></quill-editor>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="row">
+          <div class="col-md-6">
+            <label for="fromDate"><img src="../../../../assets/images/icons/hourglass.svg" class="modal-form-icon">
+              From Date</label>
+            <input
+              type="number"
+              id="fromDate"
+              name="fromDate"
+              class="form-control"
+              [(ngModel)] = "activePath.fromDate">
+          </div>
+          <div class="col-md-6">
+            <label for="toDate"><img src="../../../../assets/images/icons/hourglass.svg" class="modal-form-icon">
+              To Date</label>
+            <input
+              type="number"
+              id="toDate"
+              name="toDate"
+              class="form-control"
+              [(ngModel)] = "activePath.toDate">
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>
+          Item Type</label>
+        <ng-multiselect-dropdown
+          [placeholder]="'custom placeholder'"
+          [data]="pathTypes"
+          [(ngModel)]="activePath.pathTypeId"
+          [settings]="dropDownSettings"
+        >
+        </ng-multiselect-dropdown>
+      </div>
+      <app-reference-widget
+        [referenceId]="activePath.referenceId"
+        [editMode]="true">
+      </app-reference-widget>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn" (click)="savePath()">Save</button>
+  <button type="button" class="btn" (click)="activeModal.close()">Close</button>
+</div>

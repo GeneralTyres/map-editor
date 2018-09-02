@@ -8,6 +8,8 @@ import {TerritoryService} from '../../services/territory.service';
 import {TraitService} from '../../services/trait.service';
 import {MapItemService} from '../../services/mapItem.service';
 import {MapItemTypeService} from '../../services/mapItemType.service';
+import {PathService} from '../../services/path.service';
+import {PathTypeService} from '../../services/pathType.service';
 
 @Injectable()
 export class HomeResolverService implements Resolve<any> {
@@ -17,7 +19,9 @@ export class HomeResolverService implements Resolve<any> {
               private territoryService: TerritoryService,
               private traitsService: TraitService,
               private mapItemTypeService: MapItemTypeService,
-              private mapItemService: MapItemService) {}
+              private mapItemService: MapItemService,
+              private pathService: PathService,
+              private pathTypeService: PathTypeService) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<any> {
     const promises = [];
@@ -28,6 +32,8 @@ export class HomeResolverService implements Resolve<any> {
     promises.push(this.traitsService.loadTraits());
     promises.push(this.mapItemTypeService.loadMapItemTypes());
     promises.push(this.mapItemService.loadMapItems());
+    promises.push(this.pathService.loadPaths());
+    promises.push(this.pathTypeService.loadPathTypes());
     return Promise.all(promises);
   }
 }

@@ -5,6 +5,7 @@ import {PathTypeModel} from '../../../models/pathType.model';
 import {PathTypeService} from '../../../services/pathType.service';
 import {antPath} from '../../../../../node_modules/leaflet-ant-path/dist/leaflet-ant-path';
 import {PathTypeDefaultModel} from '../../../models/pathTypeDefault.model';
+import 'leaflet';
 
 let self;
 
@@ -38,6 +39,7 @@ export class PathTypeManagementComponent implements OnInit {
       this.activePathType = this.displayedPathTypes[0];
     }
     this.loadPathMap();
+    // setTimeout(function(){ }, 400);
   }
 
   search() {
@@ -81,14 +83,15 @@ export class PathTypeManagementComponent implements OnInit {
   }
 
   loadPathMap() {
-    const osmUrl = 'https://mt0.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',
-      osmAttrib = '&copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-      osm = L.tileLayer(osmUrl, {
-        maxZoom: 18,
-        attribution: osmAttrib
-      });
+    const terrain = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiaXNhd255dSIsImEiOiJBWEh1dUZZIn0.SiiexWxHHESIegSmW8wedQ', {
+      attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+      maxZoom: 10,
+      id: 'isawnyu.map-knmctlkh',
+      accessToken: 'pk.eyJ1IjoiaXNhd255dSIsImEiOiJBWEh1dUZZIn0.SiiexWxHHESIegSmW8wedQ'
+    });
     // initialize the map on the "map" div with a given center and zoom
-    this.map = L.map('map').setView([-8.916216, 25.709375], 4).addLayer(osm);
+    this.map = L.map('map').setView([-8.916216, 25.709375], 4).addLayer(terrain);
+
     this.drawPath();
   }
 

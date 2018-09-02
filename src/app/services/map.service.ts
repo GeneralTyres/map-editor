@@ -12,6 +12,9 @@ import {MapItemService} from './mapItem.service';
 import {MapItemTypeService} from './mapItemType.service';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {Subject} from 'rxjs/index';
+import {PathService} from './path.service';
+import {PathTypeService} from './pathType.service';
+import {antPath} from '../../../node_modules/leaflet-ant-path/dist/leaflet-ant-path';
 
 let self;
 
@@ -40,7 +43,9 @@ export class MapService {
                private traitsService: TraitService,
                private mapItemService: MapItemService,
                private mapItemTypeService: MapItemTypeService,
-               private modalService: NgbModal) {
+               private modalService: NgbModal,
+               private pathService: PathService,
+               private pathTypeService: PathTypeService) {
     self = this;
   }
 
@@ -73,6 +78,17 @@ export class MapService {
     }
     polygonString = JSON.stringify(proPolygon);
     return polygonString;
+  }
+
+  convertLeafletPolyLinesToString(polyLine: any) {
+    let stringPolyLine = '';
+    const polyLineArray = [];
+    // Loop through points
+    for (var i = 0; i < polyLine.length; i++) {
+      polyLineArray.push([polyLine[i].lat, polyLine[i].lng]);
+    }
+    stringPolyLine = JSON.stringify(polyLineArray);
+    return stringPolyLine;
   }
 
   highlightFeature(e) {
@@ -152,6 +168,30 @@ export class MapService {
     // modalRef.result.then(value => {
     //   // Doen iets na modal toe is
     // });
+    // const path = antPath([[30.327842, 1.748552], [28.103481, 5.965457],[19.261887, 8.864580]],
+    //   {"delay":400,"dashArray":[10,20],"weight":5,"color":"#0000FF","pulseColor":"#FFFFFF","paused":false,"reverse":false}
+    // );
+  }
+
+  getPathLayer(date, zoomLevel) {
+    const mapPolyLines = [];
+    const polyLines = this.pathService.getPathsByDate(date);
+    for (let p = 0; p < polyLines.length; p++) {
+      let polyLine = JSON.parse(polyLines[p].polyline);
+      let pathType = this.pathTypeService.getPathTypeByPathTypeId(polyLines[p].pathTypeId);
+      const options = JSON.parse(pathType.options);
+      const antOptions = {
+        "delay": options.delay,
+        "dashArray": [options.dashArray1, options.dashArray2],
+        "weight": options.weight,
+        "color": options.colour,
+        "pulseColor": options.pulseColour,
+        "paused": options.paused,
+        "reverse": options.reverse};
+      const path = antPath(polyLine, antOptions);
+      mapPolyLines.push(path);
+    }
+    return mapPolyLines;
   }
 
   getCountryLayer(date: number) {
