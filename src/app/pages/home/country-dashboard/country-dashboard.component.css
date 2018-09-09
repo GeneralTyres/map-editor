@@ -28,7 +28,12 @@
 }
 
 .longtext {
-  height: 21%;
+  height: 160px;
   overflow: auto;
 }
+
+/*.accordionDark {*/
+  /*background-color: #292b2c;*/
+  /*color: white;*/
+/*}*/
 

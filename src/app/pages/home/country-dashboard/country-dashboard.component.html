@@ -36,7 +36,6 @@
     <!--</div>-->
   <!--</div>-->
 <!--</div>-->
-
 <div class="card card-light-panel countryDashboard" *ngIf="activeCountry">
   <div class="card-body" style="height: 100%">
     <h3 class="card-title text-center">{{ activeCountry.name }}</h3>
@@ -44,15 +43,21 @@
       <img src="{{ activeCountry.flag }}" alt="" class="dashboard-flag img-thumbnail">
     </div>
     <p class="card-text text-center">{{ activeCountry.fromDate | yearDisplayer }} - {{ activeCountry.toDate | yearDisplayer }}</p>
-    <div class="longtext" [innerHTML]="activeCountry.description"></div>
-    <app-reference-widget
-      [referenceId]="activeCountry.referenceId"
-      [editMode]="false">
-    </app-reference-widget>
     <hr>
-    <div *ngIf="activeState" style="height: 100%">
-      <h4 class="card-text">{{ activeState.name }}</h4>
-      <div *ngIf="activeState.traits.length > 0">
+    <div style="color: black">
+      <ngb-accordion [closeOthers]="true" activeIds="static-1">
+        <ngb-panel id="activeCountry" *ngIf="activeCountry" title="{{ activeCountry.name }}">
+          <ng-template ngbPanelContent>
+            <div class="longtext" [innerHTML]="activeCountry.description"></div>
+            <app-reference-widget
+              [referenceId]="activeCountry.referenceId"
+              [editMode]="false">
+            </app-reference-widget>
+          </ng-template>
+        </ngb-panel>
+        <ngb-panel id="{{ activeState.name }}Panel" *ngIf="activeState" title="{{ activeState.name }}">
+          <ng-template ngbPanelContent>
+            <div *ngIf="activeState.traits.length > 0">
             <span
               *ngFor="let trait of activeState.traits"
               title="{{ trait.description }}">
@@ -60,13 +65,31 @@
               class="statusIcon"
               [src]="trait.icon | safeHtml">
             </span>
-      </div>
-      <div class="longtext" *ngIf="activeState" [innerHTML]="activeState.description"></div>
-      <p class="card-text" *ngIf="!activeState">No state for this period</p>
-      <app-reference-widget
-        [referenceId]="activeState.referenceId"
-        [editMode]="false">
-      </app-reference-widget>
+            </div>
+            <div class="longtext" *ngIf="activeState" [innerHTML]="activeState.description"></div>
+            <app-reference-widget
+              [referenceId]="activeState.referenceId"
+              [editMode]="false">
+            </app-reference-widget>
+          </ng-template>
+        </ngb-panel>
+      </ngb-accordion>
+      <!--<h4 class="card-text">{{ activeState.name }}</h4>-->
+      <!--<div *ngIf="activeState.traits.length > 0">-->
+            <!--<span-->
+              <!--*ngFor="let trait of activeState.traits"-->
+              <!--title="{{ trait.description }}">-->
+            <!--<img-->
+              <!--class="statusIcon"-->
+              <!--[src]="trait.icon | safeHtml">-->
+            <!--</span>-->
+      <!--</div>-->
+
+      <!--<p class="card-text" *ngIf="!activeState">No state for this period</p>-->
+      <!--<app-reference-widget-->
+        <!--[referenceId]="activeState.referenceId"-->
+        <!--[editMode]="false">-->
+      <!--</app-reference-widget>-->
     </div>
 
   </div>
