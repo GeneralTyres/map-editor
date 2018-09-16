@@ -9,7 +9,7 @@ import {StateModel} from '../../../models/states.model';
 })
 export class CountryDashboardComponent implements OnInit {
   @Input() activeCountry: CountryModel;
-  @Input() activeState: StateModel = new StateModel();
+  @Input() activeStates: StateModel[] = [new StateModel()];
 
   constructor() { }
 

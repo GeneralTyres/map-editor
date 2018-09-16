@@ -122,7 +122,7 @@ export class CountryComponent implements OnInit {
     modalRef.componentInstance.activeState = state;
     modalRef.result.then(value => {
       // Doen iets na save
-      if ((index === undefined || index === null) && value) {
+      if ((index === undefined || index === null) && value.id) {
         this.states.push(value);
       }
     });

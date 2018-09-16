@@ -50,8 +50,6 @@ export class StateModalComponent implements OnInit {
       allowSearchFilter: true
     };
     this.traits = this.traitsService.getTraits();
-    console.log('this.traits ::', this.traits)
-    console.log('this.activeState ::', this.activeState)
     if (this.activeState.traits.length > 0) {
       this.selectedTraits = this.traitsService.getTraitsByIds(JSON.parse(this.activeState.traits));
       this.iconTraits = this.traitsService.getTraitsByIds(JSON.parse(this.activeState.traits));
@@ -60,11 +58,9 @@ export class StateModalComponent implements OnInit {
 
   save() {
     this.refWid.saveReference().subscribe((value: ReferenceModel) => {
-      console.log('value ::', value);
       this.activeState.referenceId = value.id;
       const traitIds = this.baseService.getPropertyValuesFromArray(this.selectedTraits, 'id');
       this.activeState.traits = JSON.stringify(traitIds);
-      console.log('this.activeState ::', this.activeState);
       this.stateService.saveState(this.activeState).subscribe((state: any) => {
         this.activeModal.close(state);
       });

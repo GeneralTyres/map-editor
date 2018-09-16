@@ -2,7 +2,8 @@
   <h4 class=" text-center">{{ _activeMapItem.name }}</h4>
   <p class=" text-center"><img class="typeIcon" [src]="activeMapItemType.icon | safeHtml" alt="">{{activeMapItemType.name}}</p>
   <p class="card-text text-center">{{ _activeMapItem.fromDate | yearDisplayer }} - {{ _activeMapItem.toDate | yearDisplayer }}</p>
-  <div  [innerHTML]="_activeMapItem.description"></div>
+  <div  [innerHTML]="_activeMapItem.description"
+    style="width: 390px;" class="text-center"></div>
   <app-reference-widget
     [referenceId]="_activeMapItem.referenceId"
     [editMode]="false">

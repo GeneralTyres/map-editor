@@ -28,8 +28,22 @@
 }
 
 .longtext {
-  height: 160px;
+  height: 200px;
   overflow: auto;
+}
+
+.dashboardAccordion {
+  color: black;
+  overflow: auto;
+  height: 65%;
+}
+
+.dashboardAccordion.card-header {
+  background-color: lightslategray !important;
+}
+
+.dashboardAccordion.card {
+  background-color: lightslategray !important;
 }
 
 /*.accordionDark {*/

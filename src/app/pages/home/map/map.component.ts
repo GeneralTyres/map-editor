@@ -33,7 +33,7 @@ export class MapComponent implements OnInit {
   featureGroup: any = L.featureGroup();
   infoBox: any;
   activeCountry: CountryModel;
-  activeState: any;
+  activeStates: any[];
   activeMapItem: MapItemModel;
 
   constructor(private http: HttpClient,
@@ -172,7 +172,8 @@ export class MapComponent implements OnInit {
       polygons[i].on('click', function (e) {
         self.activeMapItem = null;
         self.activeCountry = self.mapService.getCountryForDashboard(e.target.area.id, self.date);
-        self.activeState = self.activeCountry.activeState;
+        self.activeStates = self.stateService.getStatesByCountry(self.activeCountry);
+        console.log('self.activeStates ::', self.activeStates);
         self.map.fitBounds(e.target.getBounds(), {paddingBottomRight: [300, 0]});
       });
       //   .on('mouseover', function (e) {
