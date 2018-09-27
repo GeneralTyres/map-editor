@@ -50,7 +50,7 @@ export class LeafletService {
     });
   }
 
-  buildPolygonsFromAreas(areas) {
+  buildPolygonsFromAreas(areas, hover) {
     const polygons = [];
     for (let i = 0; i < areas.length; i++) {
       let lineTpye = '';
@@ -67,10 +67,13 @@ export class LeafletService {
             color: 'white',
             dashArray: String(areas[i].polygonType),
             fillOpacity: 0.2
-          }).on({
-          mouseover: this.highlightFeature,
-          mouseout: this.resetFeature
-        });
+          });
+          if (hover) {
+            polygon.on({
+              mouseover: this.highlightFeature,
+              mouseout: this.resetFeature
+            });
+          }
       polygon.area = areas[i];
       polygons.push(polygon);
     }

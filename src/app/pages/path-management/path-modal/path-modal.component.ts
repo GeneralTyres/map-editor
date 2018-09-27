@@ -151,10 +151,9 @@ export class PathModalComponent implements OnInit {
   }
 
   savePath() {
-    console.log('self.editPolyline ::', self.editPolyline.getLatLngs());
     this.activePath.pathTypeId = this.activePath.pathTypeId[0].id;
     this.activePath.polyline = this.mapService.convertLeafletPolyLinesToString(self.editPolyline.getLatLngs());
-    console.log('this.activePath ::', this.activePath);
+    this.activePath.polyline = JSON.stringify(this.activePath.polyline);
     this.refWid.saveReference().subscribe((value: ReferenceModel) => {
       this.activePath.referenceId = value.id;
       this.pathService.savePath(this.activePath).subscribe(

@@ -15,6 +15,7 @@ import {Subject} from 'rxjs/index';
 import {PathService} from './path.service';
 import {PathTypeService} from './pathType.service';
 import {antPath} from '../../../node_modules/leaflet-ant-path/dist/leaflet-ant-path';
+import {LeafletService} from './leaflet.service';
 
 let self;
 
@@ -45,7 +46,8 @@ export class MapService {
                private mapItemTypeService: MapItemTypeService,
                private modalService: NgbModal,
                private pathService: PathService,
-               private pathTypeService: PathTypeService) {
+               private pathTypeService: PathTypeService,
+               private leafletService: LeafletService) {
     self = this;
   }
 
@@ -83,9 +85,19 @@ export class MapService {
   convertLeafletPolyLinesToString(polyLine: any) {
     let stringPolyLine = '';
     const polyLineArray = [];
-    // Loop through points
-    for (var i = 0; i < polyLine.length; i++) {
-      polyLineArray.push([polyLine[i].lat, polyLine[i].lng]);
+    if (polyLine[0].constructor === Array) {
+      for (let j = 0; j < polyLine.length; j++) {
+        // Loop through points
+        const poly = [];
+        for (let i = 0; i < polyLine[j].length; i++) {
+          poly.push([polyLine[j][i].lat, polyLine[j][i].lng]);
+        }
+        polyLineArray.push(poly);
+      }
+    } else {
+      for (let i = 0; i < polyLine.length; i++) {
+        polyLineArray.push([polyLine[i].lat, polyLine[i].lng]);
+      }
     }
     stringPolyLine = JSON.stringify(polyLineArray);
     return stringPolyLine;
@@ -178,6 +190,7 @@ export class MapService {
     const polyLines = this.pathService.getPathsByDate(date);
     for (let p = 0; p < polyLines.length; p++) {
       let polyLine = JSON.parse(polyLines[p].polyline);
+      polyLine = JSON.parse(polyLine);
       let pathType = this.pathTypeService.getPathTypeByPathTypeId(polyLines[p].pathTypeId);
       const options = JSON.parse(pathType.options);
       const antOptions = {
@@ -194,17 +207,17 @@ export class MapService {
     return mapPolyLines;
   }
 
-  getCountryLayer(date: number) {
+  getCountryLayer(date: number, hover) {
     // Get current countries
-    const currentCountries = this.countryService.getCountriesByDate(date);
-    // Kry land ids
-    const landIds = this.baseService.getPropertyValuesFromArray(currentCountries, 'id');
-    // Kry die gebiede
-    const landGebiede = this.territoryService.getTerritoriesByCountryIdAndDate(landIds, date);
-    // Kry die areaIds vir die gebiede
-    const gebiedAreaIds = this.baseService.getPropertyValuesFromArray(landGebiede, 'areaId');
-    // Kry die areas vir die gebiede
-    return this.areaService.getAreasByIds(gebiedAreaIds);
+    const countries = this.countryService.getCountriesByDate(date);
+    // Get the ids for later use
+    const countryIds = this.baseService.getPropertyValuesFromArray(countries, 'id');
+    // Kry al die gebiede
+    const territories = this.territoryService.getTerritoriesByCountryIdAndDate(countryIds, date);
+    const areaIds = this.baseService.getPropertyValuesFromArray(territories, 'areaId');
+    const areas = this.areaService.getAreasByIds(areaIds);
+    const polygons = this.leafletService.buildPolygonsFromAreas(areas, hover);
+    return polygons;
   }
 
   buildAreaPolygonsWithObjectAttached(objects) {

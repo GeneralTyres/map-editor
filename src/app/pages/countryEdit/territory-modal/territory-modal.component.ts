@@ -22,6 +22,7 @@ export class TerritoryModalComponent implements OnInit {
   // activeArea: any;
   map: any;
   editPolygon: any;
+  featureGroup: any = L.featureGroup();
   stateTypeOptions = [
     {
       name: 'Unified People',
@@ -126,6 +127,8 @@ export class TerritoryModalComponent implements OnInit {
       this.currentPolygon = e.layer;
       self.editPolygon = this.currentPolygon;
     });
+    this.featureGroup = L.featureGroup(this.mapSerivce.getCountryLayer(1000, false));
+    this.featureGroup.addTo(this.map);
     // if (this.editPolygon) {
     //   this.editPolygon.remove();
     // }

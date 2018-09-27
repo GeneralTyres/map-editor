@@ -167,7 +167,7 @@ export class MapComponent implements OnInit {
     this.displayedTerritories = this.territoryService.getTerritoriesByCountryIdAndDate(countryIds, this.date);
     const areaIds = this.baseService.getPropertyValuesFromArray(this.displayedTerritories, 'areaId');
     const areas = this.areaService.getAreasByIds(areaIds);
-    const polygons = this.leafletService.buildPolygonsFromAreas(areas);
+    const polygons = this.leafletService.buildPolygonsFromAreas(areas, true);
     for (let i = 0; i < polygons.length; i++) {
       polygons[i].on('click', function (e) {
         self.activeMapItem = null;
