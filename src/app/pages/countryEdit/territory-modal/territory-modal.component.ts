@@ -20,6 +20,7 @@ export class TerritoryModalComponent implements OnInit {
   @Input() closeFunction;
   @ViewChild(ReferenceWidgetComponent) refWid: ReferenceWidgetComponent;
   // activeArea: any;
+  date = 0;
   map: any;
   editPolygon: any;
   featureGroup: any = L.featureGroup();
@@ -127,8 +128,6 @@ export class TerritoryModalComponent implements OnInit {
       this.currentPolygon = e.layer;
       self.editPolygon = this.currentPolygon;
     });
-    this.featureGroup = L.featureGroup(this.mapSerivce.getCountryLayer(1000, false));
-    this.featureGroup.addTo(this.map);
     // if (this.editPolygon) {
     //   this.editPolygon.remove();
     // }
@@ -144,6 +143,12 @@ export class TerritoryModalComponent implements OnInit {
     setTimeout(function() {
       self.map.invalidateSize();
     }, 100);
+  }
+
+  showYear(date: number) {
+    this.featureGroup.clearLayers();
+    this.featureGroup = L.featureGroup(this.mapSerivce.getCountryLayer(date, false));
+    this.featureGroup.addTo(this.map);
   }
 
   save() {
