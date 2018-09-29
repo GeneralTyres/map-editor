@@ -190,7 +190,9 @@ export class MapService {
     const polyLines = this.pathService.getPathsByDate(date);
     for (let p = 0; p < polyLines.length; p++) {
       let polyLine = JSON.parse(polyLines[p].polyline);
-      polyLine = JSON.parse(polyLine);
+      if (polyLine.constructor === String) {
+        polyLine = JSON.parse(polyLine);
+      }
       let pathType = this.pathTypeService.getPathTypeByPathTypeId(polyLines[p].pathTypeId);
       const options = JSON.parse(pathType.options);
       const antOptions = {
