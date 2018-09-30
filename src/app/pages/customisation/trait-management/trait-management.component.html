@@ -58,10 +58,15 @@
     <ul class="list-group">
       <li
         *ngFor="let trait of displayedTraits"
-        class="list-group-item list-group-item-dark"
-        (click)="activateTrait(trait)">
-        <img class="trait-list-icon" [src]="trait.icon | safeHtml">
+        (click)="activateTrait(trait)"
+        class="list-group-item list-group-item-dark">
+        <img
+          class="trait-list-icon"
+          [src]="trait.icon | safeHtml">
         {{ trait.name }}
+        <!--<span class="pull-right">-->
+          <!--<button class="btn btn-link" style="color: red"><fa name="times"></fa></button>-->
+        <!--</span>-->
       </li>
     </ul>
   </div>

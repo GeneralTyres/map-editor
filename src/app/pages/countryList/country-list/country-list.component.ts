@@ -20,6 +20,7 @@ export class CountryListComponent implements OnInit {
   countries: CountryModel[] = [];
   displayedCountries: CountryModel[] = [];
   searchText = '';
+  page = 1;
 
   constructor(private countryService: CountryService,
               private stateService: StateService,
@@ -36,6 +37,7 @@ export class CountryListComponent implements OnInit {
       this.router.navigate(['home']);
     }
     this.getData();
+
   }
 
   search() {
@@ -55,6 +57,10 @@ export class CountryListComponent implements OnInit {
     }
     // no match found
     return false;
+  }
+
+  get pageProducts() {
+    return this.displayedCountries.slice((this.page - 1) * 10, this.page * 10);
   }
 
   getData() {

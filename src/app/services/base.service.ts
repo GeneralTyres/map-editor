@@ -10,6 +10,19 @@ export class BaseService {
     self = this;
   }
 
+  clone(object) {
+    let copy;
+    if (typeof object === 'string') {
+      copy = '' + object;
+      return copy;
+    }
+    copy = Array.isArray(object) ? [] : {};
+    for (const key in object) {
+      copy[key] = (typeof object[key] === 'object' && object[key] !== null) ? self.clone(object[key]) : object[key];
+    }
+    return copy;
+  }
+
   /**
    * Returns all the objects that have the values of the specified property. It can be used for example, to find
    * all the boreholes with ids that you already have.
@@ -144,6 +157,50 @@ export class BaseService {
       // Get the event.target.result from the reader (base64 of the image)
       item[propertyName] = event.target.result;
     }, false);
+  }
+
+  searchFilter(item, propertyName, searchTerm) {
+    if (searchTerm === '') {
+      // searchText is empty, display all
+      return true;
+    } else if (searchTerm !== undefined) {
+      // searchText is not empty, filter on names and alternative names
+      if (item[propertyName].toLowerCase().indexOf(searchTerm.toLowerCase()) > -1) {
+        // match found for flowMeter name
+        return true;
+      }
+    }
+    // no match found
+    return false;
+  }
+
+  searchAlphaNumericaly(list, propertyName, searchTerm) {
+    list = list.filter(this.searchFilter);
+  }
+
+  /**
+   * A simple check to see it a value is present in the provided array. It just returns true or false!
+   * Last edited by:
+   * @author Marco Pieterse
+   * @param {array} array - An array of anything.
+   * @param {value} value - The value you suspect may or may not be in the array.
+   * @param {number} startIndex - From where the search should begin for the missing entry.
+   * @return {boolean} flag - True of False.
+   */
+  checkIfArrayContains(array, value, startIndex) {
+    if (self.isNotEmpty(startIndex)) {
+      // Do nothing
+    } else if (!self.isNotEmpty(startIndex)) {
+      startIndex = 0;
+    }
+    let flag = false;
+    const a = array.indexOf(value, startIndex);
+    if (a !== -1) {
+      flag = true;
+    } else if (a === -1) {
+      flag = false;
+    }
+    return flag;
   }
 
 }

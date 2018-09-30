@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import {BaseService} from '../../services/base.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {CountryModalComponent} from '../countryEdit/country-modal/country-modal.component';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {MapItemService} from '../../services/mapItem.service';
-import {MapItemTypeModel} from '../../models/mapItemType.model';
 import {MapItemModel} from '../../models/mapItem.model';
 import {MapItemModalComponent} from './map-item-modal/map-item-modal.component';
+import {MapItemTypeService} from '../../services/mapItemType.service';
+import {MapItemTypeModel} from '../../models/mapItemType.model';
 
 let self;
 
@@ -18,10 +18,14 @@ let self;
 export class MapItemManagementComponent implements OnInit {
 
   mapItems: MapItemModel[] = [];
+  mapItemTypes: MapItemTypeModel[] = [];
   displayedMapItems: MapItemModel[] = [];
   searchText = '';
+  page = 1;
+  mapItemTypeSelection = [];
 
   constructor(private mapItemService: MapItemService,
+              private mapItemTypeService: MapItemTypeService,
               private route: ActivatedRoute,
               private router: Router,
               private baseService: BaseService,
@@ -37,8 +41,22 @@ export class MapItemManagementComponent implements OnInit {
     this.getData();
   }
 
-  search() {
+  filter() {
+    // filter by text
     this.displayedMapItems = this.mapItems.filter(this.searchFilter);
+    // filter by type
+    const typeIds = [];
+    for (let t = 0; t < self.mapItemTypeSelection.length; t++) {
+      if (self.mapItemTypeSelection[t].checked) {
+        typeIds.push(self.mapItemTypeSelection[t].id);
+      }
+    }
+    this.displayedMapItems =
+      this.baseService.getObjectsWherePropertyHasValues(
+        this.mapItems,
+        'itemType',
+        typeIds);
+    this.displayedMapItems = this.baseService.alphaNumericSort(this.displayedMapItems, 'name');
   }
 
   searchFilter(mapItem) {
@@ -56,17 +74,37 @@ export class MapItemManagementComponent implements OnInit {
     return false;
   }
 
+  get pageItems() {
+    return this.displayedMapItems.slice((this.page - 1) * 10, this.page * 10);
+  }
+
   getData() {
     this.mapItems = this.mapItemService.getMapItems();
-    console.log('this.mapItems ::', this.mapItems);
+    this.mapItemTypes = this.mapItemTypeService.getMapItemTypes();
+    // Set check boxes
+    for (let c = 0; c < this.mapItemTypes.length; c++) {
+      this.mapItemTypeSelection.push(
+        {id: this.mapItemTypes[c].id,
+          name: this.mapItemTypes[c].name,
+          checked: 1,
+          icon: this.mapItemTypes[c].icon
+        });
+    }
     this.displayedMapItems = this.baseService.alphaNumericSort(this.mapItems, 'name');
   }
 
-  // Dashboard
-  // goToCountry(country) {
-  //   this.countryService.setActiveCountry(country);
-  //   this.router.navigate(['country']);
-  // }
+  filterItemsByType(typeId: number) {
+    // Check if the array already contains value
+    const index = self.mapItemTypeSelection.indexOf(typeId);
+    // If value is present is present, remove it
+    if (index > -1) {
+      self.mapItemTypeSelection.splice(index, 1);
+      // If value is not present, add it
+    } else if (index === -1) {
+      self.mapItemTypeSelection.push(typeId);
+    }
+    self.filter();
+  }
 
   /**
    * Brings up the modal to create a new country. The country object is saved in the modal component and the result is
