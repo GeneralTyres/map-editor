@@ -9,6 +9,8 @@ import {PathTypeService} from '../../../services/pathType.service';
 import {PathTypeModel} from '../../../models/pathType.model';
 import {MapService} from '../../../services/map.service';
 import 'leaflet';
+import {MapItemService} from '../../../services/mapItem.service';
+import {MapItemTypeService} from '../../../services/mapItemType.service';
 
 let self;
 
@@ -25,6 +27,8 @@ export class PathModalComponent implements OnInit {
   editPolyline: any;
   @Input() activePath;
   @ViewChild(ReferenceWidgetComponent) refWid: ReferenceWidgetComponent;
+  featureGroup: any = L.featureGroup();
+  date = 0;
 
   icon = L.icon({
     iconUrl: '../../../../../assets/images/icons/torch.svg',
@@ -38,7 +42,9 @@ export class PathModalComponent implements OnInit {
               private pathService: PathService,
               private pathTypeService: PathTypeService,
               private baseService: BaseService,
-              private mapService: MapService) {
+              private mapService: MapService,
+              private mapItemService: MapItemService,
+              private mapItemTypeService: MapItemTypeService) {
     self = this;
   }
 
@@ -139,7 +145,10 @@ export class PathModalComponent implements OnInit {
     if (this.activePath.polyline === '') {
       // his.createNewPolygon();
     } else {
-      const polyline = JSON.parse(this.activePath.polyline);
+      let polyline = JSON.parse(this.activePath.polyline);
+      if (typeof polyline === 'string') {
+        polyline = JSON.parse(polyline);
+      }
       this.editPolyline = L.polyline(polyline).addTo(this.map);
       this.editPolyline.enableEdit();
       this.map.fitBounds(this.editPolyline.getBounds());
@@ -148,6 +157,12 @@ export class PathModalComponent implements OnInit {
     setTimeout(function() {
       self.map.invalidateSize();
     }, 100);
+  }
+
+  showYear(date: number) {
+    this.featureGroup.clearLayers();
+    this.featureGroup = L.featureGroup(this.mapService.getMapItemLayer(date, false));
+    this.featureGroup.addTo(this.map);
   }
 
   savePath() {

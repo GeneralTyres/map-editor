@@ -145,6 +145,10 @@ export class MapService {
   }
 
   getMapItemLayer(date, zoomLevel) {
+    let showAll = false;
+    if (!zoomLevel) {
+      showAll = true;
+    }
     const mapItems = this.mapItemService.getMapItemsByDate(date);
     const itemMarkers = [];
     for (let i = 0; i < mapItems.length; i++) {
@@ -152,7 +156,7 @@ export class MapService {
         this.baseService.isNotEmptyOrZero(mapItems[i].longitude)) {
         const mapType = this.mapItemTypeService.getMapItemTypeByMapItemTypeId(mapItems[i].itemType);
 
-        if (mapType.zoomLevel <= zoomLevel) {
+        if (mapType.zoomLevel <= zoomLevel || showAll ) {
           // Create divIcon with item name
           const divIcon = new L.DivIcon({
             className: 'map-item-marker',
@@ -163,7 +167,9 @@ export class MapService {
           const newLatLng = new L.LatLng(mapItems[i].latitude, mapItems[i].longitude);
           const marker: any = L.marker(newLatLng, {icon: divIcon});
           marker.mapItem = mapItems[i];
-          marker.on('click', this.openMapItemModal);
+          if (!showAll) {
+            marker.on('click', this.openMapItemModal);
+          }
           itemMarkers.push(marker);
         }
       }

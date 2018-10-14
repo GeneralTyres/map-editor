@@ -11,6 +11,18 @@
   <div class="row">
     <div class="col-md-12">
       <div class="form-group">
+        <input
+          type="text"
+          id="goToDate"
+          name="goToDate"
+          class="form-control"
+          [(ngModel)]="date">
+        <button
+          class="btn btn-primary"
+          type="button"
+          (click)="showYear(date)">Go To Date</button>
+      </div>
+      <div class="form-group">
         <label for="pathName">Name</label>
         <input
           type="text"
