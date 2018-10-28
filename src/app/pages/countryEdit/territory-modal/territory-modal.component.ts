@@ -147,7 +147,7 @@ export class TerritoryModalComponent implements OnInit {
 
   showYear(date: number) {
     this.featureGroup.clearLayers();
-    this.featureGroup = L.featureGroup(this.mapSerivce.getMapItemLayer(date, false));
+    this.featureGroup = L.featureGroup(this.mapSerivce.getCountryLayer(date, false));
     this.featureGroup.addTo(this.map);
   }
 
