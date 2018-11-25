@@ -172,8 +172,8 @@ export class MapComponent implements OnInit {
       polygons[i].on('click', function (e) {
         self.activeMapItem = null;
         self.activeCountry = self.mapService.getCountryForDashboard(e.target.area.id, self.date);
-        self.activeStates = self.stateService.getStatesByCountry(self.activeCountry);
-        console.log('self.activeStates ::', self.activeStates);
+        self.activeState = self.stateService.getStateByCountryIdAndDate(self.activeCountry.id, self.date);
+        console.log('self.activeState ::', self.activeState);
         self.map.fitBounds(e.target.getBounds(), {paddingBottomRight: [300, 0]});
       });
       //   .on('mouseover', function (e) {
