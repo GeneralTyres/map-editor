@@ -33,7 +33,7 @@ export class MapComponent implements OnInit {
   featureGroup: any = L.featureGroup();
   infoBox: any;
   activeCountry: CountryModel;
-  activeStates: any[];
+  activeState: any;
   activeMapItem: MapItemModel;
 
   constructor(private http: HttpClient,
