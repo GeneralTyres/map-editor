@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import {DataService} from './data.service';
 import {BaseService} from './base.service';
-import {CountryModel} from '../models/country.model';
 
 @Injectable()
 export class AreaService {

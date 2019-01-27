@@ -19,3 +19,7 @@
   width: 30px;
   padding-bottom: 10px;
 }
+
+.modal-content.mapItemModal {
+  width: 1000px;
+}

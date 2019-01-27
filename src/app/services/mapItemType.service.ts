@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {DataService} from './data.service';
 import {BaseService} from './base.service';
+import {MapItemTypeModel} from '../models/mapItemType.model';
 
 @Injectable()
 export class MapItemTypeService {
@@ -53,6 +54,10 @@ export class MapItemTypeService {
       }
     }
     return filteredMapItemTypes;
+  }
+
+  deleteMapType(mapItemType: MapItemTypeModel) {
+    return this.data.delete('mapItemTypes', mapItemType);
   }
 
 }

@@ -30,7 +30,7 @@
             [(ngModel)]="activeMapItemType.description">
         </div>
         <div class="form-group">
-          <label for="zoomLevel"><img src="../../../../assets/images/icons/hourglass.svg" class="modal-form-icon">
+          <label for="zoomLevel"><img src="../../../../assets/images/icons/hourglass.svg" class="modal-form-icon zoomIcon">
             Zoom Level</label>
           <input
             type="number"
@@ -67,11 +67,15 @@
     </div>
     <ul class="list-group">
       <li
-        *ngFor="let mapItemType of displayedMapItemTypes"
+        *ngFor="let mapItemType of displayedMapItemTypes let idx = index"
         class="list-group-item list-group-item-dark"
         (click)="activateMapItemType(mapItemType)">
         <img class="mapItemType-list-icon" [src]="mapItemType.icon | safeHtml">
         {{ mapItemType.name }}
+        <button
+          class="btn btn-icon-primary card-link pull-right"
+          (click)="deleteType(mapItemType, idx)">
+          <span><fa name="times"></fa></span></button>
       </li>
     </ul>
   </div>

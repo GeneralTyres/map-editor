@@ -7,6 +7,7 @@ import {MapItemModel} from '../../models/mapItem.model';
 import {MapItemModalComponent} from './map-item-modal/map-item-modal.component';
 import {MapItemTypeService} from '../../services/mapItemType.service';
 import {MapItemTypeModel} from '../../models/mapItemType.model';
+import set = Reflect.set;
 
 let self;
 
@@ -53,10 +54,10 @@ export class MapItemManagementComponent implements OnInit {
     }
     this.displayedMapItems =
       this.baseService.getObjectsWherePropertyHasValues(
-        this.mapItems,
+        this.displayedMapItems,
         'itemType',
         typeIds);
-    this.displayedMapItems = this.baseService.alphaNumericSort(this.displayedMapItems, 'name');
+    self.displayedMapItems = this.baseService.alphaNumericSort(this.displayedMapItems, 'name');
   }
 
   searchFilter(mapItem) {
@@ -81,6 +82,14 @@ export class MapItemManagementComponent implements OnInit {
   getData() {
     this.mapItems = this.mapItemService.getMapItems();
     this.mapItemTypes = this.mapItemTypeService.getMapItemTypes();
+    for (let t = 0; t < this.mapItems.length; t++) {
+      for (let u = 0; u < this.mapItemTypes.length; u++) {
+        if (this.mapItems [t].itemType === this.mapItemTypes[u].id) {
+          this.mapItems[t].mapItemType = this.mapItemTypes[u];
+        }
+      }
+
+    }
     // Set check boxes
     for (let c = 0; c < this.mapItemTypes.length; c++) {
       this.mapItemTypeSelection.push(
@@ -111,7 +120,10 @@ export class MapItemManagementComponent implements OnInit {
    * returned as value. The new map item is then added to the list.
    */
   createNewMapItem() {
-    const modalRef = this.modalService.open(MapItemModalComponent, { size: 'lg', beforeDismiss: () => false });
+    const modalRef = this.modalService.open(MapItemModalComponent, {
+      size: 'lg',
+      windowClass: 'mapItemModal',
+      beforeDismiss: () => false });
     modalRef.componentInstance.activeMapItem = new MapItemModel();
     modalRef.result.then((value: MapItemModel) => {
       if (this.baseService.isNotEmpty(value)) {
@@ -124,14 +136,27 @@ export class MapItemManagementComponent implements OnInit {
   }
 
   editMapItem(mapItem) {
-    const modalRef = this.modalService.open(MapItemModalComponent, { size: 'lg', beforeDismiss: () => false });
-    console.log('mapItem ::', mapItem);
+    const modalRef = this.modalService.open(MapItemModalComponent, {
+      size: 'lg',
+      windowClass: 'mapItemModal',
+      beforeDismiss: () => false });
     modalRef.componentInstance.activeMapItem = mapItem;
     modalRef.result.then((value: MapItemModel) => {
       if (this.baseService.isNotEmpty(value)) {
         // Doen iets na save
         // this.countryService.setActiveCountry(value);
         // this.router.navigate(['country']);
+      }
+    });
+  }
+
+  deleteItem(mapItem) {
+    this.mapItemService.deteleMapItem(mapItem).subscribe( value => {
+      for (let i = 0; i < this.mapItems.length; i++) {
+        if (this.mapItems[i].id === mapItem.id) {
+          this.mapItems.splice(i, 1);
+          self.filter();
+        }
       }
     });
   }

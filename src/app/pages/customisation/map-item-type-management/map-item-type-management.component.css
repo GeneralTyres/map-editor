@@ -11,3 +11,7 @@
 .list-group-item {
   cursor: pointer;
 }
+
+.zoomIcon {
+  height: 25px;
+}

@@ -61,25 +61,32 @@ export class MapItemTypeManagementComponent implements OnInit {
 
   saveMapItemType() {
     let created = false;
-    if (!this.baseService.isNotEmptyOrZero(this.activeMapItemType)) {
+    if (!this.baseService.isNotEmptyOrZero(this.activeMapItemType.id)) {
       created = true;
     }
     // this.activeMapItemType.icon = this.activeMapItemType.icon.changingThisBreaksApplicationSecurity;
     this.mapItemTypeService.saveMapItemType(this.activeMapItemType).subscribe((value: MapItemTypeModel) => {
       this.activeMapItemType = value;
       if (created) {
+        this.activateMapItemType(value);
         this.displayedMapItemTypes.push(value);
       }
     });
   }
 
   activateMapItemType(mapItemType) {
-    console.log('mapItemType ::', mapItemType);
     this.activeMapItemType = mapItemType;
   }
 
   uploadImage(input) {
     this.baseService.getFileBase64(input, this.activeMapItemType, 'icon');
+  }
+
+  deleteType(mapItemType, index) {
+    this.mapItemTypeService.deleteMapType(mapItemType).subscribe( value => {
+      this.mapItemTypes.splice(index, 1);
+      this.activateMapItemType(new MapItemTypeModel());
+    });
   }
 
 }

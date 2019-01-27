@@ -21,17 +21,6 @@
         Filter
       </div>
       <div class="card-body">
-        <div class="form-group input-group mb-2">
-          <div class="input-group-prepend">
-            <div class="input-group-text"><fa name="search"></fa></div>
-          </div>
-          <input
-            type="text"
-            id="typeSearch"
-            class="form-control"
-            placeholder="Egyptian City"
-            autocomplete="off">
-        </div>
         <div class="form-check" *ngFor="let mapItemType of mapItemTypeSelection">
           <input
             class="form-check-input"
@@ -79,15 +68,27 @@
         <th>Name</th>
         <th>From</th>
         <th>To</th>
+        <th>Actions</th>
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let mapItem of pageItems"
-          (click)="editMapItem(mapItem)">
+      <tr *ngFor="let mapItem of pageItems let idx = index">
         <!--<td><img src="{{ mapItem.icon }}" class="countryFlag"></td>-->
-        <td>{{ mapItem.name }}</td>
+        <td><img
+          class="filter-type-icon"
+          [src]="mapItem.mapItemType.icon | safeHtml"
+          alt="">{{ mapItem.name }}</td>
         <td>{{ mapItem.fromDate }}</td>
         <td>{{ mapItem.toDate }}</td>
+        <td>
+        <td><button
+          class="btn btn-icon-primary card-link pull-right"
+          (click)="editMapItem(mapItem)">
+          <span><fa name="pencil"></fa></span></button>
+        <button
+          class="btn btn-icon-primary card-link pull-right"
+          (click)="deleteItem(mapItem, idx)">
+          <span><fa name="times"></fa></span></button></td>
       </tr>
       </tbody>
     </table>

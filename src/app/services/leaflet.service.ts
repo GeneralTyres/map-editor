@@ -52,19 +52,25 @@ export class LeafletService {
 
   buildPolygonsFromAreas(areas, hover) {
     const polygons = [];
+    let borderColour = 'white';
     for (let i = 0; i < areas.length; i++) {
-      let lineTpye = '';
+      borderColour = 'white';
+      let lineType = '';
+      console.log('areas[i].polygonType ::', areas[i].polygonType);
       if (areas[i].polygonType === 0) {
-        } else if (areas[i].polygonType === 1) {
-        lineTpye = '15, 10, 5';
+        borderColour = 'black';
+        } else if (areas[i].polygonType === 4) {
+        borderColour = '#7f0005';
+        lineType = '15, 10, 5';
         } else if (areas[i].polygonType === 2) {
-        lineTpye = '5, 5, 1, 5';
+        lineType = '5, 5, 1, 5';
+        borderColour = '#7f0005';
         }
         const polygon: any = L.polygon(JSON.parse(areas[i].polygon),
           {fillColor: areas[i].colour,
             weight: 2,
             opacity: 0.6,
-            color: 'white',
+            color: borderColour,
             dashArray: String(areas[i].polygonType),
             fillOpacity: 0.2
           });

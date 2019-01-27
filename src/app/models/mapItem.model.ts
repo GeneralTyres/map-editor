@@ -1,3 +1,5 @@
+import {MapItemTypeModel} from './mapItemType.model';
+
 export class MapItemModel {
   constructor(public id: number = null,
               public itemType: number = 0,
@@ -9,6 +11,7 @@ export class MapItemModel {
               public fromDate: number = 0,
               public toDate: number = 0,
               public referenceId: number = null,
+              public mapItemType: MapItemTypeModel = null,
               public createdAt: string = undefined,
               public updatedAt: string = undefined,
   ) {}

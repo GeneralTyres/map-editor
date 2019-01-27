@@ -162,7 +162,7 @@ export class MapService {
             className: 'map-item-marker',
             html: '<div class="row map-item-marker"><div class="col-md-3">' +
             '<img class="map-item-icon float-left" src="' + mapType.icon + '"/></div>' +
-            '<div class="col-md-8"><p class="map-item-label">' + mapItems[i].name + '</p></div></div>'
+            '<div class="col-md-8"><p class="map-item-label"><u>' + mapItems[i].name + '</u></p></div></div>'
           });
           const newLatLng = new L.LatLng(mapItems[i].latitude, mapItems[i].longitude);
           const marker: any = L.marker(newLatLng, {icon: divIcon});
