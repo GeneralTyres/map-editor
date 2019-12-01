@@ -56,7 +56,6 @@ export class LeafletService {
     for (let i = 0; i < areas.length; i++) {
       borderColour = 'white';
       let lineType = '';
-      console.log('areas[i].polygonType ::', areas[i].polygonType);
       if (areas[i].polygonType === 0) {
         borderColour = 'black';
         } else if (areas[i].polygonType === 4) {

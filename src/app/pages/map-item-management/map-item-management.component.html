@@ -74,10 +74,15 @@
       <tbody>
       <tr *ngFor="let mapItem of pageItems let idx = index">
         <!--<td><img src="{{ mapItem.icon }}" class="countryFlag"></td>-->
-        <td><img
+
+        <td>
+          <img
+          *ngIf="mapItem.mapItemType.icon"
           class="filter-type-icon"
           [src]="mapItem.mapItemType.icon | safeHtml"
-          alt="">{{ mapItem.name }}</td>
+          alt="">
+          {{ mapItem.name }}
+        </td>
         <td>{{ mapItem.fromDate }}</td>
         <td>{{ mapItem.toDate }}</td>
         <td>

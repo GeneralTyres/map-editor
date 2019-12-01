@@ -100,4 +100,15 @@ export class PathManagementComponent implements OnInit {
     });
   }
 
+  deleteItem(path) {
+    this.pathService.detelePath(path).subscribe( value => {
+      for (let i = 0; i < this.paths.length; i++) {
+        if (this.paths[i].id === path.id) {
+          this.paths.splice(i, 1);
+          self.filter();
+        }
+      }
+    });
+  }
+
 }

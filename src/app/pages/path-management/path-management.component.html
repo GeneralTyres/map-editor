@@ -24,21 +24,31 @@
 <div class="container">
   <table class="table table-hover table-dark table-striped">
     <thead>
-    <tr>
-      <!--<th>Type</th>-->
-      <th>Name</th>
-      <th>From</th>
-      <th>To</th>
-    </tr>
+      <tr>
+        <!--<th>Type</th>-->
+        <th>Name</th>
+        <th>From</th>
+        <th>To</th>
+        <th>Actions</th>
+      </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let path of displayedPaths"
-        (click)="editPath(path)">
-      <!--<td><img src="{{ path.icon }}" class="countryFlag"></td>-->
-      <td>{{ path.name }}</td>
-      <td>{{ path.fromDate }}</td>
-      <td>{{ path.toDate }}</td>
-    </tr>
+      <tr *ngFor="let path of displayedPaths"
+          (click)="editPath(path)">
+        <!--<td><img src="{{ path.icon }}" class="countryFlag"></td>-->
+        <td>{{ path.name }}</td>
+        <td>{{ path.fromDate }}</td>
+        <td>{{ path.toDate }}</td>
+        <td><button
+          class="btn btn-icon-primary card-link pull-right"
+          (click)="editPath(path)">
+          <span><fa name="pencil"></fa></span></button>
+          <button
+            class="btn btn-icon-primary card-link pull-right"
+            (click)="deleteItem(path)">
+            <span><fa name="times"></fa></span></button>
+        </td>
+      </tr>
     </tbody>
   </table>
 </div>

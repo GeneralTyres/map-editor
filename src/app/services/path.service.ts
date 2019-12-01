@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {DataService} from './data.service';
 import {BaseService} from './base.service';
+import {MapItemModel} from '../models/mapItem.model';
 
 @Injectable()
 export class PathService {
@@ -55,6 +56,10 @@ export class PathService {
       }
     }
     return filteredPaths;
+  }
+
+  detelePath(path) {
+    return this.data.delete('paths', path);
   }
 
 }

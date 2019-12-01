@@ -155,7 +155,6 @@ export class MapService {
       if (this.baseService.isNotEmptyOrZero(mapItems[i].latitude) &&
         this.baseService.isNotEmptyOrZero(mapItems[i].longitude)) {
         const mapType = this.mapItemTypeService.getMapItemTypeByMapItemTypeId(mapItems[i].itemType);
-
         if (mapType.zoomLevel <= zoomLevel || showAll ) {
           // Create divIcon with item name
           const divIcon = new L.DivIcon({
